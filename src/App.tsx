@@ -3,17 +3,19 @@ import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
-  IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs
+  IonTabs,
+  useIonViewDidEnter
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { apps, flash, send } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import { musicalNotes, restaurant, navigate, home, time } from 'ionicons/icons';
+import Home from './pages/Home';
+import Music from './pages/Music';
+import Food from './pages/Food';
+import Maps from './pages/Maps';
+import Schedule from './pages/Schedule';
 import Details from './pages/Details';
 
 /* Core CSS required for Ionic components to work properly */
@@ -35,34 +37,53 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route path="/tab1" component={Tab1} exact={true} />
-          <Route path="/tab2" component={Tab2} exact={true} />
-          <Route path="/tab2/details" component={Details} />
-          <Route path="/tab3" component={Tab3} />
-          <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon icon={flash} />
-            <IonLabel>Tab One</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon icon={apps} />
-            <IonLabel>Tab Two</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon icon={send} />
-            <IonLabel>Tab Three</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+// import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+
+const App: React.FC = () => {
+  useIonViewDidEnter(() => {
+    // does not seem to be working
+    window.screen.orientation.lock('portrait');
+    console.log('ionViewDidEnter event fired');
+  });
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route path="/home" component={Home} exact={true} />
+            <Route path="/music" component={Music} exact={true} />
+            <Route path="/food" component={Food} exact={true} />
+            <Route path="/food/details" component={Details} />
+            <Route path="/maps" component={Maps} exact={true} />
+            <Route path="/schedule" component={Schedule} exact={true} />
+            <Route
+              path="/"
+              render={() => <Redirect to="/home" />}
+              exact={true}
+            />
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="music" href="/music">
+              <IonIcon icon={musicalNotes} />
+              {/* <IonLabel>Music</IonLabel> */}
+            </IonTabButton>
+            <IonTabButton tab="food" href="/food">
+              <IonIcon icon={restaurant} />
+            </IonTabButton>
+            <IonTabButton tab="home" href="/home">
+              <IonIcon icon={home} />
+            </IonTabButton>
+            <IonTabButton tab="schedule" href="/schedule">
+              <IonIcon icon={time} />
+            </IonTabButton>
+            <IonTabButton tab="maps" href="/maps">
+              <IonIcon icon={navigate} />
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

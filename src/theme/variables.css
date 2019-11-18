@@ -75,3 +75,41 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
+
+.grid-card {
+  /* padding: 0 !important; */
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.grid-card img {
+  /* max-height: 20vh; */
+  overflow: hidden;
+}
+
+.grid-med-title {
+  font-size: medium;
+}
+
+.welcome-card img {
+  max-height: 25vh;
+  overflow: hidden;
+}
+
+ion-content {
+  --background: url(/assets/background.png) no-repeat center/cover fixed;
+}
+
+.card-white-header {
+  background-color: white;
+}
+
+ion-toolbar {
+  --background-color: transparent;
+  --background: url(/assets/background.png) no-repeat center/cover fixed;
+  --color: white;
+}
+
+ion-header {
+  --background: url(/assets/background.png) no-repeat center/cover fixed;
+}

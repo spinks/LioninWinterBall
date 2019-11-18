@@ -7,17 +7,19 @@ import {
   IonContent
 } from '@ionic/react';
 
-const Tab3Page: React.FC = () => {
+const Schedule: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab Three</IonTitle>
+          <IonTitle>Schedule</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent />
+      <IonContent>
+        <p>HEllo there</p>
+      </IonContent>
     </IonPage>
   );
 };
 
-export default Tab3Page;
+export default Schedule;
