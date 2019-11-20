@@ -115,21 +115,25 @@ ion-list {
   --ion-item-background: transparent;
 }
 
+body {
+  background-image: url('/assets/background2.png');
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
 ion-content {
-  --background: url(/assets/background.png) no-repeat center/cover fixed;
-  /* --background: transparent; */
+  --background: transparent;
 }
 
 ion-toolbar {
   --background: transparent;
-  /* --background: url(/assets/background.png) no-repeat center/cover fixed; */
   --color: white;
   --border-width: 0 0 0px !important;
 }
 
 ion-tab-bar {
-  --background: rgb(38, 103, 93);
-  /* --background: url(/assets/background.png) no-repeat center/cover fixed; */
+  --background: transparent;
   --color: rgba(188, 206, 205, 0.705);
 }
 

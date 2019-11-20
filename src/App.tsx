@@ -80,7 +80,7 @@ const App: React.FC = () => {
               exact={true}
             />
           </IonRouterOutlet>
-          <IonTabBar slot="bottom">
+          <IonTabBar slot="bottom" translucent>
             <IonTabButton tab="music" href="/music">
               <IonIcon icon={musicalNotes} />
               {/* <IonLabel>Music</IonLabel> */}

@@ -64,13 +64,13 @@ const Home: React.FC = () => {
           <IonTitle>Lion in Winter Ball</IonTitle>
         </IonToolbar>
       </IonHeader>
-
       <IonContent fullscreen>
         {/* <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Lion in Winter Ball</IonTitle>
           </IonToolbar>
         </IonHeader> */}
+
         <IonGrid>
           <IonRow class="ion-justify-content-center">
             <img
@@ -82,7 +82,7 @@ const Home: React.FC = () => {
         </IonGrid>
 
         <IonCard class="card-white-header">
-          {/* <img src="/assets/shapes.svg" alt="" /> */}
+          {/* <img src="/assets/lions/lion_background.jpg" alt="" /> */}
           <IonCardHeader>
             <IonCardSubtitle>Take me to ...</IonCardSubtitle>
             <IonCardTitle>
