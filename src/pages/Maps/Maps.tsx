@@ -13,12 +13,12 @@ import React from 'react';
 const Maps: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Map</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent class="background">
+      <IonContent fullscreen>
         {/* <IonImg src="/assets/map.png"></IonImg> */}
         <IonCard color="dark">
           <img src="/assets/map/map.png" alt="" />

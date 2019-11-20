@@ -14,7 +14,7 @@ import {
   IonTitle
 } from '@ionic/react';
 import React, { useState } from 'react';
-import MusicPopover from '../components/musicpopover';
+import MusicPopover from '../../components/musicpopover';
 
 interface MusicProps {}
 
@@ -24,18 +24,17 @@ const Music: React.FC<MusicProps> = () => {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Music</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
         <IonGrid>
           <IonRow>
             <IonCol>
               <IonCard
-                className="grid-card"
-                color="dark"
+                class="grid-card card-white-header"
                 button
                 routerLink="/Food/details"
               >
@@ -43,6 +42,20 @@ const Music: React.FC<MusicProps> = () => {
                 <IonCardHeader>
                   <IonCardSubtitle>Headliner</IonCardSubtitle>
                   <IonCardTitle> Artist 1</IonCardTitle>
+                </IonCardHeader>
+              </IonCard>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <IonCard
+                class="grid-card card-white-header"
+                button
+                routerLink="/Food/details"
+              >
+                <IonCardHeader>
+                  <IonCardSubtitle>request songs</IonCardSubtitle>
+                  <IonCardTitle> Silent Disco</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
               {/* <IonCard
@@ -61,20 +74,18 @@ const Music: React.FC<MusicProps> = () => {
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">
-                    Artist2
-                  </IonCardTitle>
+                  <IonCardTitle class="grid-med-title">Artist2</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">
+                  <IonCardTitle class="grid-med-title">
                     A really long artist name
                   </IonCardTitle>
                 </IonCardHeader>
@@ -83,44 +94,36 @@ const Music: React.FC<MusicProps> = () => {
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">
-                    Artist3
-                  </IonCardTitle>
+                  <IonCardTitle class="grid-med-title">Artist3</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">
-                    Artist 4
-                  </IonCardTitle>
+                  <IonCardTitle class="grid-med-title">Artist 4</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">
-                    Artist 5
-                  </IonCardTitle>
+                  <IonCardTitle class="grid-med-title">Artist 5</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">
-                    Artist 6
-                  </IonCardTitle>
+                  <IonCardTitle class="grid-med-title">Artist 6</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>

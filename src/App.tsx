@@ -11,12 +11,13 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { musicalNotes, restaurant, navigate, home, time } from 'ionicons/icons';
-import Home from './pages/Home';
-import Music from './pages/Music';
-import Food from './pages/Food';
-import Maps from './pages/Maps';
-import Schedule from './pages/Schedule';
-import Details from './pages/Details';
+
+/* Page directory */
+import * as Home from './pages/Home/index';
+import * as Music from './pages/Music/index';
+import * as Food from './pages/Food/index';
+import * as Maps from './pages/Maps/index';
+import * as Schedule from './pages/Schedule/index';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -37,9 +38,11 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-// import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { Plugins } from '@capacitor/core';
+const { SplashScreen } = Plugins;
 
 const App: React.FC = () => {
+  SplashScreen.hide();
   useIonViewDidEnter(() => {
     // does not seem to be working
     window.screen.orientation.lock('portrait');
@@ -50,12 +53,27 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route path="/home" component={Home} exact={true} />
-            <Route path="/music" component={Music} exact={true} />
-            <Route path="/food" component={Food} exact={true} />
-            <Route path="/food/details" component={Details} />
-            <Route path="/maps" component={Maps} exact={true} />
-            <Route path="/schedule" component={Schedule} exact={true} />
+            {/* Home */}
+            <Route path="/home" component={Home.Home} exact={true} />
+            <Route
+              path="/home/information"
+              component={Home.Information}
+              exact={true}
+            />
+            {/* Music */}
+            <Route path="/music" component={Music.Music} exact={true} />
+            {/* Food */}
+            <Route path="/food" component={Food.Food} exact={true} />
+            <Route path="/food/dining" component={Food.Dining} exact={true} />
+            {/* Maps */}
+            <Route path="/maps" component={Maps.Maps} exact={true} />
+            {/* Schedule */}
+            <Route
+              path="/schedule"
+              component={Schedule.Schedule}
+              exact={true}
+            />
+            {/* Entry Point */}
             <Route
               path="/"
               render={() => <Redirect to="/home" />}

@@ -17,61 +17,60 @@ import {
 const Food: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Food</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
         <IonGrid>
           <IonRow>
             <IonCol>
               <IonCard
-                className="grid-card"
-                color="dark"
+                class="grid-card card-white-header"
                 button
-                routerLink="/Food/details"
+                routerLink="/Food/Dining"
               >
-                <img src="/assets/food/dining_tent.jpg" alt="" />
-                <IonCardHeader>
+                <img src="/assets/food/dining_tent.jpg" alt="dining tent" />
+                <IonCardHeader card-white-header>
                   <IonCardSubtitle>the main event</IonCardSubtitle>
-                  <IonCardTitle> Dinner</IonCardTitle>
+                  <IonCardTitle> Dining Menu</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">Food 2</IonCardTitle>
+                  <IonCardTitle class="grid-med-title">Food 2</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">Food 3</IonCardTitle>
+                  <IonCardTitle class="grid-med-title">Food 3</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">Food 4</IonCardTitle>
+                  <IonCardTitle class="grid-med-title">Food 4</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
             <IonCol>
-              <IonCard className="grid-card card-white-header">
+              <IonCard class="grid-card card-white-header">
                 <img src="/assets/shapes.svg" alt="" />
                 <IonCardHeader>
-                  <IonCardTitle className="grid-med-title">Food 5</IonCardTitle>
+                  <IonCardTitle class="grid-med-title">Food 5</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>

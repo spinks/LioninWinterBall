@@ -10,12 +10,12 @@ import {
 const Schedule: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Schedule</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
         <p>HEllo there</p>
       </IonContent>
     </IonPage>

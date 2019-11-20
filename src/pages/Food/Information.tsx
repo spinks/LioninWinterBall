@@ -9,7 +9,7 @@ import {
   IonContent
 } from '@ionic/react';
 
-const Details: React.FC = () => {
+const Information: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -27,4 +27,4 @@ const Details: React.FC = () => {
   );
 };
 
-export default Details;
+export default Information;
