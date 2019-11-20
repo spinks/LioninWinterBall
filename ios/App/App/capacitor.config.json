@@ -1,0 +1,8 @@
+{
+  "appId": "com.hatfield.liwb",
+  "appName": "LioninWinterBall",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}
