@@ -54,3 +54,8 @@ sudo gem install cocoapods
 Within Xcode you should modify assets such as the loading splash screen, app icon, and other pertinent details.
 
 For deployment instructions see [iOS distribution](https://www.joshmorony.com/deploying-capacitor-applications-to-ios-development-distribution/).
+
+## Firebase
+For your usage case you may want to use Firebase, as these components are already configured in this project it is probably the most convenient method for content management and notification pushes (and one of the most widespread technologies for this purpose anyways).
+
+For reference these 
