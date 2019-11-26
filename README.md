@@ -17,6 +17,9 @@ Certain functionalities are already implemented on various pages, which may be u
 ## Modifying Content
 Trivial changes to content can be made, simply be editing the `tsx` files for each page. New page formats and such can be built from the components at [ionic components](https://ionicframework.com/docs/components). You are of course able to build any other functionality, using react JS primitives.
 
+### Theming
+You are able to have individual css pages imported per page, but for consistency it is probably easier to keep them all in the variables.css file. If you have different bespoke styles for a certain page then keep that within a specific css file.
+
 ## Building
 The app's mobile builds are made with capacitor (see [building-your-app](https://capacitor.ionicframework.com/docs/basics/building-your-app)).
 
