@@ -15,7 +15,9 @@ import {
   IonToolbar,
   IonRow,
   IonGrid,
-  IonCardContent
+  IonCardContent,
+  IonText,
+  IonCol
 } from '@ionic/react';
 import {
   book,
@@ -165,6 +167,13 @@ const Home: React.FC = () => {
             </IonList>
           </IonCardContent>
         </IonCard>
+        <IonRow>
+          <IonCol class="ion-text-center ">
+            <IonText color="light" class="font-small">
+              App by Ben Spinks
+            </IonText>
+          </IonCol>
+        </IonRow>
       </IonContent>
     </IonPage>
   );

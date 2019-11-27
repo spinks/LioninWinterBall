@@ -87,6 +87,11 @@ http://ionicframework.com/docs/theming/ */
   overflow: hidden;
 }
 
+ion-card-content {
+  padding-top: 0px !important;
+  padding-bottom: 10px !important;
+}
+
 .grid-med-title {
   font-size: medium;
 }
@@ -99,6 +104,10 @@ http://ionicframework.com/docs/theming/ */
 .card-white-header {
   /* background-color: white; */
   background-color: rgb(255, 255, 255, 0.85);
+}
+
+.font-small {
+  font-size: 8pt;
 }
 
 ion-item {
