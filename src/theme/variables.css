@@ -87,11 +87,6 @@ http://ionicframework.com/docs/theming/ */
   overflow: hidden;
 }
 
-ion-card-content {
-  padding-top: 0px !important;
-  padding-bottom: 10px !important;
-}
-
 .grid-med-title {
   font-size: medium;
 }

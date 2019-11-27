@@ -19,7 +19,7 @@ import {
 export default function grid(VLEArray: Array<any>, pagekey: string): any {
   const [value, loading, error] = VLEArray;
   return (
-    <div>
+    <React.Fragment>
       {error && (
         <IonRow>
           <IonCol>
@@ -41,7 +41,7 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
         </IonRow>
       )}
       {value && (
-        <div>
+        <React.Fragment>
           {Object.keys(value[pagekey])
             .sort()
             .map(key => {
@@ -58,18 +58,25 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
                         href={item['href']}
                       >
                         {item['img'] && <img src={item['img']} alt="" />}
-                        <IonCardHeader>
-                          {item['subtitle'] && (
-                            <IonCardSubtitle>
-                              {item['subtitle']}
-                            </IonCardSubtitle>
-                          )}
-                          {item['title'] && (
-                            <IonCardTitle>{item['title']}</IonCardTitle>
-                          )}
-                        </IonCardHeader>
-                        {item['body'] && (
+                        {(item['title'] || item['subtitle']) && (
+                          <IonCardHeader>
+                            {item['subtitle'] && (
+                              <IonCardSubtitle>
+                                {item['subtitle']}
+                              </IonCardSubtitle>
+                            )}
+                            {item['title'] && (
+                              <IonCardTitle>{item['title']}</IonCardTitle>
+                            )}
+                          </IonCardHeader>
+                        )}
+                        {item['body'] && !item['title'] && (
                           <IonCardContent>{item['body']}</IonCardContent>
+                        )}
+                        {item['body'] && item['title'] && (
+                          <IonCardContent style={{ paddingTop: '0px' }}>
+                            {item['body']}
+                          </IonCardContent>
                         )}
                       </IonCard>
                     </IonCol>
@@ -89,20 +96,27 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
                         href={left['href']}
                       >
                         {left['img'] && <img src={left['img']} alt="" />}
-                        <IonCardHeader>
-                          {left['subtitle'] && (
-                            <IonCardSubtitle>
-                              {left['subtitle']}
-                            </IonCardSubtitle>
-                          )}
-                          {left['title'] && (
-                            <IonCardTitle class="grid-med-title">
-                              {left['title']}
-                            </IonCardTitle>
-                          )}
-                        </IonCardHeader>
-                        {left['body'] && (
+                        {(left['title'] || left['subtitle']) && (
+                          <IonCardHeader>
+                            {left['subtitle'] && (
+                              <IonCardSubtitle>
+                                {left['subtitle']}
+                              </IonCardSubtitle>
+                            )}
+                            {left['title'] && (
+                              <IonCardTitle class="grid-med-title">
+                                {left['title']}
+                              </IonCardTitle>
+                            )}
+                          </IonCardHeader>
+                        )}
+                        {left['body'] && !left['title'] && (
                           <IonCardContent>{left['body']}</IonCardContent>
+                        )}
+                        {left['body'] && left['title'] && (
+                          <IonCardContent style={{ paddingTop: '0px' }}>
+                            {left['body']}
+                          </IonCardContent>
                         )}
                       </IonCard>
                     </IonCol>
@@ -114,20 +128,27 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
                         href={right['href']}
                       >
                         {right['img'] && <img src={right['img']} alt="" />}
-                        <IonCardHeader>
-                          {right['subtitle'] && (
-                            <IonCardSubtitle>
-                              {right['subtitle']}
-                            </IonCardSubtitle>
-                          )}
-                          {right['title'] && (
-                            <IonCardTitle class="grid-med-title">
-                              {right['title']}
-                            </IonCardTitle>
-                          )}
-                        </IonCardHeader>
-                        {right['body'] && (
+                        {(right['title'] || right['subtitle']) && (
+                          <IonCardHeader>
+                            {right['subtitle'] && (
+                              <IonCardSubtitle>
+                                {right['subtitle']}
+                              </IonCardSubtitle>
+                            )}
+                            {right['title'] && (
+                              <IonCardTitle class="grid-med-title">
+                                {right['title']}
+                              </IonCardTitle>
+                            )}
+                          </IonCardHeader>
+                        )}
+                        {right['body'] && !right['title'] && (
                           <IonCardContent>{right['body']}</IonCardContent>
+                        )}
+                        {right['body'] && right['title'] && (
+                          <IonCardContent style={{ paddingTop: '0px' }}>
+                            {right['body']}
+                          </IonCardContent>
                         )}
                       </IonCard>
                     </IonCol>
@@ -135,8 +156,8 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
                 );
               }
             })}
-        </div>
+        </React.Fragment>
       )}
-    </div>
+    </React.Fragment>
   );
 }
