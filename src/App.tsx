@@ -38,6 +38,11 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import AppContext from './AppContext';
+
+import master from './Firebase';
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+
 import { Plugins } from '@capacitor/core';
 const { SplashScreen } = Plugins;
 
@@ -48,59 +53,62 @@ const App: React.FC = () => {
     window.screen.orientation.lock('portrait');
     console.log('ionViewDidEnter event fired');
   });
+  const [value, loading, error] = useDocumentDataOnce(master);
   return (
-    <IonApp>
-      <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet>
-            {/* Home */}
-            <Route path="/home" component={Home.Home} exact={true} />
-            <Route
-              path="/home/information"
-              component={Home.Information}
-              exact={true}
-            />
-            {/* Music */}
-            <Route path="/music" component={Music.Music} exact={true} />
-            {/* Food */}
-            <Route path="/food" component={Food.Food} exact={true} />
-            <Route path="/food/dining" component={Food.Dining} exact={true} />
-            {/* Maps */}
-            <Route path="/maps" component={Maps.Maps} exact={true} />
-            {/* Schedule */}
-            <Route
-              path="/schedule"
-              component={Schedule.Schedule}
-              exact={true}
-            />
-            {/* Entry Point */}
-            <Route
-              path="/"
-              render={() => <Redirect to="/home" />}
-              exact={true}
-            />
-          </IonRouterOutlet>
-          <IonTabBar slot="bottom" translucent>
-            <IonTabButton tab="music" href="/music">
-              <IonIcon icon={musicalNotes} />
-              {/* <IonLabel>Music</IonLabel> */}
-            </IonTabButton>
-            <IonTabButton tab="food" href="/food">
-              <IonIcon icon={restaurant} />
-            </IonTabButton>
-            <IonTabButton tab="home" href="/home">
-              <IonIcon icon={home} />
-            </IonTabButton>
-            <IonTabButton tab="schedule" href="/schedule">
-              <IonIcon icon={time} />
-            </IonTabButton>
-            <IonTabButton tab="maps" href="/maps">
-              <IonIcon icon={navigate} />
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      </IonReactRouter>
-    </IonApp>
+    <AppContext.Provider value={[value, loading, error]}>
+      <IonApp>
+        <IonReactRouter>
+          <IonTabs>
+            <IonRouterOutlet>
+              {/* Home */}
+              <Route path="/home" component={Home.Home} exact={true} />
+              <Route
+                path="/home/information"
+                component={Home.Information}
+                exact={true}
+              />
+              {/* Music */}
+              <Route path="/music" component={Music.Music} exact={true} />
+              {/* Food */}
+              <Route path="/food" component={Food.Food} exact={true} />
+              <Route path="/food/dining" component={Food.Dining} exact={true} />
+              {/* Maps */}
+              <Route path="/maps" component={Maps.Maps} exact={true} />
+              {/* Schedule */}
+              <Route
+                path="/schedule"
+                component={Schedule.Schedule}
+                exact={true}
+              />
+              {/* Entry Point */}
+              <Route
+                path="/"
+                render={() => <Redirect to="/home" />}
+                exact={true}
+              />
+            </IonRouterOutlet>
+            <IonTabBar slot="bottom" translucent>
+              <IonTabButton tab="music" href="/music">
+                <IonIcon icon={musicalNotes} />
+                {/* <IonLabel>Music</IonLabel> */}
+              </IonTabButton>
+              <IonTabButton tab="food" href="/food">
+                <IonIcon icon={restaurant} />
+              </IonTabButton>
+              <IonTabButton tab="home" href="/home">
+                <IonIcon icon={home} />
+              </IonTabButton>
+              <IonTabButton tab="schedule" href="/schedule">
+                <IonIcon icon={time} />
+              </IonTabButton>
+              <IonTabButton tab="maps" href="/maps">
+                <IonIcon icon={navigate} />
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        </IonReactRouter>
+      </IonApp>
+    </AppContext.Provider>
   );
 };
 
