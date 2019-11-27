@@ -8,13 +8,15 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonPopover,
   IonHeader,
   IonToolbar,
   IonTitle
 } from '@ionic/react';
-import React, { useState } from 'react';
-import MusicPopover from '../../components/musicpopover';
+import React from 'react';
+
+import grid from '../../utilities/grid';
+import master from '../../Firebase';
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 
 interface MusicProps {}
 
@@ -22,6 +24,7 @@ const Music: React.FC<MusicProps> = () => {
   // const [showPopover, setShowPopover] = useState(false);
   // const [popoverEvent, setPopoverEvent] = useState();
 
+  const [value, loading, error] = useDocumentDataOnce(master);
   return (
     <IonPage>
       <IonHeader translucent>
@@ -38,96 +41,14 @@ const Music: React.FC<MusicProps> = () => {
                 button
                 routerLink="/Food/details"
               >
-                <img src="/assets/shapes.svg" alt="" />
-                <IonCardHeader>
-                  <IonCardSubtitle>Headliner</IonCardSubtitle>
-                  <IonCardTitle> Artist 1</IonCardTitle>
-                </IonCardHeader>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard
-                class="grid-card card-white-header"
-                button
-                routerLink="/Food/details"
-              >
                 <IonCardHeader>
                   <IonCardSubtitle>request songs</IonCardSubtitle>
                   <IonCardTitle> Silent Disco</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
-              {/* <IonCard
-                className="grid-card"
-                color="dark"
-                button
-                onClick={presentPopover}
-              >
-                <img src="/assets/shapes.svg" alt="" />
-                <IonCardHeader>
-                  <IonCardSubtitle>Headliner</IonCardSubtitle>
-                  <IonCardTitle> Artist 1</IonCardTitle>
-                </IonCardHeader>
-              </IonCard> */}
             </IonCol>
           </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard class="grid-card card-white-header">
-                <img src="/assets/shapes.svg" alt="" />
-                <IonCardHeader>
-                  <IonCardTitle class="grid-med-title">Artist2</IonCardTitle>
-                </IonCardHeader>
-              </IonCard>
-            </IonCol>
-            <IonCol>
-              <IonCard class="grid-card card-white-header">
-                <img src="/assets/shapes.svg" alt="" />
-                <IonCardHeader>
-                  <IonCardTitle class="grid-med-title">
-                    A really long artist name
-                  </IonCardTitle>
-                </IonCardHeader>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard class="grid-card card-white-header">
-                <img src="/assets/shapes.svg" alt="" />
-                <IonCardHeader>
-                  <IonCardTitle class="grid-med-title">Artist3</IonCardTitle>
-                </IonCardHeader>
-              </IonCard>
-            </IonCol>
-            <IonCol>
-              <IonCard class="grid-card card-white-header">
-                <img src="/assets/shapes.svg" alt="" />
-                <IonCardHeader>
-                  <IonCardTitle class="grid-med-title">Artist 4</IonCardTitle>
-                </IonCardHeader>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard class="grid-card card-white-header">
-                <img src="/assets/shapes.svg" alt="" />
-                <IonCardHeader>
-                  <IonCardTitle class="grid-med-title">Artist 5</IonCardTitle>
-                </IonCardHeader>
-              </IonCard>
-            </IonCol>
-            <IonCol>
-              <IonCard class="grid-card card-white-header">
-                <img src="/assets/shapes.svg" alt="" />
-                <IonCardHeader>
-                  <IonCardTitle class="grid-med-title">Artist 6</IonCardTitle>
-                </IonCardHeader>
-              </IonCard>
-            </IonCol>
-          </IonRow>
+          {grid([value, loading, error], 'music')}
         </IonGrid>
       </IonContent>
       {/* <IonPopover
