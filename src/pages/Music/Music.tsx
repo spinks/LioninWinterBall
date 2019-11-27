@@ -15,16 +15,15 @@ import {
 import React from 'react';
 
 import grid from '../../utilities/grid';
-import master from '../../Firebase';
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import AppContext from '../../AppContext';
 
-interface MusicProps {}
+// interface MusicProps {}
 
-const Music: React.FC<MusicProps> = () => {
+const Music: React.FC = () => {
   // const [showPopover, setShowPopover] = useState(false);
   // const [popoverEvent, setPopoverEvent] = useState();
 
-  const [value, loading, error] = useDocumentDataOnce(master);
+  const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
       <IonHeader translucent>
@@ -48,7 +47,7 @@ const Music: React.FC<MusicProps> = () => {
               </IonCard>
             </IonCol>
           </IonRow>
-          {grid([value, loading, error], 'music')}
+          {grid(vle, 'music')}
         </IonGrid>
       </IonContent>
       {/* <IonPopover

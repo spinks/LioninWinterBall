@@ -107,23 +107,27 @@ Card fields:
 
 
 ##### Implementing
+
+In the [App.tsx](./src/App.tsx) the **master document reference** is read once, this is then stored in the app context, and passed to all children (`AppContext.Provider`), again minimising reads.
+
 Within a page component the following imports,
 
 ```tsx
+// grid utility
 import grid from '../../utilities/grid';
-import master from '../../Firebase';
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+// read in the app context document data
+import AppContext from '../../AppContext';
 ```
 
 And within the functional component, the following line
 
 ```tsx
-const [value, loading, error] = useDocumentDataOnce(master); 
+const vle = Object.values(React.useContext(AppContext));
 ```
 
 And then within an IonGrid, the following snippet
 
 ```tsx
-{grid([value, loading, error], 'music'}
+{grid(vle, 'music')}
 // where music is the ID of the top level map that you want to format
 ```
