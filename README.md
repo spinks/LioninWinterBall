@@ -131,3 +131,7 @@ And then within an IonGrid, the following snippet
 {grid(vle, 'music')}
 // where music is the ID of the top level map that you want to format
 ```
+
+
+## Additional Notes
+On routing, if using `router='somepage/subpage'` if the router value matches *exactly* the capitalisation of the route as declared in the IonRouterOutlet then it will stay on the subpage when swapping between tabs. If it is not exact (ie `router='Somepage/subpage`) the link will still work, and it will reset back to the parent tab page on going to a different tab and back. Pressing the tab icon for the parent page from within a subpage will always navigate you back to the parent page.
