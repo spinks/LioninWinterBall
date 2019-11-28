@@ -41,7 +41,7 @@ import './theme/variables.css';
 import AppContext from './AppContext';
 
 import master from './Firebase';
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { Plugins } from '@capacitor/core';
 const { SplashScreen } = Plugins;
@@ -53,7 +53,7 @@ const App: React.FC = () => {
     window.screen.orientation.lock('portrait');
     console.log('ionViewDidEnter event fired');
   });
-  const [value, loading, error] = useDocumentDataOnce(master);
+  const [value, loading, error] = useDocumentData(master);
   return (
     <AppContext.Provider value={[value, loading, error]}>
       <IonApp>
@@ -69,6 +69,7 @@ const App: React.FC = () => {
               />
               {/* Music */}
               <Route path="/music" component={Music.Music} exact={true} />
+              <Route path="/music/disco" component={Music.Disco} exact={true} />
               {/* Food */}
               <Route path="/food" component={Food.Food} exact={true} />
               <Route path="/food/dining" component={Food.Dining} exact={true} />
