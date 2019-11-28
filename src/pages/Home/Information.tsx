@@ -15,7 +15,7 @@ const Information: React.FC = () => {
           <IonTitle>Detail</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
         <p>Details</p>
       </IonContent>
     </IonPage>

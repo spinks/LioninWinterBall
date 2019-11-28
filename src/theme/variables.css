@@ -120,14 +120,15 @@ ion-list {
   --ion-item-background: transparent;
 }
 
-body {
+ion-app {
+  background: rgb(33, 94, 85);
+}
+
+ion-content {
   background-image: url('/assets/background2.png');
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
-}
-
-ion-content {
   --background: transparent;
 }
 

@@ -15,7 +15,7 @@ const Disco: React.FC = () => {
           <IonTitle>Silent Disco</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
         <p>Implement spotify API here</p>
       </IonContent>
     </IonPage>
