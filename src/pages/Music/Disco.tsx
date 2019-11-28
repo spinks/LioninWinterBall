@@ -7,19 +7,19 @@ import {
   IonContent
 } from '@ionic/react';
 
-const Information: React.FC = () => {
+const Disco: React.FC = () => {
   return (
     <IonPage>
       <IonHeader translucent>
         <IonToolbar>
-          <IonTitle>Detail</IonTitle>
+          <IonTitle>Silent Disco</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <p>Details</p>
+        <p>Implement spotify API here</p>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Information;
+export default Disco;

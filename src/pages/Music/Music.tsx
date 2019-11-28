@@ -38,7 +38,7 @@ const Music: React.FC = () => {
               <IonCard
                 class="grid-card card-white-header"
                 button
-                routerLink="/Food/details"
+                routerLink="/Music/disco"
               >
                 <IonCardHeader>
                   <IonCardSubtitle>request songs</IonCardSubtitle>

@@ -83,8 +83,9 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .grid-card img {
-  /* max-height: 10vh; */
+  max-height: 16vh;
   overflow: hidden;
+  object-fit: cover;
 }
 
 .grid-med-title {
