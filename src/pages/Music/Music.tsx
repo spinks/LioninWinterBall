@@ -42,7 +42,7 @@ const Music: React.FC = () => {
               >
                 <IonCardHeader>
                   <IonCardSubtitle>request songs</IonCardSubtitle>
-                  <IonCardTitle> Silent Disco</IonCardTitle>
+                  <IonCardTitle>Silent Disco</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
