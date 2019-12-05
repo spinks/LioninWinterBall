@@ -48,11 +48,6 @@ const { SplashScreen } = Plugins;
 
 const App: React.FC = () => {
   SplashScreen.hide();
-  useIonViewDidEnter(() => {
-    // does not seem to be working
-    window.screen.orientation.lock('portrait');
-    console.log('ionViewDidEnter event fired');
-  });
   const [value, loading, error] = useDocumentData(master);
   return (
     <AppContext.Provider value={[value, loading, error]}>
