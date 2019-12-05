@@ -10,6 +10,8 @@ import {
   IonCardSubtitle
 } from '@ionic/react';
 
+import NotifyChip from './notify';
+
 /**
  * Generate an Ionic Card grid array from Firebase Array (map) for a certiain page
  * @param {Array} VLEArray The firestore loading array
@@ -78,6 +80,7 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
                             {item['body']}
                           </IonCardContent>
                         )}
+                        {item['notify'] && <NotifyChip {...item['notify']} />}
                       </IonCard>
                     </IonCol>
                   </IonRow>
@@ -118,6 +121,7 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
                             {left['body']}
                           </IonCardContent>
                         )}
+                        {left['notify'] && <NotifyChip {...left['notify']} />}
                       </IonCard>
                     </IonCol>
                     <IonCol>
@@ -150,6 +154,7 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
                             {right['body']}
                           </IonCardContent>
                         )}
+                        {right['notify'] && <NotifyChip {...right['notify']} />}
                       </IonCard>
                     </IonCol>
                   </IonRow>
