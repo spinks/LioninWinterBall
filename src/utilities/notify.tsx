@@ -49,7 +49,7 @@ function notify(notificationContent: NProps) {
   });
 }
 
-interface NProps {
+export interface NProps {
   id: number;
   title: string;
   body: string;

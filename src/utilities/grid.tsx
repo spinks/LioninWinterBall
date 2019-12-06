@@ -1,16 +1,13 @@
 import React from 'react';
 import {
   IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonCardContent,
   IonRow,
   IonCol,
-  IonSpinner,
-  IonCardSubtitle
+  IonSpinner
 } from '@ionic/react';
 
-import NotifyChip from './notify';
+import GridCard from './card';
 
 /**
  * Generate an Ionic Card grid array from Firebase Array (map) for a certiain page
@@ -53,109 +50,20 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
                 return (
                   <IonRow key={key}>
                     <IonCol>
-                      <IonCard
-                        class="grid-card card-white-header"
-                        button={item['router'] || item['href']}
-                        routerLink={item['router']}
-                        href={item['href']}
-                      >
-                        {item['img'] && <img src={item['img']} alt="" />}
-                        {(item['title'] || item['subtitle']) && (
-                          <IonCardHeader>
-                            {item['subtitle'] && (
-                              <IonCardSubtitle>
-                                {item['subtitle']}
-                              </IonCardSubtitle>
-                            )}
-                            {item['title'] && (
-                              <IonCardTitle>{item['title']}</IonCardTitle>
-                            )}
-                          </IonCardHeader>
-                        )}
-                        {item['body'] && !item['title'] && (
-                          <IonCardContent>{item['body']}</IonCardContent>
-                        )}
-                        {item['body'] && item['title'] && (
-                          <IonCardContent style={{ paddingTop: '0px' }}>
-                            {item['body']}
-                          </IonCardContent>
-                        )}
-                        {item['notify'] && <NotifyChip {...item['notify']} />}
-                      </IonCard>
+                      <GridCard {...item} />
                     </IonCol>
                   </IonRow>
                 );
               } else {
                 // item is 2 cards for the row
-                const left = item['0'];
-                const right = item['1'];
+                // 0 is left 1 is right
                 return (
                   <IonRow key={key}>
                     <IonCol>
-                      <IonCard
-                        class="grid-card card-white-header"
-                        button={left['router'] || left['href']}
-                        routerLink={left['router']}
-                        href={left['href']}
-                      >
-                        {left['img'] && <img src={left['img']} alt="" />}
-                        {(left['title'] || left['subtitle']) && (
-                          <IonCardHeader>
-                            {left['subtitle'] && (
-                              <IonCardSubtitle>
-                                {left['subtitle']}
-                              </IonCardSubtitle>
-                            )}
-                            {left['title'] && (
-                              <IonCardTitle class="grid-med-title">
-                                {left['title']}
-                              </IonCardTitle>
-                            )}
-                          </IonCardHeader>
-                        )}
-                        {left['body'] && !left['title'] && (
-                          <IonCardContent>{left['body']}</IonCardContent>
-                        )}
-                        {left['body'] && left['title'] && (
-                          <IonCardContent style={{ paddingTop: '0px' }}>
-                            {left['body']}
-                          </IonCardContent>
-                        )}
-                        {left['notify'] && <NotifyChip {...left['notify']} />}
-                      </IonCard>
+                      <GridCard {...item['0']} />
                     </IonCol>
                     <IonCol>
-                      <IonCard
-                        class="grid-card card-white-header"
-                        button={right['router'] || right['href']}
-                        routerLink={right['router']}
-                        href={right['href']}
-                      >
-                        {right['img'] && <img src={right['img']} alt="" />}
-                        {(right['title'] || right['subtitle']) && (
-                          <IonCardHeader>
-                            {right['subtitle'] && (
-                              <IonCardSubtitle>
-                                {right['subtitle']}
-                              </IonCardSubtitle>
-                            )}
-                            {right['title'] && (
-                              <IonCardTitle class="grid-med-title">
-                                {right['title']}
-                              </IonCardTitle>
-                            )}
-                          </IonCardHeader>
-                        )}
-                        {right['body'] && !right['title'] && (
-                          <IonCardContent>{right['body']}</IonCardContent>
-                        )}
-                        {right['body'] && right['title'] && (
-                          <IonCardContent style={{ paddingTop: '0px' }}>
-                            {right['body']}
-                          </IonCardContent>
-                        )}
-                        {right['notify'] && <NotifyChip {...right['notify']} />}
-                      </IonCard>
+                      <GridCard {...item['1']} />
                     </IonCol>
                   </IonRow>
                 );
