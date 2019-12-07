@@ -62,6 +62,11 @@ const App: React.FC = () => {
                 component={Home.Information}
                 exact={true}
               />
+              <Route
+                path="/home/sponsors"
+                component={Home.Sponsors}
+                exact={true}
+              />
               {/* Music */}
               <Route path="/music" component={Music.Music} exact={true} />
               <Route path="/music/disco" component={Music.Disco} exact={true} />
