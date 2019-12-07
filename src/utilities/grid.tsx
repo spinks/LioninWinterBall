@@ -57,6 +57,8 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
               } else {
                 // item is 2 cards for the row
                 // 0 is left 1 is right
+                item['0']['smallTitle'] = true;
+                item['1']['smallTitle'] = true;
                 return (
                   <IonRow key={key}>
                     <IonCol>

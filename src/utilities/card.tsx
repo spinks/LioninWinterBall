@@ -18,6 +18,7 @@ interface GCProps {
   router?: string;
   href?: string;
   notify?: NProps;
+  smallTitle?: Boolean;
 }
 
 const GridCard: React.FC<GCProps> = props => {
@@ -42,7 +43,11 @@ const GridCard: React.FC<GCProps> = props => {
             {item['subtitle'] && (
               <IonCardSubtitle>{item['subtitle']}</IonCardSubtitle>
             )}
-            {item['title'] && <IonCardTitle>{item['title']}</IonCardTitle>}
+            {item['title'] && (
+              <IonCardTitle class={item['smallTitle'] ? 'grid-med-title' : ''}>
+                {item['title']}
+              </IonCardTitle>
+            )}
           </IonCardHeader>
         )}
         {item['body'] && !item['title'] && (
@@ -57,6 +62,10 @@ const GridCard: React.FC<GCProps> = props => {
       </IonCard>
     </React.Fragment>
   );
+};
+
+GridCard.defaultProps = {
+  smallTitle: false
 };
 
 export default GridCard;
