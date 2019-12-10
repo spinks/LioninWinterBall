@@ -26,3 +26,5 @@ liwb.code-workspace
 
 # Firebase config keys
 /src/FirebaseConfig.tsx
+# Spotify config keys
+/src/SpotifyConfig.tsx
