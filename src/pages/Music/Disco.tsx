@@ -21,8 +21,6 @@ import { Plugins, KeyboardResize } from '@capacitor/core';
 const { Keyboard } = Plugins;
 Keyboard.setResizeMode({ mode: KeyboardResize.Ionic });
 
-declare let cordova: any;
-
 const options = {
   method: 'post',
   data: { grant_type: 'client_credentials' },
@@ -36,24 +34,43 @@ let token = '';
  * Gets spotify acess token
  */
 function getToken() {
-  cordova.plugin.http.sendRequest(
-    'https://accounts.spotify.com/api/token',
-    options,
-    function(response: any) {
-      // prints 200
-      response.data = JSON.parse(response.data);
-      console.log(response.data, Object.keys(response.data));
-      console.log(response.data.access_token);
-      token = response.data.access_token;
-    },
-    function(response: any) {
-      // prints 403
-      console.log(response.status);
+  // cordova.plugin.http.sendRequest(
+  //   'https://accounts.spotify.com/api/token',
+  //   options,
+  //   function(response: any) {
+  //     // prints 200
+  //     response.data = JSON.parse(response.data);
+  //     console.log(response.data, Object.keys(response.data));
+  //     console.log(response.data.access_token);
+  //     token = response.data.access_token;
+  //   },
+  //   function(response: any) {
+  //     // prints 403
+  //     console.log(response.status);
 
-      // prints Permission denied
-      console.log(response.error);
+  //     // prints Permission denied
+  //     console.log(response.error);
+  //   }
+  // );
+  fetch(
+    'https://cors-anywhere.herokuapp.com/' +
+      'https://accounts.spotify.com/api/token',
+    {
+      method: 'POST',
+      headers: {
+        Authorization:
+          'Basic ' + btoa(config.clientId + ':' + config.clientSecret),
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body:
+        encodeURIComponent('grant_type') +
+        '=' +
+        encodeURIComponent('client_credentials')
     }
-  );
+  ).then(r => {
+    console.log('test', r, r.status, r.body);
+    r.text().then(s => (token = JSON.parse(s).access_token));
+  });
 }
 getToken();
 

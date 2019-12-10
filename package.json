@@ -13,8 +13,6 @@
     "@types/react-dom": "^16.9.1",
     "@types/react-router": "^5.1.1",
     "@types/react-router-dom": "^5.1.0",
-    "cordova-plugin-advanced-http": "^2.3.0",
-    "cordova-plugin-file": "^6.0.2",
     "firebase": "^7.5.0",
     "ionicons": "^4.6.3",
     "react": "^16.10.2",
@@ -23,7 +21,7 @@
     "react-firebase-hooks": "^2.1.1",
     "react-router": "^5.1.0",
     "react-router-dom": "^5.1.0",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.3.0",
     "react-spotify-api": "^2.4.0",
     "typescript": "3.6.3"
   },
