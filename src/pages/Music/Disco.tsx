@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   IonHeader,
   IonPage,
@@ -10,30 +10,39 @@ import {
   IonLabel,
   IonCard,
   IonInput,
-  IonCardContent
+  IonCardContent,
+  IonCardSubtitle,
+  IonIcon,
+  IonCardHeader,
+  IonCardTitle,
+  IonAlert
 } from '@ionic/react';
 
 // @ts-ignore
 import { SpotifyApiContext, Search } from 'react-spotify-api';
 import config from '../../SpotifyConfig';
 
-import { Plugins, KeyboardResize } from '@capacitor/core';
-const { Keyboard } = Plugins;
-Keyboard.setResizeMode({ mode: KeyboardResize.Ionic });
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
-const options = {
-  method: 'post',
-  data: { grant_type: 'client_credentials' },
-  headers: {
-    Authorization: 'Basic ' + btoa(config.clientId + ':' + config.clientSecret)
-  }
-};
+import { Plugins, KeyboardResize } from '@capacitor/core';
+import { add } from 'ionicons/icons';
+const { Keyboard, Storage } = Plugins;
+Keyboard.setResizeMode({ mode: KeyboardResize.Ionic });
 
 let token = '';
 /**
  * Gets spotify acess token
  */
 function getToken() {
+  // const options = {
+  //   method: 'post',
+  //   data: { grant_type: 'client_credentials' },
+  //   headers: {
+  //     Authorization: 'Basic ' + btoa(config.clientId + ':' + config.clientSecret)
+  //   }
+  // };
   // cordova.plugin.http.sendRequest(
   //   'https://accounts.spotify.com/api/token',
   //   options,
@@ -74,8 +83,48 @@ function getToken() {
 }
 getToken();
 
+/**
+ * Saves selected tract to storage and FS
+ * @param {any} trackInfo
+ */
+async function saveTrack(trackInfo: any) {
+  await Storage.set({
+    key: 'savedTrack',
+    value: JSON.stringify(trackInfo)
+  });
+  if (firebase.auth().currentUser) {
+    firebase
+      .firestore()
+      .collection('songs')
+      .doc(firebase.auth().currentUser!.uid)
+      .set({
+        name: trackInfo.name,
+        artist: trackInfo.artists[0].name,
+        url: trackInfo.external_urls.spotify
+      });
+  }
+}
+
+let loadedTrack: any = {};
+/**
+ * Saves selected tract to storage and FS
+ * @return {any} trackInfo or null if not found
+ */
+function getTrack(): any {
+  const r = Storage.get({ key: 'savedTrack' }).then(ret => {
+    loadedTrack = JSON.parse(ret.value || '{}');
+  });
+  console.log(r);
+  return r;
+}
+getTrack();
+
 const Disco: React.FC = () => {
   const [search, setSearch] = useState('');
+  const [savedTrack, setSavedTrack] = useState(loadedTrack);
+  const [choiceTrack, setChoiceTrack] = useState(loadedTrack);
+  const [showAlert, setShowAlert] = useState(false);
+
   return (
     <IonPage>
       <IonHeader translucent>
@@ -100,8 +149,7 @@ const Disco: React.FC = () => {
               inputmode="search"
               type="search"
               onKeyPress={e => {
-                console.log(e.key);
-                if (e.key == 'Enter') {
+                if (e.key === 'Enter') {
                   Keyboard.hide();
                   // console.log(e.currentTarget.innerHTML);
                   console.log(document.activeElement);
@@ -117,9 +165,41 @@ const Disco: React.FC = () => {
             ></IonInput>
           </IonCardContent>
         </IonCard>
-        <SpotifyApiContext.Provider value={token}>
-          {search && (
-            <Search query={search} track>
+        {search === '' && savedTrack['name'] && (
+          <IonCard
+            class="card-white-header"
+            style={{ margin: '5px 6px 5px 6px' }}
+          >
+            <IonCardHeader>
+              <IonCardSubtitle>Currently selected song</IonCardSubtitle>
+              <IonCardTitle>
+                {savedTrack['name'] + '     '}
+                <h5 style={{ display: 'inline' }}>
+                  {savedTrack['artists'][0]['name']}
+                </h5>
+              </IonCardTitle>
+            </IonCardHeader>
+            <img
+              src={savedTrack['album']['images'][0]['url']}
+              alt="album artwork"
+            />
+          </IonCard>
+        )}
+        {search === '' && !savedTrack['name'] && (
+          <IonCard
+            class="card-white-header"
+            style={{ margin: '5px 6px 5px 6px' }}
+          >
+            <IonCardHeader>
+              <IonCardSubtitle>
+                No song currently selected, search
+              </IonCardSubtitle>
+            </IonCardHeader>
+          </IonCard>
+        )}
+        {search && (
+          <SpotifyApiContext.Provider value={token}>
+            <Search query={search} track options={{ limit: 10 }}>
               {(data: any, loading: any, error: any) => (
                 <React.Fragment>
                   {error && <h1>{JSON.stringify(error)}</h1>}
@@ -142,6 +222,14 @@ const Disco: React.FC = () => {
                               <h3>{track.name}</h3>
                               <p>{track.artists[0].name}</p>
                             </IonLabel>
+                            <IonIcon
+                              icon={add}
+                              slot="end"
+                              onClick={() => {
+                                setChoiceTrack(track);
+                                setShowAlert(true);
+                              }}
+                            />
                           </IonItem>
                         </IonCard>
                       ))}
@@ -150,8 +238,32 @@ const Disco: React.FC = () => {
                 </React.Fragment>
               )}
             </Search>
-          )}
-        </SpotifyApiContext.Provider>
+          </SpotifyApiContext.Provider>
+        )}
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={'Confirm song choice?'}
+          message={
+            'Select <b>' + choiceTrack.name + '</b> for the silent disco'
+          }
+          buttons={[
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: () => {}
+            },
+            {
+              text: 'Confirm',
+              handler: () => {
+                setSavedTrack(choiceTrack);
+                saveTrack(choiceTrack);
+                setSearch('');
+              }
+            }
+          ]}
+        />
       </IonContent>
     </IonPage>
   );

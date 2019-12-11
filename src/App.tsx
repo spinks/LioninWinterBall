@@ -40,7 +40,7 @@ import './theme/variables.css';
 
 import AppContext from './AppContext';
 
-import master from './Firebase';
+import masterFire from './Firebase';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { Plugins } from '@capacitor/core';
@@ -48,7 +48,7 @@ const { SplashScreen } = Plugins;
 
 const App: React.FC = () => {
   SplashScreen.hide();
-  const [value, loading, error] = useDocumentData(master);
+  const [value, loading, error] = useDocumentData(masterFire);
   return (
     <AppContext.Provider value={[value, loading, error]}>
       <IonApp>

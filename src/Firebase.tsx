@@ -1,6 +1,7 @@
 // import firebase from 'firebase';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 import config from './FirebaseConfig';
 
 firebase.initializeApp(config);
@@ -10,9 +11,34 @@ firebase.firestore().enablePersistence();
 // data in one document 'master/liwb' and read here
 // exporting the document data for the rest of the app
 // we should stay under the 20,000 item limit for firestore documents given the relatively minimal amount of conent
-const master: any = firebase
+const masterFire: any = firebase
   .firestore()
   .collection('master')
   .doc('liwb');
 
-export default master;
+export default masterFire;
+
+firebase
+  .auth()
+  .signInAnonymously()
+  .catch(function(error) {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode, errorMessage);
+    // ...
+  });
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    // const isAnonymous = user.isAnonymous;
+    const uid = user.uid;
+    console.log(uid);
+    // ...
+  } else {
+    // User is signed out.
+    // ...
+  }
+  // ...
+});
