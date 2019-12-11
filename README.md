@@ -39,7 +39,7 @@ npx cap open ios
 npx cap open android
 ```
 
-To update these builds (for testing for example) you will need to again build the ionic app with `ionic build` and sync with `npx cap sync`.
+To update these builds (for testing for example) you will need to again build the ionic app with `ionic build` and sync with `npx cap sync` (or just `npx cap copy` for non-package changes).
 
 You may want to lock the screen orientation of your app, this is best done in the dedicated development studios, for instance the screen orientation options within Xcode when deploying.
 
@@ -64,14 +64,27 @@ The implementation of the Firebase Firestore Content Management System, as found
 
 After creating a Firebase project you want to initialise the Firestore database; from the console's navigation pane, select Database, then click Create database for Cloud Firestore (for location pick the most sensible server).
 
-After this within the [FirebaseConfig.tsx](./src/FirebaseConfig.tsx) file in `src` you need to update the config object. This is done as follows (copied from Firestore documentation):
+After this within a `FirebaseConfig.tsx` file in the `src` folder, you need to update the config object. This is done as follows (copied from Firestore documentation):
 
 1. Sign in to Firebase, then open your project.
 2. Click the Settings icon, then select Project settings.
 3. In the Your apps card, select the nickname of the app for which you need a config object.
 	- If not yet configured create a **web** app.
 4. Select Config from the Firebase SDK snippet pane.
-5. Copy the config object snippet, then add it to your app (replacing the template values on the default export object.)
+5. Copy the config object snippet, then add it to your app (example FirebaseConfig file shown below.)
+
+```tsx
+export default {
+  apiKey: '',
+  authDomain: '',
+  databaseURL: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: '',
+  measurementId: ''
+};
+```
 
 #### One Document
 This portion is rather implementation specific, but we found it best fitted our needs for the ball. As Firebase charges per document read it is optimal to minimise these, so as to stay under the free plans limit of 50,000 reads per day. The way this is done is by simply having *maps* all under one master document. Maps are essentially JSON objects and allow nesting any other number of maps beneath them. The limit to this is that there is a maximum of 20,000 *ID's* per document, and that it is less efficient to read the whole document, however, for the purposes of a ball app, the possibility that you exceed 20,000 ids, or need to perform very frequent updates (which would need efficient reading) is low (if you want to learn more see [maps, arrays, subcollections](https://youtu.be/o7d5Zeic63s) and [firestore pricing](https://youtu.be/6NegFl9p_sE).)
@@ -87,6 +100,8 @@ Here is a walkthrough (as implemented) of using the IonGrid->IonCard structure w
 
 ##### Document
 At the top level of the document you should have maps, with their IDs as the page (or content group) names. For example we have map IDs `music, food, maps, schedule` and so on.
+
+You should also have a string called `visibility` set to `public` (this is for the rules if you copy the format seen later in the silent disco section)
 
 If you then want this page (content) to be formatted into a grid of cards (and make use of the grid utility) the second level (within each page map) should be maps with numbers as IDs, `"0"`, `"1"`, and so on, these represent the rows of the grid.
 
@@ -156,6 +171,39 @@ The notifier chips can also be implemented on static cards with:
 	}}
 />
 ```
+
+## Silent Disco
+*foreword* The song request system has been built with the premise that each user gets one song request, this can be changed although with some effort.
+
+The system uses the Spotify API to search songs, with those choices being published to a firebase collection.
+
+To set up this system for use there are a few components which need to be configured.
+
+**Spotify Api** - you need to create a new app on the Spotify developer portal, take the clientID and clientSecret and export them as an object from a `SpotifyConfig.tsx` file in the `src` directory. A sample of this file is shown below:
+
+```tsx
+export default {
+  clientId: '',
+  clientSecret: ''
+};
+```
+
+**Firebase Firestore** - you need to:
+1. On the console goto auth, enable anonymous authentication
+2. Create a `songs` collection
+3. Set up write rules, your database rules file should look something like:
+
+```
+match /databases/{database}/documents {
+	service cloud.firestore {
+		match /databases/{database}/documents {
+	    match /{document=**} {	 allow read: if (resource.data.visibility == 'public') && (request.auth.uid != null) }
+	    match /songs/{userId} { allow write, update, create: if request.auth.uid == userId}
+	  }
+	}
+}
+```
+
 
 ## Additional Notes
 On routing, if using `router='somepage/subpage'` if the router value matches *exactly* the capitalisation of the route as declared in the IonRouterOutlet then it will stay on the subpage when swapping between tabs. If it is not exact (ie `router='Somepage/subpage`) the link will still work, and it will reset back to the parent tab page on going to a different tab and back. Pressing the tab icon for the parent page from within a subpage will always navigate you back to the parent page.
