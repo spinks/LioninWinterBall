@@ -22,9 +22,7 @@ import {
 import { SpotifyApiContext, Search } from 'react-spotify-api';
 import config from '../../SpotifyConfig';
 
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import fb from '../../Firebase';
 
 import { Plugins, KeyboardResize } from '@capacitor/core';
 import { add } from 'ionicons/icons';
@@ -92,11 +90,10 @@ async function saveTrack(trackInfo: any) {
     key: 'savedTrack',
     value: JSON.stringify(trackInfo)
   });
-  if (firebase.auth().currentUser) {
-    firebase
-      .firestore()
+  if (fb.auth().currentUser) {
+    fb.firestore()
       .collection('songs')
-      .doc(firebase.auth().currentUser!.uid)
+      .doc(fb.auth().currentUser!.uid)
       .set({
         name: trackInfo.name,
         artist: trackInfo.artists[0].name,
