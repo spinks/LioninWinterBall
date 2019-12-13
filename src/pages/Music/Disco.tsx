@@ -86,7 +86,7 @@ getToken();
  * @param {any} trackInfo
  */
 async function saveTrack(trackInfo: any) {
-  await Storage.set({
+  Storage.set({
     key: 'savedTrack',
     value: JSON.stringify(trackInfo)
   });
@@ -104,15 +104,12 @@ async function saveTrack(trackInfo: any) {
 
 let loadedTrack: any = {};
 /**
- * Saves selected tract to storage and FS
- * @return {any} trackInfo or null if not found
+ * Sets global constant to stored track
  */
-function getTrack(): any {
-  const r = Storage.get({ key: 'savedTrack' }).then(ret => {
+async function getTrack() {
+  await Storage.get({ key: 'savedTrack' }).then(ret => {
     loadedTrack = JSON.parse(ret.value || '{}');
   });
-  console.log(r);
-  return r;
 }
 getTrack();
 
@@ -209,12 +206,20 @@ const Disco: React.FC = () => {
                           style={{ margin: '5px 6px 5px 6px' }}
                         >
                           <IonItem>
-                            <IonThumbnail slot="start">
-                              <img
-                                src={track.album.images[2].url}
-                                alt="album artwork"
-                              />
-                            </IonThumbnail>
+                            {track.album.images[
+                              track.album.images.length - 1
+                            ] && (
+                              <IonThumbnail slot="start">
+                                <img
+                                  src={
+                                    track.album.images[
+                                      track.album.images.length - 1
+                                    ].url
+                                  }
+                                  alt="album artwork"
+                                />
+                              </IonThumbnail>
+                            )}
                             <IonLabel>
                               <h3>{track.name}</h3>
                               <p>{track.artists[0].name}</p>
@@ -256,6 +261,7 @@ const Disco: React.FC = () => {
               handler: () => {
                 setSavedTrack(choiceTrack);
                 saveTrack(choiceTrack);
+                loadedTrack = choiceTrack;
                 setSearch('');
               }
             }
