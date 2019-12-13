@@ -70,7 +70,8 @@ const NotifyChip: React.FC<NProps> = props => {
           zIndex: 2,
           top: '1px',
           right: '1px',
-          background: 'rgba(255, 255, 255, 0.85)'
+          opacity: '0.9',
+          background: 'var(--ion-color-light)'
         }}
         color={notifyOn ? 'primary' : 'dark'}
         onClick={() => {

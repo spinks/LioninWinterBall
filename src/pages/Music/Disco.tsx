@@ -134,7 +134,7 @@ const Disco: React.FC = () => {
         <IonCard
           class="card-white-header"
           style={{ margin: '5px 6px 5px 6px' }}
-          id="carder"
+          color="light"
         >
           <IonCardContent style={{ paddingTop: '0px', paddingBottom: '0px' }}>
             <IonInput
@@ -163,6 +163,7 @@ const Disco: React.FC = () => {
           <IonCard
             class="card-white-header"
             style={{ margin: '5px 6px 5px 6px' }}
+            color="light"
           >
             <IonCardHeader>
               <IonCardSubtitle>Currently selected song</IonCardSubtitle>
@@ -182,6 +183,7 @@ const Disco: React.FC = () => {
         {search === '' && !savedTrack['name'] && (
           <IonCard
             class="card-white-header"
+            color="light"
             style={{ margin: '5px 6px 5px 6px' }}
           >
             <IonCardHeader>

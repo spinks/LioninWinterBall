@@ -70,7 +70,7 @@ const Home: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        <IonCard class="card-white-header">
+        <IonCard class="card-white-header" color="light">
           {/* <img src="/assets/lions/lion_background.jpg" alt="" /> */}
           <IonCardHeader>
             <IonCardSubtitle>Take me to ...</IonCardSubtitle>
@@ -84,7 +84,7 @@ const Home: React.FC = () => {
           </IonCardContent>
         </IonCard>
 
-        <IonCard class="card-white-header">
+        <IonCard class="card-white-header" color="light">
           <IonCardContent class="ion-no-padding">
             <IonList>
               <IonListHeader>
@@ -125,7 +125,7 @@ const Home: React.FC = () => {
         </IonCard>
         <IonRow>
           <IonCol class="ion-text-center ">
-            <IonText color="light" class="font-small">
+            <IonText color="ion-primary-light" class="font-small">
               App by Ben Spinks
             </IonText>
           </IonCol>

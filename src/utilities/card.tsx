@@ -33,6 +33,7 @@ const GridCard: React.FC<GCProps> = props => {
     <React.Fragment>
       <IonCard
         class="grid-card card-white-header"
+        color="light"
         button={'router' in item || 'href' in item}
         routerLink={item['router']}
         href={item['href']}
