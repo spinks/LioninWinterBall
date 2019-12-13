@@ -23,8 +23,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 liwb.code-workspace
-
-# Firebase config keys
-/src/FirebaseConfig.tsx
-# Spotify config keys
-/src/SpotifyConfig.tsx

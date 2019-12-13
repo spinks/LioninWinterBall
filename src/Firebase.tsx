@@ -11,10 +11,6 @@ fb.firestore().enablePersistence();
 // data in one document 'master/liwb' and read here
 // exporting the document data for the rest of the app
 // we should stay under the 20,000 item limit for firestore documents given the relatively minimal amount of conent
-// const masterFire: any = fb
-//   .firestore()
-//   .collection('master')
-//   .doc('liwb');
 
 fb.auth()
   .signInAnonymously()
@@ -29,18 +25,18 @@ fb.auth()
     // ...
   });
 
-fb.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    // const isAnonymous = user.isAnonymous;
-    const uid = user.uid;
-    console.log(uid);
-    // ...
-  } else {
-    // User is signed out.
-    // ...
-  }
-  // ...
-});
+// fb.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     // User is signed in.
+//     // const isAnonymous = user.isAnonymous;
+//     const uid = user.uid;
+//     console.log(uid);
+//     // ...
+//   } else {
+//     // User is signed out.
+//     // ...
+//   }
+//   // ...
+// });
 
 export default fb;

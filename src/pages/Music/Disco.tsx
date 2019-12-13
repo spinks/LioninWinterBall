@@ -17,15 +17,15 @@ import {
   IonCardTitle,
   IonAlert
 } from '@ionic/react';
+import { add } from 'ionicons/icons';
 
 // @ts-ignore
 import { SpotifyApiContext, Search } from 'react-spotify-api';
-import config from '../../SpotifyConfig';
 
 import fb from '../../Firebase';
+import spotifyKeys from '../../SpotifyConfig';
 
 import { Plugins, KeyboardResize } from '@capacitor/core';
-import { add } from 'ionicons/icons';
 const { Keyboard, Storage } = Plugins;
 Keyboard.setResizeMode({ mode: KeyboardResize.Ionic });
 
@@ -66,7 +66,8 @@ function getToken() {
       method: 'POST',
       headers: {
         Authorization:
-          'Basic ' + btoa(config.clientId + ':' + config.clientSecret),
+          'Basic ' +
+          btoa(spotifyKeys.clientId + ':' + spotifyKeys.clientSecret),
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body:
@@ -196,51 +197,63 @@ const Disco: React.FC = () => {
         {search && (
           <SpotifyApiContext.Provider value={token}>
             <Search query={search} track options={{ limit: 10 }}>
-              {(data: any, loading: any, error: any) => (
-                <React.Fragment>
-                  {error && <h1>{JSON.stringify(error)}</h1>}
-                  {data && (
+              {(data: any, loading: any, error: any) => {
+                if (error) {
+                  if (error.status === 401) {
+                    getToken();
+                    return <React.Fragment />;
+                  }
+                  return (
                     <React.Fragment>
-                      {data.tracks.items.map((track: any) => (
-                        <IonCard
-                          class="card-white-header"
-                          key={track.id}
-                          style={{ margin: '5px 6px 5px 6px' }}
-                        >
-                          <IonItem>
-                            {track.album.images[
-                              track.album.images.length - 1
-                            ] && (
-                              <IonThumbnail slot="start">
-                                <img
-                                  src={
-                                    track.album.images[
-                                      track.album.images.length - 1
-                                    ].url
-                                  }
-                                  alt="album artwork"
-                                />
-                              </IonThumbnail>
-                            )}
-                            <IonLabel>
-                              <h3>{track.name}</h3>
-                              <p>{track.artists[0].name}</p>
-                            </IonLabel>
-                            <IonIcon
-                              icon={add}
-                              slot="end"
-                              onClick={() => {
-                                setChoiceTrack(track);
-                                setShowAlert(true);
-                              }}
-                            />
-                          </IonItem>
-                        </IonCard>
-                      ))}
+                      {error && <h1>{JSON.stringify(error)}</h1>}
                     </React.Fragment>
-                  )}
-                </React.Fragment>
-              )}
+                  );
+                }
+                return (
+                  <React.Fragment>
+                    {data && (
+                      <React.Fragment>
+                        {data.tracks.items.map((track: any) => (
+                          <IonCard
+                            class="card-white-header"
+                            key={track.id}
+                            style={{ margin: '5px 6px 5px 6px' }}
+                          >
+                            <IonItem>
+                              {track.album.images[
+                                track.album.images.length - 1
+                              ] && (
+                                <IonThumbnail slot="start">
+                                  <img
+                                    src={
+                                      track.album.images[
+                                        track.album.images.length - 1
+                                      ].url
+                                    }
+                                    alt="album artwork"
+                                  />
+                                </IonThumbnail>
+                              )}
+                              <IonLabel>
+                                <h3>{track.name}</h3>
+                                <p>{track.artists[0].name}</p>
+                              </IonLabel>
+                              <IonIcon
+                                icon={add}
+                                slot="end"
+                                onClick={() => {
+                                  setChoiceTrack(track);
+                                  setShowAlert(true);
+                                }}
+                              />
+                            </IonItem>
+                          </IonCard>
+                        ))}
+                      </React.Fragment>
+                    )}
+                  </React.Fragment>
+                );
+              }}
             </Search>
           </SpotifyApiContext.Provider>
         )}
