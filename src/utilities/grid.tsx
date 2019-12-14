@@ -22,7 +22,7 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
       {error && (
         <IonRow>
           <IonCol>
-            <IonCard class="grid-card card-white-header">
+            <IonCard class="grid-card card-white-header" color="light">
               <IonCardContent>Error: {JSON.stringify(error)}</IonCardContent>
             </IonCard>
           </IonCol>
@@ -31,7 +31,7 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
       {loading && (
         <IonRow>
           <IonCol>
-            <IonCard class="grid-card card-white-header">
+            <IonCard class="grid-card card-white-header" color="light">
               <IonCardContent class="ion-text-center">
                 <IonSpinner />
               </IonCardContent>

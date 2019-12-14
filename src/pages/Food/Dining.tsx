@@ -20,7 +20,7 @@ const FoodDining: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         {/* <IonImg src="/assets/map.png"></IonImg> */}
-        <IonCard class="card-white-header">
+        <IonCard class="card-white-header" color="light">
           <IonCardHeader>
             <IonCardTitle>Main</IonCardTitle>
           </IonCardHeader>
