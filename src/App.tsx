@@ -79,8 +79,8 @@ const App: React.FC = () => {
               {/* Home */}
               <Route path="/home" component={Home.Home} exact={true} />
               <Route
-                path="/home/information"
-                component={Home.Information}
+                path="/home/ballInformation"
+                component={Home.BallInformation}
                 exact={true}
               />
               <Route

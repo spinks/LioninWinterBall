@@ -19,7 +19,12 @@ import {
   IonText,
   IonCol
 } from '@ionic/react';
-import { colorFill, logoInstagram, logoFacebook, star } from 'ionicons/icons';
+import {
+  logoInstagram,
+  logoFacebook,
+  star,
+  informationCircleOutline
+} from 'ionicons/icons';
 import React from 'react';
 import Countdown from 'react-countdown-now';
 
@@ -114,11 +119,15 @@ const Home: React.FC = () => {
               </IonItem>
 
               <IonListHeader>
-                <IonLabel>Quick Links</IonLabel>
-              </IonListHeader>
-              <IonItem routerLink="/Home/Information">
-                <IonIcon slot="start" color="medium" icon={colorFill} />
                 <IonLabel>Information</IonLabel>
+              </IonListHeader>
+              <IonItem routerLink="/Home/BallInformation">
+                <IonIcon
+                  slot="start"
+                  color="medium"
+                  icon={informationCircleOutline}
+                />
+                <IonLabel>Ball Information and Help</IonLabel>
               </IonItem>
             </IonList>
           </IonCardContent>
