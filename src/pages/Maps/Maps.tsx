@@ -9,6 +9,7 @@ import {
   IonTitle
 } from '@ionic/react';
 import React from 'react';
+import {toggleImage} from '../../App';
 
 const Maps: React.FC = () => {
   return (
@@ -21,7 +22,7 @@ const Maps: React.FC = () => {
       <IonContent fullscreen>
         {/* <IonImg src="/assets/map.png"></IonImg> */}
         <IonCard color="dark">
-          <img src="/assets/map/map.png" alt="" />
+          <img id='map' src='/assets/map/map.png' alt="" onLoad={()=>toggleImage('map','/assets/map/map',true)} />
           <IonCardHeader>
             <IonCardTitle>Map</IonCardTitle>
           </IonCardHeader>

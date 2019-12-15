@@ -7,6 +7,7 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
+// eslint-disable-next-line
   useIonViewDidEnter
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -60,6 +61,22 @@ prefersDark.addListener(mediaQuery => toggleDarkTheme(mediaQuery.matches));
  */
 function toggleDarkTheme(shouldAdd: boolean | undefined) {
   document.body.classList.toggle('dark', shouldAdd);
+  toggleImage('lion_home','/assets/lions/lion',false);
+  toggleImage('map','assets/map/map',false);
+  prefersDark.addListener(mediaQuery => toggleDarkTheme(mediaQuery.matches));
+}
+export function toggleImage(id:string,path:string,b:boolean){
+  var el=(document.getElementById(id) as HTMLImageElement);
+  if(el){
+    if(!(b&&el.classList.contains('loaded'))){
+      if(prefersDark.matches)
+        el.src=path+'_dark.png';
+      else
+        el.src=path+'.png';
+    }
+    if(b)
+    	el.classList.add('loaded');
+  }
 }
 
 const App: React.FC = () => {

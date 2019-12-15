@@ -22,6 +22,7 @@ import {
 import { colorFill, logoInstagram, logoFacebook, star } from 'ionicons/icons';
 import React from 'react';
 import Countdown from 'react-countdown-now';
+import {toggleImage} from '../../App';
 
 const Home: React.FC = () => {
   // Countdown renderer
@@ -63,9 +64,11 @@ const Home: React.FC = () => {
         <IonGrid>
           <IonRow class="ion-justify-content-center ion-padding-top">
             <img
+              id='lion_home'
               src={'/assets/lions/lion.png'}
               height="120"
               alt="lion logo"
+              onLoad={() => toggleImage('lion_home','/assets/lions/lion',true)}
             ></img>
           </IonRow>
         </IonGrid>
