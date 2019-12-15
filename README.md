@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
+
+- [Lion in Winter Ball App](#lion-in-winter-ball-app)
+  - [Set Up Development environment](#set-up-development-environment)
+  - [Modifying Content](#modifying-content)
+    - [Theming](#theming)
+  - [Building](#building)
+    - [Device Native Dependencies](#device-native-dependencies)
+    - [iOS](#ios)
+  - [Firebase](#firebase)
+    - [One Document](#one-document)
+    - [Document Reading and Implementing](#document-reading-and-implementing)
+      - [Document](#document)
+        - [Notify](#notify)
+      - [Implementing](#implementing)
+  - [Silent Disco](#silent-disco)
+  - [Additional Notes](#additional-notes)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Lion in Winter Ball App
 
 App built on the ionic react framework, to be deployed to iOS and Android for the Lion in Winter Ball for Hatfield College.
@@ -78,7 +101,7 @@ The implementation of the Firebase Firestore Content Management System, as found
 
 After creating a Firebase project you want to initialise the Firestore database; from the console's navigation pane, select Database, then click Create database for Cloud Firestore (for location pick the most sensible server).
 
-After this within a `FirebaseConfig.tsx` file in the `src` folder, you need to update the config object. This is done as follows (copied from Firestore documentation):
+After this within the [FirebaseConfig.tsx](./src/FirebaseConfig.tsx) file in the `src` folder, you need to update the config object. This is done as follows (copied from Firestore documentation):
 
 1. Sign in to Firebase, then open your project.
 2. Click the Settings icon, then select Project settings.
@@ -110,7 +133,7 @@ The existing infrastructure is based on this one document philosophy (feel free 
 
 In [Firebase.tsx](./src/Firebase.tsx) the firebase app is initialised and a **document reference** to the master document is created and exported. (When naming your database files you can copy the **master/liwb** **collection/document** naming convention.)
 
-To read from this document and implement the data we use the `react-firebase-hooks/firestore` library (as it has the cleanest interface). Should you want to stick with the IonGrid->IonCard layout as seen in this app there is a very useful grid function in [utilities/grid.tsx](./src/utilities/grid.tsx). If you do not want to stick with this app design philosophy or change how the firestore db is structured this can serve as a guide on how to generate the page contents from a firebase document array (from the `react-firebase-hooks library`).
+To read from this document and implement the data we use the `react-firebase-hooks/firestore` library (as it has the cleanest interface). Should you want to stick with the IonGrid->IonCard layout as seen in this app there is a very useful grid function in [utilities/grid.tsx](./src/utilities/grid.tsx). If you do not want to stick with this app design philosophy or change how the firestore db is structured this can serve as a guide on how to generate the page contents from a firebase document array (from the `react-firebase-hooks` library).
 
 Here is a walkthrough (as implemented) of using the IonGrid->IonCard structure with a firestore db, and how to structure the document.
 
@@ -137,7 +160,7 @@ Card fields (all are strings unless otherwise noted):
 - `href` — a full web link to navigate a user out of the app to a webpage
 - `notify` — a map: see below
 
-###### Notifiers
+###### Notify
 
 Cards can also have a notify field. The presence of a notify field will add the small icon in the corner allowing custom alerts per card locally. If you implement a notifier on a card it is **essential** that all the following components of the `notify` map are filled out correctly.
 
@@ -193,37 +216,40 @@ The notifier chips can also be implemented on static cards with:
 
 ## Silent Disco
 
-_foreword_ The song request system has been built with the premise that each user gets one song request, this can be changed although with some effort.
+_foreword:_ The song request system has been built with the premise that each user gets one song request, this can be changed although with some effort.
 
 The system uses the Spotify API to search songs, with those choices being published to a firebase collection.
 
 To set up this system for use there are a few components which need to be configured.
 
-**Spotify Api** - you need to create a new app on the Spotify developer portal, take the clientID and clientSecret and export them as an object from a `SpotifyConfig.tsx` file in the `src` directory. A sample of this file is shown below:
-
-```tsx
-export default {
-  clientId: '',
-  clientSecret: ''
-};
-```
+**Spotify Api** - you need to create a new app on the Spotify developer portal, note the clientID and clientSecret.
 
 **Firebase Firestore** - you need to:
 
 1. On the console goto auth, enable anonymous authentication
 2. Create a `songs` collection
-3. Set up write rules, your database rules file should look something like:
+3. Within this collection create a `APIKeys` document with two values `clientId` and `clientSecret`, set these to the values from spotify
+4. Set up write rules, your database rules file should look something like:
 
 ```
 match /databases/{database}/documents {
-	service cloud.firestore {
-		match /databases/{database}/documents {
-		match /{document=**} { allow read: if resource.data.visibility == 'public' }
-		match /songs/{userId} { allow write, update, create: if request.auth.uid == userId}
-		}
-	}
+  service cloud.firestore {
+    match /songs/{userId} {
+      allow write, update, create: if request.auth.uid == userId
+    }
+    match /songs/APIKeys {
+      allow read: if request.auth.uid != null
+    }
+    match /{document=**} {
+      allow read: if (resource.data.visibility == 'public')
+    }
+  }
 }
 ```
+
+This means that A - only authenticated users from within the app can acess the API keys, and that they are not distributed in the source code, and B that users can only edit their own (per device) song choice.
+
+If you have a large amount of song requests be cautious of using the firebase console to look at them, as every user song push or page refresh will perform **a lot** of reads, definitely do not leave it open for extended periods.
 
 ## Additional Notes
 
