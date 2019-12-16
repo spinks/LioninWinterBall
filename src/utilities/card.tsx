@@ -23,12 +23,6 @@ interface GCProps {
 
 const GridCard: React.FC<GCProps> = props => {
   const item = props;
-  if (item['notify']) {
-    // remove notifiers for events that have passed
-    if (new Date(item['notify']['datetime']) < new Date()) {
-      delete item['notify'];
-    }
-  }
   return (
     <React.Fragment>
       <IonCard
@@ -59,7 +53,10 @@ const GridCard: React.FC<GCProps> = props => {
             {item['body']}
           </IonCardContent>
         )}
-        {item['notify'] && <NotifyChip {...item['notify']} />}
+        {item['notify'] &&
+          new Date(item['notify']['datetime']) >= new Date() && (
+            <NotifyChip {...item['notify']} />
+          )}
       </IonCard>
     </React.Fragment>
   );
