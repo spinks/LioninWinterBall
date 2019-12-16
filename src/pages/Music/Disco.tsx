@@ -50,60 +50,63 @@ async function saveTrack(trackInfo: any) {
   }
 }
 
-let loadedTrack: any = {};
+let savedTrack: any = {};
 /**
  * Sets loadedTrack global constant to stored track
  */
-async function getTrack() {
+async function getSavedTrack() {
   await Storage.get({ key: 'savedTrack' }).then(ret => {
-    loadedTrack = JSON.parse(ret.value || '{}');
+    savedTrack = JSON.parse(ret.value || '{}');
   });
 }
 // code in the main page is one once on app startup
 // this has to be run before the component mounts
-getTrack();
+getSavedTrack();
 
 /**
  * Saves selected token to storage
  * @param {any} token
  */
-async function savePToken(token: any) {
-  console.log('setting pToken', token);
+async function saveToken(token: any) {
+  console.log('setting saved Token', token);
   Storage.set({
     key: 'savedToken',
     value: JSON.stringify(token)
   });
 }
-// a token instance which is persistent
-let pToken = '';
+
 /**
- * Sets the pToken global constant to stored token value
+ * Gets token from storage
+ * @return {Promise<string>} token
  */
-async function getPToken() {
+async function getSavedToken(): Promise<string> {
+  let token = '';
   await Storage.get({ key: 'savedToken' }).then(ret => {
-    pToken = JSON.parse(ret.value || '""');
-    console.log('getting pToken', pToken);
+    token = JSON.parse(ret.value || '""');
+    console.log('getting saved Token', token);
   });
+  return token;
 }
 
 const Disco: React.FC = () => {
   const [search, setSearch] = useState('');
   // selected track
-  const [savedTrack, setSavedTrack] = useState(loadedTrack);
+  const [selectedTrack, setSelectedTrack] = useState(savedTrack);
   // track selection currently being processed
-  const [choiceTrack, setChoiceTrack] = useState(loadedTrack);
-  // confirmation toast
+  const [choiceTrack, setChoiceTrack] = useState(savedTrack);
+  // selection confirmation alert
   const [showAlert, setShowAlert] = useState(false);
 
   // spotify api token
-  const [token, setToken] = useState(pToken);
+  const [token, setToken] = useState('');
   // refresh guard
   const [currentlyFetching, setCurrentlyFetching] = useState(false);
 
   /**
-   * Gets spotify access token
+   * Gets spotify access token sets values within this component
+   * Also stores to cache
    */
-  function getToken() {
+  function getAPIToken() {
     if (!currentlyFetching) {
       setCurrentlyFetching(true);
       fetch(
@@ -117,10 +120,7 @@ const Disco: React.FC = () => {
               btoa(spotifyKeys.clientId + ':' + spotifyKeys.clientSecret),
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body:
-            encodeURIComponent('grant_type') +
-            '=' +
-            encodeURIComponent('client_credentials')
+          body: 'grant_type=client_credentials'
         }
       ).then(r => {
         console.log('fetching token:', r.status, r);
@@ -128,7 +128,7 @@ const Disco: React.FC = () => {
           r.text().then(s => {
             const at = JSON.parse(s).access_token;
             setToken(at);
-            savePToken(at);
+            saveToken(at);
           });
         }
         // timeout to protect against repeated rapid calls
@@ -143,12 +143,13 @@ const Disco: React.FC = () => {
 
   useEffect(() => {
     // runs once on component mount (due to empty array second arg)
-
     // get any cached token and then set (if empty it gets a new token)
-    getPToken().then(() => {
-      setToken(pToken);
-      // if pToken was null get a new token
-      if (pToken === '') getToken();
+    getSavedToken().then(t => {
+      if (t) {
+        setToken(t);
+      } else {
+        getAPIToken();
+      }
     });
     // some warnings about not passing the functions to useEffect?
     // eslint-disable-next-line
@@ -194,7 +195,7 @@ const Disco: React.FC = () => {
             ></IonInput>
           </IonCardContent>
         </IonCard>
-        {search === '' && savedTrack['name'] && (
+        {search === '' && selectedTrack['name'] && (
           <IonCard
             class="card-white-header"
             style={{ margin: '5px 6px 5px 6px' }}
@@ -203,19 +204,19 @@ const Disco: React.FC = () => {
             <IonCardHeader>
               <IonCardSubtitle>Currently selected song</IonCardSubtitle>
               <IonCardTitle>
-                {savedTrack['name'] + '     '}
+                {selectedTrack['name'] + '     '}
                 <h5 style={{ display: 'inline' }}>
-                  {savedTrack['artists'][0]['name']}
+                  {selectedTrack['artists'][0]['name']}
                 </h5>
               </IonCardTitle>
             </IonCardHeader>
             <img
-              src={savedTrack['album']['images'][0]['url']}
+              src={selectedTrack['album']['images'][0]['url']}
               alt="album artwork"
             />
           </IonCard>
         )}
-        {search === '' && !savedTrack['name'] && (
+        {search === '' && !selectedTrack['name'] && (
           <IonCard
             class="card-white-header"
             color="light"
@@ -240,14 +241,15 @@ const Disco: React.FC = () => {
                       error.message ===
                         'Only valid bearer authentication supported')
                   ) {
-                    getToken();
+                    getAPIToken();
                     return <React.Fragment />;
+                  } else {
+                    return (
+                      <React.Fragment>
+                        {error && <h1>{JSON.stringify(error)}</h1>}
+                      </React.Fragment>
+                    );
                   }
-                  return (
-                    <React.Fragment>
-                      {error && <h1>{JSON.stringify(error)}</h1>}
-                    </React.Fragment>
-                  );
                 }
                 return (
                   <React.Fragment>
@@ -314,9 +316,9 @@ const Disco: React.FC = () => {
             {
               text: 'Confirm',
               handler: () => {
-                setSavedTrack(choiceTrack);
+                setSelectedTrack(choiceTrack);
                 saveTrack(choiceTrack);
-                loadedTrack = choiceTrack;
+                savedTrack = choiceTrack;
                 setSearch('');
               }
             }
