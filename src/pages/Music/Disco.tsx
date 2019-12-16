@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   IonHeader,
   IonPage,
@@ -28,59 +28,6 @@ import spotifyKeys from '../../SpotifyConfig';
 import { Plugins, KeyboardResize } from '@capacitor/core';
 const { Keyboard, Storage } = Plugins;
 Keyboard.setResizeMode({ mode: KeyboardResize.Ionic });
-
-let token = '';
-/**
- * Gets spotify acess token
- */
-function getToken() {
-  // const options = {
-  //   method: 'post',
-  //   data: { grant_type: 'client_credentials' },
-  //   headers: {
-  //     Authorization: 'Basic ' + btoa(config.clientId + ':' + config.clientSecret)
-  //   }
-  // };
-  // cordova.plugin.http.sendRequest(
-  //   'https://accounts.spotify.com/api/token',
-  //   options,
-  //   function(response: any) {
-  //     // prints 200
-  //     response.data = JSON.parse(response.data);
-  //     console.log(response.data, Object.keys(response.data));
-  //     console.log(response.data.access_token);
-  //     token = response.data.access_token;
-  //   },
-  //   function(response: any) {
-  //     // prints 403
-  //     console.log(response.status);
-
-  //     // prints Permission denied
-  //     console.log(response.error);
-  //   }
-  // );
-  fetch(
-    'https://cors-anywhere.herokuapp.com/' +
-      'https://accounts.spotify.com/api/token',
-    {
-      method: 'POST',
-      headers: {
-        Authorization:
-          'Basic ' +
-          btoa(spotifyKeys.clientId + ':' + spotifyKeys.clientSecret),
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body:
-        encodeURIComponent('grant_type') +
-        '=' +
-        encodeURIComponent('client_credentials')
-    }
-  ).then(r => {
-    console.log('test', r, r.status, r.body);
-    r.text().then(s => (token = JSON.parse(s).access_token));
-  });
-}
-getToken();
 
 /**
  * Saves selected tract to storage and FS
@@ -112,13 +59,92 @@ async function getTrack() {
     loadedTrack = JSON.parse(ret.value || '{}');
   });
 }
+// code in the main page is one once on app startup
+// this has to be run before the component mounts
 getTrack();
+
+/**
+ * Saves selected token to storage
+ * @param {any} token
+ */
+async function savePToken(token: any) {
+  console.log('setting pToken', token);
+  Storage.set({
+    key: 'savedToken',
+    value: JSON.stringify(token)
+  });
+}
+// a token instance which is persistent
+let pToken = '';
+/**
+ * Sets global constant to stored track
+ */
+async function getPToken() {
+  await Storage.get({ key: 'savedToken' }).then(ret => {
+    pToken = JSON.parse(ret.value || '{}');
+    console.log('getting pToken', pToken);
+  });
+}
+savePToken('fishy');
+getPToken();
 
 const Disco: React.FC = () => {
   const [search, setSearch] = useState('');
   const [savedTrack, setSavedTrack] = useState(loadedTrack);
   const [choiceTrack, setChoiceTrack] = useState(loadedTrack);
   const [showAlert, setShowAlert] = useState(false);
+
+  const [token, setToken] = useState(pToken);
+  const [currentlyFetching, setCurrentlyFetching] = useState(false);
+
+  /**
+   * Gets spotify access token
+   */
+  function getToken() {
+    if (!currentlyFetching) {
+      setCurrentlyFetching(true);
+      fetch(
+        'https://cors-anywhere.herokuapp.com/' +
+          'https://accounts.spotify.com/api/token',
+        {
+          method: 'POST',
+          headers: {
+            Authorization:
+              'Basic ' +
+              btoa(spotifyKeys.clientId + ':' + spotifyKeys.clientSecret),
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body:
+            encodeURIComponent('grant_type') +
+            '=' +
+            encodeURIComponent('client_credentials')
+        }
+      ).then(r => {
+        console.log('fetching token:', r.status, r);
+        if (r.status === 200) {
+          r.text().then(s => {
+            const at = JSON.parse(s).access_token;
+            setToken(at);
+            savePToken(at);
+          });
+        }
+        setTimeout(() => {
+          setCurrentlyFetching(false);
+        }, 1000);
+      });
+    } else {
+      console.log('bypassed fetch, was already fetching');
+    }
+  }
+
+  useEffect(() => {
+    // runs once on component mount (due to empty array second arg)
+    getPToken().then(() => {
+      setToken(pToken);
+      if (token === '') getToken();
+    });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <IonPage>
@@ -199,7 +225,12 @@ const Disco: React.FC = () => {
             <Search query={search} track options={{ limit: 10 }}>
               {(data: any, loading: any, error: any) => {
                 if (error) {
-                  if (error.status === 401) {
+                  if (
+                    error.status === 401 ||
+                    (error.status === 400 &&
+                      error.message ===
+                        'Only valid bearer authentication supported')
+                  ) {
                     getToken();
                     return <React.Fragment />;
                   }
