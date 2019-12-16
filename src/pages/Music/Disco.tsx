@@ -52,7 +52,7 @@ async function saveTrack(trackInfo: any) {
 
 let loadedTrack: any = {};
 /**
- * Sets global constant to stored track
+ * Sets loadedTrack global constant to stored track
  */
 async function getTrack() {
   await Storage.get({ key: 'savedTrack' }).then(ret => {
@@ -77,24 +77,27 @@ async function savePToken(token: any) {
 // a token instance which is persistent
 let pToken = '';
 /**
- * Sets global constant to stored track
+ * Sets the pToken global constant to stored token value
  */
 async function getPToken() {
   await Storage.get({ key: 'savedToken' }).then(ret => {
-    pToken = JSON.parse(ret.value || '{}');
+    pToken = JSON.parse(ret.value || '""');
     console.log('getting pToken', pToken);
   });
 }
-savePToken('fishy');
-getPToken();
 
 const Disco: React.FC = () => {
   const [search, setSearch] = useState('');
+  // selected track
   const [savedTrack, setSavedTrack] = useState(loadedTrack);
+  // track selection currently being processed
   const [choiceTrack, setChoiceTrack] = useState(loadedTrack);
+  // confirmation toast
   const [showAlert, setShowAlert] = useState(false);
 
+  // spotify api token
   const [token, setToken] = useState(pToken);
+  // refresh guard
   const [currentlyFetching, setCurrentlyFetching] = useState(false);
 
   /**
@@ -128,6 +131,7 @@ const Disco: React.FC = () => {
             savePToken(at);
           });
         }
+        // timeout to protect against repeated rapid calls
         setTimeout(() => {
           setCurrentlyFetching(false);
         }, 1000);
@@ -139,10 +143,14 @@ const Disco: React.FC = () => {
 
   useEffect(() => {
     // runs once on component mount (due to empty array second arg)
+
+    // get any cached token and then set (if empty it gets a new token)
     getPToken().then(() => {
       setToken(pToken);
-      if (token === '') getToken();
+      // if pToken was null get a new token
+      if (pToken === '') getToken();
     });
+    // some warnings about not passing the functions to useEffect?
     // eslint-disable-next-line
   }, []);
 
@@ -226,6 +234,7 @@ const Disco: React.FC = () => {
               {(data: any, loading: any, error: any) => {
                 if (error) {
                   if (
+                    // cases where tokens are invalid or not provided
                     error.status === 401 ||
                     (error.status === 400 &&
                       error.message ===
