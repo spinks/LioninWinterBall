@@ -19,7 +19,7 @@ const BallInformation: React.FC = () => {
     <IonPage>
       <IonHeader translucent>
         <IonToolbar>
-          <IonTitle>Ball Information and Help</IonTitle>
+          <IonTitle>Information and Help</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -30,7 +30,7 @@ const BallInformation: React.FC = () => {
                 <IonCardHeader>
                   <IonCardSubtitle>Emergency Information</IonCardSubtitle>
                 </IonCardHeader>
-                <IonCardContent>
+                <IonCardContent style={{ paddingTop: '0px' }}>
                   For medical emergencies refer to the First Aiders located in
                   the Porters' Lodge. For other emergencies visit the Porters'
                   Lodge for further assistance.
@@ -44,7 +44,7 @@ const BallInformation: React.FC = () => {
                 <IonCardHeader>
                   <IonCardSubtitle>Emergency Evacuation</IonCardSubtitle>
                 </IonCardHeader>
-                <IonCardContent>
+                <IonCardContent style={{ paddingTop: '0px' }}>
                   In the unlikely event of an emergency, please evacuate via the
                   nearest emergency exit. These are located at the main college
                   gates or the side gate next to the Rectory Building. Then
@@ -60,7 +60,7 @@ const BallInformation: React.FC = () => {
                 <IonCardHeader>
                   <IonCardSubtitle>Security</IonCardSubtitle>
                 </IonCardHeader>
-                <IonCardContent>
+                <IonCardContent style={{ paddingTop: '0px' }}>
                   Entry to the college is only permitted with a valid Lion in
                   Winter Ball 2020 wristband. If you are asked by security or a
                   member of the Lion in Winter Ball team to show your wristband

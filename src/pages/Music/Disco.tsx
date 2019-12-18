@@ -164,7 +164,7 @@ const Disco: React.FC = () => {
       </IonHeader>
       <IonContent
         fullscreen
-        style={{ background: 'rgb(33, 94, 85)' }}
+        // style={{ background: 'rgb(33, 94, 85)' }}
         // onIonScrollStart={() => Keyboard.hide()}
       >
         <IonCard

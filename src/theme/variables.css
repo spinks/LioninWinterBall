@@ -279,13 +279,13 @@ ion-content {
 
 ion-toolbar {
   /* --background: transparent; */
-  --background: rgb(33, 94, 85);
+  --background: rgb(19, 29, 90);
   color: white;
   border-width: 0 0 0px !important;
 }
 
 ion-tab-bar {
-  --background: rgb(33, 94, 85);
+  --background: rgb(23, 62, 64);
   --color: rgba(188, 206, 205, 0.705);
 }
 
