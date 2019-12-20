@@ -11,7 +11,17 @@ import {
 import grid from '../../utilities/grid';
 import AppContext from '../../AppContext';
 
-const Schedule: React.FC = () => {
+import { useSwipeable } from 'react-swipeable';
+
+const Schedule: React.FC = (props: any) => {
+  const handlers = useSwipeable({
+    onSwipedRight: () => {
+      props.history.replace('home');
+    },
+    onSwipedLeft: () => {
+      props.history.replace('maps');
+    }
+  });
   const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
@@ -20,7 +30,7 @@ const Schedule: React.FC = () => {
           <IonTitle>Schedule</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen {...handlers}>
         <IonGrid>{grid(vle, 'schedule')}</IonGrid>
       </IonContent>
     </IonPage>

@@ -17,12 +17,18 @@ import React from 'react';
 import grid from '../../utilities/grid';
 import AppContext from '../../AppContext';
 
+import { useSwipeable } from 'react-swipeable';
+
 // interface MusicProps {}
 
-const Music: React.FC = () => {
+const Music: React.FC = (props: any) => {
   // const [showPopover, setShowPopover] = useState(false);
   // const [popoverEvent, setPopoverEvent] = useState();
-
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      props.history.replace('food');
+    }
+  });
   const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
@@ -31,7 +37,7 @@ const Music: React.FC = () => {
           <IonTitle>Music</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen {...handlers}>
         <IonGrid>
           <IonRow>
             <IonCol>

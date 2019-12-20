@@ -28,7 +28,19 @@ import {
 import React from 'react';
 import Countdown from 'react-countdown-now';
 
-const Home: React.FC = () => {
+import { useSwipeable } from 'react-swipeable';
+
+const Home: React.FC = (props: any) => {
+  const handlers = useSwipeable({
+    onSwipedRight: () => {
+      props.history.replace('food');
+      // props.history.replace('food');
+    },
+    onSwipedLeft: () => {
+      props.history.replace('schedule');
+    }
+  });
+
   // Countdown renderer
   const ballDate = new Date('Mar 6, 2020 19:00:00').getTime();
   const renderer = ({
@@ -64,7 +76,7 @@ const Home: React.FC = () => {
           <IonTitle>Lion in Winter Ball</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen {...handlers}>
         <IonGrid>
           <IonRow class="ion-justify-content-center ion-padding-top">
             <img

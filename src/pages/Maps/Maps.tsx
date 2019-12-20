@@ -10,7 +10,14 @@ import {
 } from '@ionic/react';
 import React from 'react';
 
-const Maps: React.FC = () => {
+import { useSwipeable } from 'react-swipeable';
+
+const Maps: React.FC = (props: any) => {
+  const handlers = useSwipeable({
+    onSwipedRight: () => {
+      props.history.replace('schedule');
+    }
+  });
   return (
     <IonPage>
       <IonHeader translucent>
@@ -18,7 +25,7 @@ const Maps: React.FC = () => {
           <IonTitle>Map</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen {...handlers}>
         {/* <IonImg src="/assets/map.png"></IonImg> */}
         <IonCard color="dark">
           <img src="/assets/map/map.png" alt="" />
