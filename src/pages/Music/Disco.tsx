@@ -15,7 +15,8 @@ import {
   IonIcon,
   IonCardHeader,
   IonCardTitle,
-  IonAlert
+  IonAlert,
+  IonToast
 } from '@ionic/react';
 import { add } from 'ionicons/icons';
 
@@ -26,8 +27,12 @@ import fb from '../../Firebase';
 import spotifyKeys from '../../SpotifyConfig';
 
 import { Plugins, KeyboardResize } from '@capacitor/core';
-const { Keyboard, Storage } = Plugins;
-Keyboard.setResizeMode({ mode: KeyboardResize.Ionic });
+const { Keyboard, Storage, Device } = Plugins;
+Keyboard.setResizeMode({ mode: KeyboardResize.None });
+let deviceInfo = {};
+Device.getInfo().then(r => {
+  deviceInfo = r;
+});
 
 /**
  * Saves selected tract to storage and FS
@@ -102,6 +107,8 @@ const Disco: React.FC = () => {
   // refresh guard
   const [currentlyFetching, setCurrentlyFetching] = useState(false);
 
+  const [showToastKeyboard, setShowToastKeyboard] = useState(false);
+
   /**
    * Gets spotify access token sets values within this component
    * Also stores to cache
@@ -167,6 +174,17 @@ const Disco: React.FC = () => {
         // style={{ background: 'rgb(33, 94, 85)' }}
         // onIonScrollStart={() => Keyboard.hide()}
       >
+        <IonToast
+          isOpen={showToastKeyboard}
+          onDidDismiss={() => {
+            setShowToastKeyboard(false);
+          }}
+          message={''}
+          duration={1}
+          position="bottom"
+          animated={false}
+          keyboardClose={true}
+        />
         <IonCard
           class="card-white-header"
           style={{ margin: '5px 6px 5px 6px' }}
@@ -180,9 +198,14 @@ const Disco: React.FC = () => {
               type="search"
               onKeyPress={e => {
                 if (e.key === 'Enter') {
-                  Keyboard.hide();
-                  // console.log(e.currentTarget.innerHTML);
-                  console.log(document.activeElement);
+                  if (
+                    'platform' in deviceInfo &&
+                    deviceInfo['platform'] === 'ios'
+                  ) {
+                    setShowToastKeyboard(true);
+                  } else {
+                    Keyboard.hide();
+                  }
                 }
               }}
               onIonChange={e => {
