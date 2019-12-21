@@ -28,10 +28,12 @@ import spotifyKeys from '../../SpotifyConfig';
 
 import { Plugins, KeyboardResize } from '@capacitor/core';
 const { Keyboard, Storage, Device } = Plugins;
-Keyboard.setResizeMode({ mode: KeyboardResize.None });
 let deviceInfo = {};
 Device.getInfo().then(r => {
   deviceInfo = r;
+  if ('platform' in deviceInfo && deviceInfo['platform'] === 'ios') {
+    Keyboard.setResizeMode({ mode: KeyboardResize.None });
+  }
 });
 
 /**
@@ -197,11 +199,12 @@ const Disco: React.FC = () => {
               inputmode="search"
               type="search"
               onKeyPress={e => {
-                if (e.key === 'Enter') {
-                  if (
-                    'platform' in deviceInfo &&
-                    deviceInfo['platform'] === 'ios'
-                  ) {
+                if (
+                  e.key === 'Enter' &&
+                  'platform' in deviceInfo &&
+                  deviceInfo['platform'] !== 'web'
+                ) {
+                  if (deviceInfo['platform'] === 'ios') {
                     setShowToastKeyboard(true);
                   } else {
                     Keyboard.hide();
