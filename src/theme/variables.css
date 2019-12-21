@@ -251,6 +251,10 @@ body.dark {
   font-size: 8pt;
 }
 
+.align-alert-left .alert-message.sc-ion-alert-ios {
+  text-align: left !important;
+}
+
 ion-item {
   /* this one affect ares inside items */
   background-color: transparent;

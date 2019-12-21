@@ -74,7 +74,8 @@ const NotifyChip: React.FC<NProps> = props => {
           background: 'var(--ion-color-light)'
         }}
         color={notifyOn ? 'primary' : 'dark'}
-        onClick={() => {
+        onClick={e => {
+          e.stopPropagation();
           notifyHandler(props).then(b => {
             setNotifyOn(b);
             setToastString(

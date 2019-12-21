@@ -158,6 +158,7 @@ Card fields (all are strings unless otherwise noted):
 - `body` — the body-text for the card
 - `router` — a link to navigate to another page within the app, as listed in the IonRouterOutlet component in [App.tsx](./src/App.tsx)
 - `href` — a full web link to navigate a user out of the app to a webpage
+- `popup` — a string for a more detailed pop up window which comes up when the card is pressed (html styling can be done within this string, such as `<br/>` and `<strong></strong>`). This popup will also use the `title` variable for its header.
 - `notify` — a map: see below
 
 ###### Notify
