@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -55,7 +55,6 @@ prefersDark.addListener(mediaQuery => toggleDarkTheme(mediaQuery.matches));
 
 // Add or remove the "dark" class based on if the media query matches
 /**
- *
  * @param {any} shouldAdd
  */
 function toggleDarkTheme(shouldAdd: boolean | undefined) {
@@ -63,7 +62,9 @@ function toggleDarkTheme(shouldAdd: boolean | undefined) {
 }
 
 const App: React.FC = () => {
-  SplashScreen.hide();
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   const [value, loading, error] = useDocumentData(
     fb
       .firestore()

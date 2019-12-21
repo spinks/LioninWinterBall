@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonChip, IonIcon, IonToast } from '@ionic/react';
 import { notificationsOff, notifications } from 'ionicons/icons';
 
@@ -60,8 +60,9 @@ const NotifyChip: React.FC<NProps> = props => {
   const [showToast1, setShowToast1] = useState(false);
   const [toastString, setToastString] = useState('');
   const [notifyOn, setNotifyOn] = useState(false);
-
-  notifyExists(props.id).then(b => setNotifyOn(b ? true : false));
+  useEffect(() => {
+    notifyExists(props.id).then(b => setNotifyOn(b ? true : false));
+  }, []);
   return (
     <React.Fragment>
       <IonChip
