@@ -15,15 +15,14 @@ import {
   IonToolbar,
   IonRow,
   IonGrid,
-  IonCardContent,
-  IonText,
-  IonCol
+  IonCardContent
 } from '@ionic/react';
 import {
   logoInstagram,
   logoFacebook,
   star,
-  informationCircleOutline
+  informationCircleOutline,
+  cog
 } from 'ionicons/icons';
 import React from 'react';
 import Countdown from 'react-countdown-now';
@@ -78,7 +77,7 @@ const Home: React.FC = () => {
         <IonCard class="card-white-header" color="light">
           {/* <img src="/assets/lions/lion_background.jpg" alt="" /> */}
           <IonCardHeader>
-            <IonCardSubtitle>Take me to ...</IonCardSubtitle>
+            <IonCardSubtitle>Take me to Neverland</IonCardSubtitle>
             <IonCardTitle>
               {<Countdown date={ballDate} renderer={renderer} />}
             </IonCardTitle>
@@ -122,23 +121,16 @@ const Home: React.FC = () => {
                 <IonLabel>Information</IonLabel>
               </IonListHeader>
               <IonItem routerLink="/Home/BallInformation">
-                <IonIcon
-                  slot="start"
-                  color="medium"
-                  icon={informationCircleOutline}
-                />
+                <IonIcon slot="start" icon={informationCircleOutline} />
                 <IonLabel>Ball Information and Help</IonLabel>
+              </IonItem>
+              <IonItem routerLink="/Home/AppInformation">
+                <IonIcon slot="start" icon={cog} />
+                <IonLabel>About the App</IonLabel>
               </IonItem>
             </IonList>
           </IonCardContent>
         </IonCard>
-        <IonRow>
-          <IonCol class="ion-text-center ">
-            <IonText color="ion-primary-light" class="font-small">
-              App by Ben Spinks
-            </IonText>
-          </IonCol>
-        </IonRow>
       </IonContent>
     </IonPage>
   );
