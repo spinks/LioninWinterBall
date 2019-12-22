@@ -62,7 +62,7 @@ const NotifyChip: React.FC<NProps> = props => {
   const [notifyOn, setNotifyOn] = useState(false);
   useEffect(() => {
     notifyExists(props.id).then(b => setNotifyOn(b ? true : false));
-  }, []);
+  }, [props.id]);
   return (
     <React.Fragment>
       <IonChip
