@@ -32,7 +32,7 @@ To get an initial grip of the structure of the repository and how to develop the
 `npm install` to install all required packages.
 Dev dependencies, such as `eslint`, `prettier`, and the `capacitorcli` (command line interface) will also be installed.
 
-When writing code you should be linting, and following the style rules (these are thrown as errors in `eslint`. For example VSCode extensions such as [ESlint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) will streamline this process, but you can use any alternatives. The rulesets given in the repository will ensure consistency.
+When writing code you should be linting, and following the style rules (these are thrown as errors in `eslint`. For example VSCode extensions such as [ESlint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) will streamline this process, but you can use any alternatives. The rule-sets given in the repository will ensure consistency.
 
 When developing using `ionic serve` and running in a chrome is a much faster approach, and allows live reloading.
 
@@ -135,7 +135,7 @@ In [Firebase.tsx](./src/Firebase.tsx) the firebase app is initialised and a **do
 
 To read from this document and implement the data we use the `react-firebase-hooks/firestore` library (as it has the cleanest interface). Should you want to stick with the IonGrid->IonCard layout as seen in this app there is a very useful grid function in [utilities/grid.tsx](./src/utilities/grid.tsx). If you do not want to stick with this app design philosophy or change how the firestore db is structured this can serve as a guide on how to generate the page contents from a firebase document array (from the `react-firebase-hooks` library).
 
-Here is a walkthrough (as implemented) of using the IonGrid->IonCard structure with a firestore db, and how to structure the document.
+Here is a walk-through (as implemented) of using the IonGrid->IonCard structure with a firestore db, and how to structure the document.
 
 ##### Document
 
@@ -172,7 +172,7 @@ The notify field is a map, the sub fields of the map are as follows (again all a
 - `body` — the content of the notification
 - `datetime` — A date time string that can be parsed through the javascript [Date function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date), example: `2019-12-12T10:00:00Z`. This is the time at which the notification is set for.
 
-Note if you update these after they have been released to users the scheduled notification will not change unless they cancel and reenable the notification.
+Note if you update these after they have been released to users the scheduled notification will not change unless they cancel and re-enable the notification.
 
 ##### Implementing
 
@@ -223,15 +223,15 @@ The system uses the Spotify API to search songs, with those choices being publis
 
 To set up this system for use there are a few components which need to be configured.
 
-**Spotify Api** - you need to create a new app on the Spotify developer portal, note the clientID and clientSecret.
+**Spotify Api** - you need to create a new app on the Spotify developer portal.
 
-Create a serverless function, deployed with Zeit (for example), which performs the post request to Spotify to get tokens. The function then returns this token to the app. This ensures the security of the private tokens. For example of this ask Ben Spinks.
+Then create a serverless function, deployed with Zeit (for example), which performs the post request to Spotify to get tokens. The function then returns this token to the app. This ensures the security of the client secret. For example of this ask Ben Spinks.
 
 **Firebase Firestore** - you need to:
 
 1. On the console goto auth, enable anonymous authentication
 2. Create a `songs` collection
-2. Set up write rules, your database rules file should look something like:
+3. Set up write rules, your database rules file should look something like:
 
 ```
 match /databases/{database}/documents {
@@ -250,4 +250,4 @@ If you have a large amount of song requests be cautious of using the firebase co
 
 ## Additional Notes
 
-On routing, if using `router='somepage/subpage'` if the router value matches _exactly_ the capitalisation of the route as declared in the IonRouterOutlet then it will stay on the subpage when swapping between tabs. If it is not exact (ie `router='Somepage/subpage`) the link will still work, and it will reset back to the parent tab page on going to a different tab and back. Pressing the tab icon for the parent page from within a subpage will always navigate you back to the parent page.
+On routing, if using `router='somepage/subpage'` if the router value matches _exactly_ the capitalisation of the route as declared in the IonRouterOutlet then it will stay on the sub-page when swapping between tabs. If it is not exact (ie `router='Somepage/subpage`) the link will still work, and it will reset back to the parent tab page on going to a different tab and back. Pressing the tab icon for the parent page from within a sub-page will always navigate you back to the parent page.
