@@ -33,11 +33,9 @@ const AppInformation: React.FC = () => {
                 <IonCardContent>
                   <strong>Ben Spinks</strong> - Head Developer
                   <br />
-                  <blockquote>
-                    <a href="mailto:benjamin.j.spinks@durham.ac.uk">
-                      benjamin.j.spinks@durham.ac.uk
-                    </a>
-                  </blockquote>
+                  <a href="mailto:benjamin.j.spinks@durham.ac.uk">
+                    benjamin.j.spinks@durham.ac.uk
+                  </a>
                   <br />
                   With junior developers <br />
                   Alasdair Cooper and Jonathan Hauenstein

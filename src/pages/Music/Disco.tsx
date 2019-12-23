@@ -24,7 +24,6 @@ import { add } from 'ionicons/icons';
 import { SpotifyApiContext, Search } from 'react-spotify-api';
 
 import fb from '../../Firebase';
-import spotifyKeys from '../../SpotifyConfig';
 
 import { Plugins, KeyboardResize } from '@capacitor/core';
 const { Keyboard, Storage, Device } = Plugins;
@@ -118,26 +117,12 @@ const Disco: React.FC = () => {
   function getAPIToken() {
     if (!currentlyFetching) {
       setCurrentlyFetching(true);
-      fetch(
-        'https://cors-anywhere.herokuapp.com/' +
-          'https://accounts.spotify.com/api/token',
-        {
-          method: 'POST',
-          headers: {
-            Authorization:
-              'Basic ' +
-              btoa(spotifyKeys.clientId + ':' + spotifyKeys.clientSecret),
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: 'grant_type=client_credentials'
-        }
-      ).then(r => {
+      fetch('https://lioninwinterballserver.now.sh/api/token.js').then(r => {
         console.log('fetching token:', r.status, r);
         if (r.status === 200) {
-          r.text().then(s => {
-            const at = JSON.parse(s).access_token;
-            setToken(at);
-            saveToken(at);
+          r.text().then(resp => {
+            setToken(resp);
+            saveToken(resp);
           });
         }
         // timeout to protect against repeated rapid calls
@@ -157,7 +142,7 @@ const Disco: React.FC = () => {
       if (t) {
         setToken(t);
       } else {
-        getAPIToken();
+        // getAPIToken();
       }
     });
     // some warnings about not passing the functions to useEffect?
