@@ -225,12 +225,13 @@ To set up this system for use there are a few components which need to be config
 
 **Spotify Api** - you need to create a new app on the Spotify developer portal, note the clientID and clientSecret.
 
+Create a serverless function, deployed with Zeit (for example), which performs the post request to Spotify to get tokens. The function then returns this token to the app. This ensures the security of the private tokens. For example of this ask Ben Spinks.
+
 **Firebase Firestore** - you need to:
 
 1. On the console goto auth, enable anonymous authentication
 2. Create a `songs` collection
-3. Within this collection create a `APIKeys` document with two values `clientId` and `clientSecret`, set these to the values from spotify
-4. Set up write rules, your database rules file should look something like:
+2. Set up write rules, your database rules file should look something like:
 
 ```
 match /databases/{database}/documents {
@@ -238,17 +239,12 @@ match /databases/{database}/documents {
     match /songs/{userId} {
       allow write, update, create: if request.auth.uid == userId
     }
-    match /songs/APIKeys {
-      allow read: if request.auth.uid != null
-    }
     match /{document=**} {
       allow read: if (resource.data.visibility == 'public')
     }
   }
 }
 ```
-
-This means that A - only authenticated users from within the app can acess the API keys, and that they are not distributed in the source code, and B that users can only edit their own (per device) song choice.
 
 If you have a large amount of song requests be cautious of using the firebase console to look at them, as every user song push or page refresh will perform **a lot** of reads, definitely do not leave it open for extended periods.
 

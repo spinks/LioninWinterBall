@@ -142,7 +142,7 @@ const Disco: React.FC = () => {
       if (t) {
         setToken(t);
       } else {
-        // getAPIToken();
+        getAPIToken();
       }
     });
     // some warnings about not passing the functions to useEffect?
