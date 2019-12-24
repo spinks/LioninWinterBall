@@ -100,6 +100,8 @@ const Disco: React.FC = () => {
   const [selectedTrack, setSelectedTrack] = useState(savedTrack);
   // track selection currently being processed
   const [choiceTrack, setChoiceTrack] = useState(savedTrack);
+  // error getting tokens div
+  const [errorTokens, setErrorTokens] = useState(false);
   // selection confirmation alert
   const [showAlert, setShowAlert] = useState(false);
 
@@ -123,12 +125,16 @@ const Disco: React.FC = () => {
           r.text().then(resp => {
             setToken(resp);
             saveToken(resp);
+            setCurrentlyFetching(false);
+            if (errorTokens) setErrorTokens(false);
           });
+        } else {
+          console.log('error fetching token', r);
+          if (!errorTokens) setErrorTokens(true);
+          setTimeout(() => {
+            setCurrentlyFetching(false);
+          }, 10000);
         }
-        // timeout to protect against repeated rapid calls
-        setTimeout(() => {
-          setCurrentlyFetching(false);
-        }, 1000);
       });
     } else {
       console.log('bypassed fetch, was already fetching');
@@ -240,7 +246,19 @@ const Disco: React.FC = () => {
             </IonCardHeader>
           </IonCard>
         )}
-        {search && (
+        {errorTokens && (
+          <IonCard
+            class="card-white-header"
+            color="light"
+            style={{ margin: '5px 6px 5px 6px' }}
+          >
+            <IonCardContent>
+              Error getting tokens. Try again later, if this issue persists
+              contact the LiWB team.
+            </IonCardContent>
+          </IonCard>
+        )}
+        {search && !currentlyFetching && (
           <SpotifyApiContext.Provider value={token}>
             <Search query={search} track options={{ limit: 10 }}>
               {(data: any, loading: any, error: any) => {
@@ -271,6 +289,7 @@ const Disco: React.FC = () => {
                             class="card-white-header"
                             key={track.id}
                             style={{ margin: '5px 6px 5px 6px' }}
+                            color="light"
                           >
                             <IonItem>
                               {track.album.images[
