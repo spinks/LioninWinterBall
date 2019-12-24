@@ -50,7 +50,8 @@ const Home: React.FC = () => {
       // Render a countdown
       return (
         <span>
-          {days} Days {hours}:{minutes}:{seconds}
+          {days > 0 && <span>{days} Days</span>}
+          {days === 0 && <span>{hours} Hours</span>} Left!
         </span>
       );
     }
