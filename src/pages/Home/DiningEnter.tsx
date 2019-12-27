@@ -21,6 +21,7 @@ import {
   IonAlert
 } from '@ionic/react';
 
+import * as firebase from 'firebase/app';
 import fb from '../../Firebase';
 
 import { Plugins } from '@capacitor/core';
@@ -57,6 +58,7 @@ async function saveTable(table: Table, fire: boolean = true) {
       delete tableInfo[i];
     }
     tableInfo.id = fb.auth().currentUser!.uid;
+    tableInfo.timestamp = firebase.firestore.FieldValue.serverTimestamp();
     await fb
       .firestore()
       .collection('tables')
@@ -119,7 +121,10 @@ const DiningEnter: React.FC = () => {
     }
     saveTable(tableInfo, fire).then(s => {
       if (s !== 'OK') {
-        setAlertText('If the issue persists please contact the LiWB team');
+        setAlertText(
+          'If the issue persists please contact the LiWB team <br/>' +
+            'If it is a firebase error you may have tried to submit more than once in 15 minutes, try again later'
+        );
         setAlertTitle(s);
       } else {
         if (!fire) {
@@ -246,6 +251,7 @@ const DiningEnter: React.FC = () => {
               Enter your table information below and be sure to submit, bring
               your UID to sign-up. Your UID is as follows.
               <h5 style={{ textAlign: 'center' }}>{uid}</h5>
+              You can only submit your table changes once every 15 minutes.
               <br />
               <IonGrid>
                 <IonRow>
