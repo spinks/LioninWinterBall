@@ -9,14 +9,14 @@ import {
   IonThumbnail,
   IonLabel,
   IonCard,
-  IonInput,
   IonCardContent,
   IonCardSubtitle,
   IonIcon,
   IonCardHeader,
   IonCardTitle,
   IonAlert,
-  IonToast
+  IonToast,
+  IonSearchbar
 } from '@ionic/react';
 import { add } from 'ionicons/icons';
 
@@ -183,12 +183,19 @@ const Disco: React.FC = () => {
           style={{ margin: '5px 6px 5px 6px' }}
           color="light"
         >
-          <IonCardContent style={{ paddingTop: '0px', paddingBottom: '0px' }}>
-            <IonInput
-              clearInput
+          <IonCardContent
+            style={{
+              paddingTop: '0px',
+              paddingBottom: '0px',
+              paddingLeft: '0px',
+              paddingRight: '0px'
+            }}
+          >
+            <IonSearchbar
               placeholder="Search"
               inputmode="search"
               type="search"
+              showCancelButton="always"
               onKeyPress={e => {
                 if (
                   e.key === 'Enter' &&
@@ -209,7 +216,7 @@ const Disco: React.FC = () => {
                   setSearch('');
                 }
               }}
-            ></IonInput>
+            ></IonSearchbar>
           </IonCardContent>
         </IonCard>
         {search === '' && selectedTrack['name'] && (
