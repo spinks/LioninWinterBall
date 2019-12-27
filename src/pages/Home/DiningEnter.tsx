@@ -36,8 +36,9 @@ interface Table {
 /**
  * Saves selected tract to storage and FS
  * @param {any} table
+ * @param {boolean} fire if the function should write to firebase
  */
-async function saveTable(table: Table) {
+async function saveTable(table: Table, fire: boolean = true) {
   let status = 'OK';
   const tableString = JSON.stringify(table);
   const tableInfo = JSON.parse(tableString);
@@ -47,7 +48,11 @@ async function saveTable(table: Table) {
   }).catch(() => {
     status = 'Document Error';
   });
-  if (fb.auth().currentUser) {
+  if (fire) {
+    if (!fb.auth().currentUser) {
+      status = 'Not yet authenticated';
+      return status;
+    }
     for (let i = tableInfo.size + 1; i < 12 + 1; i++) {
       delete tableInfo[i];
     }
@@ -91,9 +96,16 @@ const DiningEnter: React.FC = () => {
   /**
    * Handles form submission
    * @param {any} e event
+   * @param {boolean} fire wether to save to firebase
    */
-  function handleSubmit(e: any): any {
-    e.preventDefault();
+  function handleSubmit(
+    e: { target: any; preventDefault?: any },
+    fire: boolean = true
+  ): any {
+    if (typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
+
     tableInfo['size'] = fullTable ? 12 : 6;
     for (let i = 1; i < tableInfo.size + 1; i++) {
       tableInfo[i] = {
@@ -105,13 +117,22 @@ const DiningEnter: React.FC = () => {
         dietary: sanitizeHtml(e.target[i.toString() + '_dietary'].value)
       };
     }
-    saveTable(tableInfo).then(s => {
+    saveTable(tableInfo, fire).then(s => {
       if (s !== 'OK') {
         setAlertText('If the issue persists please contact the LiWB team');
         setAlertTitle(s);
       } else {
-        setAlertText('Your table has been submitted, bring the UID to sign-up');
-        setAlertTitle('Table Submitted');
+        if (!fire) {
+          setAlertText(
+            'Table information saved, you can return at a later time to submit'
+          );
+          setAlertTitle('Table Saved');
+        } else {
+          setAlertText(
+            'Your table has been submitted, bring the UID to sign-up'
+          );
+          setAlertTitle('Table Submitted');
+        }
       }
       setShowAlert(true);
     });
@@ -147,7 +168,7 @@ const DiningEnter: React.FC = () => {
           header={alertTitle}
           message={alertText}
         />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id="diningForm">
           <IonCard class="card-white-header" color="light" id="top">
             <IonCardHeader>
               Enter your table information below and be sure to submit, bring
