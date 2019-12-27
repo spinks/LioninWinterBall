@@ -89,7 +89,11 @@ const Home: React.FC = () => {
           </IonCardContent>
         </IonCard>
 
-        <IonCard class="card-white-header" color="light">
+        <IonCard
+          class="card-white-header"
+          color="light"
+          style={{ '--ion-item-background': 'transparent' }}
+        >
           <IonCardContent class="ion-no-padding">
             <IonList>
               <IonListHeader>

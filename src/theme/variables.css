@@ -255,11 +255,6 @@ body.dark {
   text-align: left !important;
 }
 
-ion-item {
-  /* this one affect ares inside items */
-  background-color: transparent;
-}
-
 ion-list {
   opacity: 0.85;
   border-radius: 8px !important;
