@@ -160,7 +160,7 @@ const DiningEnter: React.FC = () => {
     return (
       <IonCard class="card-white-header" color="light">
         <IonCardHeader>
-          <IonCardSubtitle>Head of Table</IonCardSubtitle>
+          <IonCardSubtitle>{title}</IonCardSubtitle>
         </IonCardHeader>
 
         <IonCardContent class="ion-no-padding">
