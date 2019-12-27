@@ -42,8 +42,17 @@ import AppContext from './AppContext';
 import fb from './Firebase';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
-import { Plugins } from '@capacitor/core';
-const { SplashScreen } = Plugins;
+import { Plugins, KeyboardResize } from '@capacitor/core';
+const { SplashScreen, Device, Keyboard } = Plugins;
+
+Device.getInfo().then(r => {
+  if ('platform' in r && r['platform'] === 'ios') {
+    Keyboard.setResizeMode({ mode: KeyboardResize.Body });
+  }
+  if ('platform' in r && r['platform'] !== 'web') {
+    Keyboard.setAccessoryBarVisible({ isVisible: true });
+  }
+});
 
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -61,6 +70,13 @@ function toggleDarkTheme(shouldAdd: boolean | undefined) {
 }
 
 const App: React.FC = () => {
+  window.addEventListener('keyboardDidShow', () => {
+    document!.activeElement!.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'nearest'
+    });
+  });
   useEffect(() => {
     SplashScreen.hide();
   }, []);

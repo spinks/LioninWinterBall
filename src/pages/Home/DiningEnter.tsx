@@ -141,12 +141,22 @@ const DiningEnter: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader translucent>
+      <IonHeader
+        translucent
+        onClick={() => {
+          document!.getElementById('top')!.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end',
+            inline: 'nearest'
+          });
+          // window.scrollTo(0, 0);
+        }}
+      >
         <IonToolbar>
           <IonTitle>Table Information</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen style={{ background: 'rgb(18, 39, 78)' }}>
         <IonAlert
           isOpen={showAlert}
           onDidDismiss={() => setShowAlert(false)}
@@ -154,7 +164,7 @@ const DiningEnter: React.FC = () => {
           message={alertText}
         />
         <form onSubmit={handleSubmit}>
-          <IonCard class="card-white-header" color="light">
+          <IonCard class="card-white-header" color="light" id="top">
             <IonCardHeader>
               Enter your table information below and be sure to submit, bring
               your UID to sign-up. Your UID is as follows.

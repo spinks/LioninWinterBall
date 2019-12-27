@@ -25,14 +25,11 @@ import { SpotifyApiContext, Search } from 'react-spotify-api';
 
 import fb from '../../Firebase';
 
-import { Plugins, KeyboardResize } from '@capacitor/core';
+import { Plugins } from '@capacitor/core';
 const { Keyboard, Storage, Device } = Plugins;
 let deviceInfo = {};
 Device.getInfo().then(r => {
   deviceInfo = r;
-  if ('platform' in deviceInfo && deviceInfo['platform'] === 'ios') {
-    Keyboard.setResizeMode({ mode: KeyboardResize.None });
-  }
 });
 
 /**
@@ -162,11 +159,7 @@ const Disco: React.FC = () => {
           <IonTitle>Silent Disco</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent
-        fullscreen
-        // style={{ background: 'rgb(33, 94, 85)' }}
-        // onIonScrollStart={() => Keyboard.hide()}
-      >
+      <IonContent fullscreen style={{ background: 'rgb(18, 39, 78)' }}>
         <IonToast
           isOpen={showToastKeyboard}
           onDidDismiss={() => {
