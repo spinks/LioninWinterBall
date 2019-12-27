@@ -70,24 +70,7 @@ let savedTable: any = {};
  */
 async function getSavedTable() {
   await Storage.get({ key: 'savedTable' }).then(ret => {
-    savedTable = JSON.parse(
-      ret.value ||
-        JSON.stringify({
-          size: 12,
-          1: { name: '', email: '', cis: '', college: '', wine: null },
-          2: { name: '', email: '', cis: '', college: '', wine: null },
-          3: { name: '', email: '', cis: '', college: '', wine: null },
-          4: { name: '', email: '', cis: '', college: '', wine: null },
-          5: { name: '', email: '', cis: '', college: '', wine: null },
-          6: { name: '', email: '', cis: '', college: '', wine: null },
-          7: { name: '', email: '', cis: '', college: '', wine: null },
-          8: { name: '', email: '', cis: '', college: '', wine: null },
-          9: { name: '', email: '', cis: '', college: '', wine: null },
-          10: { name: '', email: '', cis: '', college: '', wine: null },
-          11: { name: '', email: '', cis: '', college: '', wine: null },
-          12: { name: '', email: '', cis: '', college: '', wine: null }
-        })
-    );
+    savedTable = JSON.parse(ret.value || JSON.stringify(defaultTable));
   });
 }
 // code in the main page is one once on app startup
@@ -118,7 +101,8 @@ const DiningEnter: React.FC = () => {
         email: sanitizeHtml(e.target[i.toString() + '_email'].value),
         cis: sanitizeHtml(e.target[i.toString() + '_cis'].value),
         college: sanitizeHtml(e.target[i.toString() + '_college'].value),
-        wine: sanitizeHtml(e.target[i.toString() + '_wine'].value)
+        wine: sanitizeHtml(e.target[i.toString() + '_wine'].value),
+        dietary: sanitizeHtml(e.target[i.toString() + '_dietary'].value)
       };
     }
     saveTable(tableInfo).then(s => {
@@ -232,7 +216,9 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">CIS Username</IonLabel>
+                <IonLabel position="floating">
+                  CIS Username (NA if not student)
+                </IonLabel>
                 <IonInput
                   type="text"
                   name="1_cis"
@@ -240,7 +226,7 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">College</IonLabel>
+                <IonLabel position="floating">College (or guest)</IonLabel>
                 <IonInput
                   type="text"
                   name="1_college"
@@ -253,6 +239,16 @@ const DiningEnter: React.FC = () => {
                   type="number"
                   name="1_wine"
                   value={tableInfo[1]['wine']}
+                ></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonLabel position="floating">
+                  Dietary Requirements (optional)
+                </IonLabel>
+                <IonInput
+                  type="text"
+                  name="1_dietary"
+                  value={tableInfo[1]['dietary']}
                 ></IonInput>
               </IonItem>
             </IonCardContent>
@@ -280,7 +276,9 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">CIS Username</IonLabel>
+                <IonLabel position="floating">
+                  CIS Username (NA if not student)
+                </IonLabel>
                 <IonInput
                   type="text"
                   name="2_cis"
@@ -288,7 +286,7 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">College</IonLabel>
+                <IonLabel position="floating">College (or guest)</IonLabel>
                 <IonInput
                   type="text"
                   name="2_college"
@@ -301,6 +299,16 @@ const DiningEnter: React.FC = () => {
                   type="number"
                   name="2_wine"
                   value={tableInfo[2]['wine']}
+                ></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonLabel position="floating">
+                  Dietary Requirements (optional)
+                </IonLabel>
+                <IonInput
+                  type="text"
+                  name="2_dietary"
+                  value={tableInfo[2]['dietary']}
                 ></IonInput>
               </IonItem>
             </IonCardContent>
@@ -328,7 +336,9 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">CIS Username</IonLabel>
+                <IonLabel position="floating">
+                  CIS Username (NA if not student)
+                </IonLabel>
                 <IonInput
                   type="text"
                   name="3_cis"
@@ -336,7 +346,7 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">College</IonLabel>
+                <IonLabel position="floating">College (or guest)</IonLabel>
                 <IonInput
                   type="text"
                   name="3_college"
@@ -349,6 +359,16 @@ const DiningEnter: React.FC = () => {
                   type="number"
                   name="3_wine"
                   value={tableInfo[3]['wine']}
+                ></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonLabel position="floating">
+                  Dietary Requirements (optional)
+                </IonLabel>
+                <IonInput
+                  type="text"
+                  name="3_dietary"
+                  value={tableInfo[3]['dietary']}
                 ></IonInput>
               </IonItem>
             </IonCardContent>
@@ -376,7 +396,9 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">CIS Username</IonLabel>
+                <IonLabel position="floating">
+                  CIS Username (NA if not student)
+                </IonLabel>
                 <IonInput
                   type="text"
                   name="4_cis"
@@ -384,7 +406,7 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">College</IonLabel>
+                <IonLabel position="floating">College (or guest)</IonLabel>
                 <IonInput
                   type="text"
                   name="4_college"
@@ -397,6 +419,16 @@ const DiningEnter: React.FC = () => {
                   type="number"
                   name="4_wine"
                   value={tableInfo[4]['wine']}
+                ></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonLabel position="floating">
+                  Dietary Requirements (optional)
+                </IonLabel>
+                <IonInput
+                  type="text"
+                  name="4_dietary"
+                  value={tableInfo[4]['dietary']}
                 ></IonInput>
               </IonItem>
             </IonCardContent>
@@ -424,7 +456,9 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">CIS Username</IonLabel>
+                <IonLabel position="floating">
+                  CIS Username (NA if not student)
+                </IonLabel>
                 <IonInput
                   type="text"
                   name="5_cis"
@@ -432,7 +466,7 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">College</IonLabel>
+                <IonLabel position="floating">College (or guest)</IonLabel>
                 <IonInput
                   type="text"
                   name="5_college"
@@ -445,6 +479,16 @@ const DiningEnter: React.FC = () => {
                   type="number"
                   name="5_wine"
                   value={tableInfo[5]['wine']}
+                ></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonLabel position="floating">
+                  Dietary Requirements (optional)
+                </IonLabel>
+                <IonInput
+                  type="text"
+                  name="5_dietary"
+                  value={tableInfo[5]['dietary']}
                 ></IonInput>
               </IonItem>
             </IonCardContent>
@@ -472,7 +516,9 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">CIS Username</IonLabel>
+                <IonLabel position="floating">
+                  CIS Username (NA if not student)
+                </IonLabel>
                 <IonInput
                   type="text"
                   name="6_cis"
@@ -480,7 +526,7 @@ const DiningEnter: React.FC = () => {
                 ></IonInput>
               </IonItem>
               <IonItem>
-                <IonLabel position="floating">College</IonLabel>
+                <IonLabel position="floating">College (or guest)</IonLabel>
                 <IonInput
                   type="text"
                   name="6_college"
@@ -493,6 +539,16 @@ const DiningEnter: React.FC = () => {
                   type="number"
                   name="6_wine"
                   value={tableInfo[6]['wine']}
+                ></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonLabel position="floating">
+                  Dietary Requirements (optional)
+                </IonLabel>
+                <IonInput
+                  type="text"
+                  name="6_dietary"
+                  value={tableInfo[6]['dietary']}
                 ></IonInput>
               </IonItem>
             </IonCardContent>
@@ -522,7 +578,9 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">CIS Username</IonLabel>
+                    <IonLabel position="floating">
+                      CIS Username (NA if not student)
+                    </IonLabel>
                     <IonInput
                       type="text"
                       name="7_cis"
@@ -530,7 +588,7 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">College</IonLabel>
+                    <IonLabel position="floating">College (or guest)</IonLabel>
                     <IonInput
                       type="text"
                       name="7_college"
@@ -543,6 +601,16 @@ const DiningEnter: React.FC = () => {
                       type="number"
                       name="7_wine"
                       value={tableInfo[7]['wine']}
+                    ></IonInput>
+                  </IonItem>
+                  <IonItem>
+                    <IonLabel position="floating">
+                      Dietary Requirements (optional)
+                    </IonLabel>
+                    <IonInput
+                      type="text"
+                      name="7_dietary"
+                      value={tableInfo[7]['dietary']}
                     ></IonInput>
                   </IonItem>
                 </IonCardContent>
@@ -570,7 +638,9 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">CIS Username</IonLabel>
+                    <IonLabel position="floating">
+                      CIS Username (NA if not student)
+                    </IonLabel>
                     <IonInput
                       type="text"
                       name="8_cis"
@@ -578,7 +648,7 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">College</IonLabel>
+                    <IonLabel position="floating">College (or guest)</IonLabel>
                     <IonInput
                       type="text"
                       name="8_college"
@@ -591,6 +661,16 @@ const DiningEnter: React.FC = () => {
                       type="number"
                       name="8_wine"
                       value={tableInfo[8]['wine']}
+                    ></IonInput>
+                  </IonItem>
+                  <IonItem>
+                    <IonLabel position="floating">
+                      Dietary Requirements (optional)
+                    </IonLabel>
+                    <IonInput
+                      type="text"
+                      name="8_dietary"
+                      value={tableInfo[8]['dietary']}
                     ></IonInput>
                   </IonItem>
                 </IonCardContent>
@@ -618,7 +698,9 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">CIS Username</IonLabel>
+                    <IonLabel position="floating">
+                      CIS Username (NA if not student)
+                    </IonLabel>
                     <IonInput
                       type="text"
                       name="9_cis"
@@ -626,7 +708,7 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">College</IonLabel>
+                    <IonLabel position="floating">College (or guest)</IonLabel>
                     <IonInput
                       type="text"
                       name="9_college"
@@ -639,6 +721,16 @@ const DiningEnter: React.FC = () => {
                       type="number"
                       name="9_wine"
                       value={tableInfo[9]['wine']}
+                    ></IonInput>
+                  </IonItem>
+                  <IonItem>
+                    <IonLabel position="floating">
+                      Dietary Requirements (optional)
+                    </IonLabel>
+                    <IonInput
+                      type="text"
+                      name="9_dietary"
+                      value={tableInfo[9]['dietary']}
                     ></IonInput>
                   </IonItem>
                 </IonCardContent>
@@ -666,7 +758,9 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">CIS Username</IonLabel>
+                    <IonLabel position="floating">
+                      CIS Username (NA if not student)
+                    </IonLabel>
                     <IonInput
                       type="text"
                       name="10_cis"
@@ -674,7 +768,7 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">College</IonLabel>
+                    <IonLabel position="floating">College (or guest)</IonLabel>
                     <IonInput
                       type="text"
                       name="10_college"
@@ -687,6 +781,16 @@ const DiningEnter: React.FC = () => {
                       type="number"
                       name="10_wine"
                       value={tableInfo[10]['wine']}
+                    ></IonInput>
+                  </IonItem>
+                  <IonItem>
+                    <IonLabel position="floating">
+                      Dietary Requirements (optional)
+                    </IonLabel>
+                    <IonInput
+                      type="text"
+                      name="10_dietary"
+                      value={tableInfo[10]['dietary']}
                     ></IonInput>
                   </IonItem>
                 </IonCardContent>
@@ -714,7 +818,9 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">CIS Username</IonLabel>
+                    <IonLabel position="floating">
+                      CIS Username (NA if not student)
+                    </IonLabel>
                     <IonInput
                       type="text"
                       name="11_cis"
@@ -722,7 +828,7 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">College</IonLabel>
+                    <IonLabel position="floating">College (or guest)</IonLabel>
                     <IonInput
                       type="text"
                       name="11_college"
@@ -735,6 +841,16 @@ const DiningEnter: React.FC = () => {
                       type="number"
                       name="11_wine"
                       value={tableInfo[11]['wine']}
+                    ></IonInput>
+                  </IonItem>
+                  <IonItem>
+                    <IonLabel position="floating">
+                      Dietary Requirements (optional)
+                    </IonLabel>
+                    <IonInput
+                      type="text"
+                      name="11_dietary"
+                      value={tableInfo[11]['dietary']}
                     ></IonInput>
                   </IonItem>
                 </IonCardContent>
@@ -762,7 +878,9 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">CIS Username</IonLabel>
+                    <IonLabel position="floating">
+                      CIS Username (NA if not student)
+                    </IonLabel>
                     <IonInput
                       type="text"
                       name="12_cis"
@@ -770,7 +888,7 @@ const DiningEnter: React.FC = () => {
                     ></IonInput>
                   </IonItem>
                   <IonItem>
-                    <IonLabel position="floating">College</IonLabel>
+                    <IonLabel position="floating">College (or guest)</IonLabel>
                     <IonInput
                       type="text"
                       name="12_college"
@@ -785,6 +903,16 @@ const DiningEnter: React.FC = () => {
                       value={tableInfo[12]['wine']}
                     ></IonInput>
                   </IonItem>
+                  <IonItem>
+                    <IonLabel position="floating">
+                      Dietary Requirements (optional)
+                    </IonLabel>
+                    <IonInput
+                      type="text"
+                      name="12_dietary"
+                      value={tableInfo[12]['dietary']}
+                    ></IonInput>
+                  </IonItem>
                 </IonCardContent>
               </IonCard>
             </React.Fragment>
@@ -796,3 +924,103 @@ const DiningEnter: React.FC = () => {
 };
 
 export default DiningEnter;
+
+const defaultTable = {
+  size: 12,
+  1: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  2: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  3: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  4: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  5: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  6: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  7: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  8: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  9: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  10: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  11: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  },
+  12: {
+    name: '',
+    email: '',
+    cis: '',
+    college: '',
+    wine: null,
+    dietary: ''
+  }
+};
