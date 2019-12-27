@@ -86,6 +86,10 @@ const Home: React.FC = () => {
           <IonCardContent>
             Discover the artists playing on the night. <br /> Explore the wide
             range of food and entertainment.
+            <br />
+            <br />
+            If you plan on dining, please pre-enter your table information on
+            the link below.
           </IonCardContent>
         </IonCard>
 
@@ -96,6 +100,14 @@ const Home: React.FC = () => {
         >
           <IonCardContent class="ion-no-padding">
             <IonList>
+              <IonListHeader>
+                <IonLabel>Dining Pre-Sign-up</IonLabel>
+              </IonListHeader>
+              <IonItem routerLink="/Home/DiningEnter">
+                <IonIcon slot="start" icon={star} />
+                <IonLabel>Enter Table Information</IonLabel>
+              </IonItem>
+
               <IonListHeader>
                 <IonLabel>Follow us on social media</IonLabel>
               </IonListHeader>

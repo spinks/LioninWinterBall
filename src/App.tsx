@@ -6,8 +6,7 @@ import {
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs,
-  useIonViewDidEnter
+  IonTabs
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { musicalNotes, restaurant, navigate, home, time } from 'ionicons/icons';
@@ -92,6 +91,11 @@ const App: React.FC = () => {
               <Route
                 path="/home/appInformation"
                 component={Home.AppInformation}
+                exact={true}
+              />
+              <Route
+                path="/home/diningEnter"
+                component={Home.DiningEnter}
                 exact={true}
               />
               {/* Music */}
