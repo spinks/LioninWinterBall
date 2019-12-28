@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   IonHeader,
   IonPage,
@@ -84,6 +84,32 @@ async function getSavedTable() {
 // this has to be run before the component mounts
 getSavedTable();
 
+/**
+ * Saves table submission time to storage
+ * @param {number} time as a string
+ */
+async function saveTableTime(time: number) {
+  console.log('setting saved time', time);
+  Storage.set({
+    key: 'savedTableTime',
+    value: time.toString()
+  });
+}
+
+/**
+ * Gets table time from storage
+ * @return {Promise<any>} time
+ * if false then no submit time has been previously set
+ */
+async function getSavedTableTime(): Promise<any> {
+  let time = '';
+  await Storage.get({ key: 'savedTableTime' }).then(ret => {
+    time = JSON.parse(ret.value || JSON.stringify(false));
+    console.log('getting saved time', time);
+  });
+  return time;
+}
+
 const DiningEnter: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState(
@@ -94,6 +120,19 @@ const DiningEnter: React.FC = () => {
   const [tableInfo] = useState(savedTable);
   const [fullTable, setFullTable] = useState(tableInfo.size === 12);
   const [uid, setUid] = useState('Not yet authenticated');
+
+  const [tableTime, setTableTime] = useState();
+
+  useEffect(() => {
+    // runs once on component mount (due to empty array second arg)
+    getSavedTableTime().then(t => {
+      if (t) {
+        setTableTime(t);
+      }
+    });
+    // some warnings about not passing the functions to useEffect?
+    // eslint-disable-next-line
+  }, []);
 
   /**
    * Handles form submission
@@ -137,6 +176,8 @@ const DiningEnter: React.FC = () => {
             'Your table has been submitted, bring the UID to sign-up'
           );
           setAlertTitle('Table Submitted');
+          setTableTime(Date.now());
+          saveTableTime(Date.now());
         }
       }
       setShowAlert(true);
@@ -271,7 +312,10 @@ const DiningEnter: React.FC = () => {
                   <IonCol>
                     <IonButton
                       expand="block"
-                      disabled={fb.auth().currentUser === null}
+                      disabled={
+                        fb.auth().currentUser === null ||
+                        (tableTime && Date.now() <= tableTime + 15 * 60000)
+                      }
                       type="submit"
                     >
                       Submit
