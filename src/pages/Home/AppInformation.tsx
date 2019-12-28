@@ -37,8 +37,8 @@ const AppInformation: React.FC = () => {
                     benjamin.j.spinks@durham.ac.uk
                   </a>
                   <br />
-                  With junior developers <br />
-                  Alasdair Cooper and Jonathan Hauenstein
+                  <br />
+                  With junior developers Alasdair Cooper and Jonathan Hauenstein
                 </IonCardContent>
               </IonCard>
             </IonCol>
@@ -67,8 +67,20 @@ const AppInformation: React.FC = () => {
                   <IonCardSubtitle>Technology Stack</IonCardSubtitle>
                 </IonCardHeader>
                 <IonCardContent>
-                  Built on Ionic React with capacitor <br />
-                  Using a Firebase CMS
+                  Built on Ionic React with Capacitor. <br />
+                  Using a Firebase CMS. <br />
+                  With a ZEIT Now Backend with Serverless Node Functions.
+                </IonCardContent>
+              </IonCard>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <IonCard class="card-white-header grid-card" color="light">
+                <IonCardContent>
+                  <a href="https://lioninwinterball.now.sh/policy.html">
+                    Privacy Policy and Terms and Conditions
+                  </a>
                 </IonCardContent>
               </IonCard>
             </IonCol>
