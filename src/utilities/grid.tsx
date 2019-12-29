@@ -12,10 +12,10 @@ import GridCard from './card';
 /**
  * Generate an Ionic Card grid array from Firebase Array (map) for a certiain page
  * @param {Array} VLEArray The firestore loading array
- * @param {string} pagekey The page that needs to be queried from the doc
+ * @param {string} pageKey The page that needs to be queried from the doc
  * @return {any} The formated grid
  */
-export default function grid(VLEArray: Array<any>, pagekey: string): any {
+export default function grid(VLEArray: Array<any>, pageKey: string): any {
   const [value, loading, error] = VLEArray;
   return (
     <React.Fragment>
@@ -39,12 +39,23 @@ export default function grid(VLEArray: Array<any>, pagekey: string): any {
           </IonCol>
         </IonRow>
       )}
-      {value && (
+      {value && !(pageKey in value) && (
+        <IonRow>
+          <IonCol>
+            <IonCard class="grid-card card-white-header" color="light">
+              <IonCardContent class="ion-text-center">
+                Content unavailable. If the issue persists contact LiWB.
+              </IonCardContent>
+            </IonCard>
+          </IonCol>
+        </IonRow>
+      )}
+      {value && pageKey in value && (
         <React.Fragment>
-          {Object.keys(value[pagekey])
+          {Object.keys(value[pageKey])
             .sort()
             .map(key => {
-              const item = value[pagekey][key];
+              const item = value[pageKey][key];
               if (!item['0']) {
                 // item is one leveled (0 and 1 are column positions)
                 return (
