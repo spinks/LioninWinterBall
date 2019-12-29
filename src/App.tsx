@@ -63,7 +63,6 @@ function toggleDarkTheme(shouldAdd: boolean | undefined) {
   document.body.classList.toggle('dark', shouldAdd);
   toggleImage('lion_home','/assets/lions/lion',false);
   toggleImage('map','assets/map/map',false);
-  prefersDark.addListener(mediaQuery => toggleDarkTheme(mediaQuery.matches));
 }
 export function toggleImage(id:string,path:string,b:boolean){
   var el=(document.getElementById(id) as HTMLImageElement);
