@@ -5,12 +5,14 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle
+  IonGrid
 } from '@ionic/react';
 
-const FoodDining: React.FC = () => {
+import grid from '../../utilities/grid';
+import AppContext from '../../AppContext';
+
+const Dining: React.FC = () => {
+  const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
       <IonHeader translucent>
@@ -19,15 +21,10 @@ const FoodDining: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {/* <IonImg src="/assets/map.png"></IonImg> */}
-        <IonCard class="card-white-header" color="light">
-          <IonCardHeader>
-            <IonCardTitle>Main</IonCardTitle>
-          </IonCardHeader>
-        </IonCard>
+        <IonGrid>{grid(vle, 'food/dining')}</IonGrid>
       </IonContent>
     </IonPage>
   );
 };
 
-export default FoodDining;
+export default Dining;
