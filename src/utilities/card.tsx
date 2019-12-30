@@ -65,11 +65,13 @@ const GridCard: React.FC<GCProps> = props => {
         )}
         {/* {item['body'] && <IonCardContent>{item['body']}</IonCardContent>} */}
         {item['body'] && !(item['title'] || item['subtitle']) && (
-          <IonCardContent>{item['body']}</IonCardContent>
+          <IonCardContent>
+            {htmlToReactParser.parse(item['body'])}
+          </IonCardContent>
         )}
         {item['body'] && (item['title'] || item['subtitle']) && (
           <IonCardContent style={{ paddingTop: '0px' }}>
-            {item['body']}
+            {htmlToReactParser.parse(item['body'])}
           </IonCardContent>
         )}
         {item['notify'] &&
