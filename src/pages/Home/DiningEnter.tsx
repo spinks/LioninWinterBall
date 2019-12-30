@@ -247,7 +247,7 @@ const DiningEnter: React.FC = () => {
               value={tableInfo[num]['wine']}
             ></IonInput>
           </IonItem>
-          <IonItem>
+          <IonItem lines="none">
             <IonLabel position="floating">
               Dietary Requirements (optional)
             </IonLabel>

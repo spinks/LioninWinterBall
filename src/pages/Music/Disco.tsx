@@ -291,7 +291,7 @@ const Disco: React.FC = () => {
                             style={{ margin: '5px 6px 5px 6px' }}
                             color="light"
                           >
-                            <IonItem>
+                            <IonItem lines="none">
                               {track.album.images[
                                 track.album.images.length - 1
                               ] && (
