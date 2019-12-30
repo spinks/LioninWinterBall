@@ -60,15 +60,15 @@ const GridCard: React.FC<GCProps> = props => {
             )}
           </IonCardHeader>
         )}
-        {item['body'] && <IonCardContent>{item['body']}</IonCardContent>}
-        {/* {item['body'] && !item['title'] && (
+        {/* {item['body'] && <IonCardContent>{item['body']}</IonCardContent>} */}
+        {item['body'] && !(item['title'] || item['subtitle']) && (
           <IonCardContent>{item['body']}</IonCardContent>
         )}
-        {item['body'] && item['title'] && (
+        {item['body'] && (item['title'] || item['subtitle']) && (
           <IonCardContent style={{ paddingTop: '0px' }}>
             {item['body']}
           </IonCardContent>
-        )} */}
+        )}
         {item['notify'] &&
           new Date(item['notify']['datetime']) >= new Date() && (
             <NotifyChip {...item['notify']} />
