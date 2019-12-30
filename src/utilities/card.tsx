@@ -11,6 +11,9 @@ import {
 import NotifyChip from './notify';
 import { NProps } from './notify';
 
+const HtmlToReactParser = require('html-to-react').Parser;
+const htmlToReactParser = new HtmlToReactParser();
+
 interface GCProps {
   title?: string;
   subtitle?: string;
