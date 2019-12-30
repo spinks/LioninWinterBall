@@ -327,7 +327,7 @@ const DiningEnter: React.FC = () => {
           </IonCard>
           <IonCard class="card-white-header" color="light">
             <IonCardHeader class="ion-no-padding">
-              <IonRadioGroup style={{ '--ion-item-background': 'transparent' }}>
+              <IonRadioGroup>
                 <IonGrid>
                   <IonRow>
                     <IonCol>

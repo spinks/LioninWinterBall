@@ -83,7 +83,7 @@ const Home: React.FC = () => {
               {<Countdown date={ballDate} renderer={renderer} />}
             </IonCardTitle>
           </IonCardHeader>
-          <IonCardContent>
+          <IonCardContent style={{ paddingTop: '0px' }}>
             Discover the artists playing on the night. <br /> Explore the wide
             range of food and entertainment.
             <br />
