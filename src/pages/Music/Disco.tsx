@@ -116,7 +116,7 @@ const Disco: React.FC = () => {
   function getAPIToken() {
     if (!currentlyFetching) {
       setCurrentlyFetching(true);
-      fetch('https://lioninwinterballserver.now.sh/api/token.js').then(r => {
+      fetch('https://lioninwinterball.now.sh/api/token.js').then(r => {
         console.log('fetching token:', r.status, r);
         if (r.status === 200) {
           r.text().then(resp => {
