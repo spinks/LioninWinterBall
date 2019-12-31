@@ -230,7 +230,7 @@ body.dark {
 }
 
 .grid-card img {
-  max-height: 16vh;
+  max-height: 20vh;
   overflow: hidden;
   object-fit: cover;
 }
