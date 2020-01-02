@@ -54,11 +54,13 @@ const GridCard: React.FC<GCProps> = props => {
         {(item['title'] || item['subtitle']) && (
           <IonCardHeader>
             {item['subtitle'] && (
-              <IonCardSubtitle>{item['subtitle']}</IonCardSubtitle>
+              <IonCardSubtitle>
+                {htmlToReactParser.parse(item['subtitle'])}
+              </IonCardSubtitle>
             )}
             {item['title'] && (
               <IonCardTitle class={item['smallTitle'] ? 'grid-med-title' : ''}>
-                {item['title']}
+                {htmlToReactParser.parse(item['subtitle'])}
               </IonCardTitle>
             )}
           </IonCardHeader>
