@@ -5,7 +5,13 @@ import {
   IonGrid,
   IonHeader,
   IonToolbar,
-  IonTitle
+  IonTitle,
+  IonRow,
+  IonCol,
+  IonCard,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle
 } from '@ionic/react';
 
 import grid from '../../utilities/grid';
@@ -21,7 +27,24 @@ const Music: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonGrid>{grid(vle, 'music')}</IonGrid>
+        <IonGrid>
+          <IonRow>
+            <IonCol>
+              <IonCard
+                class="grid-card card-white-header"
+                button
+                routerLink="/Music/disco"
+                color="light"
+              >
+                <IonCardHeader>
+                  <IonCardSubtitle>Request Songs</IonCardSubtitle>
+                  <IonCardTitle>Silent Disco</IonCardTitle>
+                </IonCardHeader>
+              </IonCard>
+            </IonCol>
+          </IonRow>
+          {grid(vle, 'music')}
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

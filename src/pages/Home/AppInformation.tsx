@@ -7,14 +7,16 @@ import {
   IonContent,
   IonCard,
   IonCardContent,
-  IonCardSubtitle,
-  IonCardHeader,
   IonGrid,
   IonRow,
   IonCol
 } from '@ionic/react';
 
+import grid from '../../utilities/grid';
+import AppContext from '../../AppContext';
+
 const AppInformation: React.FC = () => {
+  const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
       <IonHeader translucent>
@@ -24,56 +26,7 @@ const AppInformation: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonCard class="card-white-header grid-card" color="light">
-                <IonCardHeader>
-                  <IonCardSubtitle>Team</IonCardSubtitle>
-                </IonCardHeader>
-                <IonCardContent>
-                  <strong>Ben Spinks</strong> - Head Developer
-                  <br />
-                  <a href="mailto:benjamin.j.spinks@durham.ac.uk">
-                    benjamin.j.spinks@durham.ac.uk
-                  </a>
-                  <br />
-                  <br />
-                  With junior developers Alasdair Cooper and Jonathan Hauenstein
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard class="card-white-header grid-card" color="light">
-                <IonCardHeader>
-                  <IonCardSubtitle>Business Enquiries</IonCardSubtitle>
-                </IonCardHeader>
-                <IonCardContent>
-                  This app was built with flexibility and adaptability in mind,
-                  and as such it can be easily changed to suit any potential
-                  needs that future events may have.
-                  <br /> <br />
-                  If you would like to have an app for your ball or event and
-                  wish to build on this infrastructure contact Ben Spinks.
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard class="card-white-header grid-card" color="light">
-                <IonCardHeader>
-                  <IonCardSubtitle>Technology Stack</IonCardSubtitle>
-                </IonCardHeader>
-                <IonCardContent>
-                  Built on Ionic React with Capacitor. <br />
-                  Using a Firebase CMS. <br />
-                  With a ZEIT Now Backend with Serverless Node Functions.
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
+          {grid(vle, 'home/appInformation')}
           <IonRow>
             <IonCol>
               <IonCard class="card-white-header grid-card" color="light">

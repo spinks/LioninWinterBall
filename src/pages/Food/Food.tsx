@@ -5,7 +5,12 @@ import {
   IonGrid,
   IonHeader,
   IonToolbar,
-  IonTitle
+  IonTitle,
+  IonRow,
+  IonCol,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle
 } from '@ionic/react';
 
 import grid from '../../utilities/grid';
@@ -21,7 +26,24 @@ const Food: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonGrid>{grid(vle, 'food')}</IonGrid>
+        <IonGrid>
+          <IonRow>
+            <IonCol>
+              <IonCard
+                class="grid-card card-white-header"
+                button
+                routerLink="/Food/dining"
+                color="light"
+              >
+                <img src="/assets/food/dining_tent.jpg" alt="" />
+                <IonCardHeader>
+                  <IonCardTitle>Dining Menu</IonCardTitle>
+                </IonCardHeader>
+              </IonCard>
+            </IonCol>
+          </IonRow>
+          {grid(vle, 'food')}
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
