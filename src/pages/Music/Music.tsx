@@ -19,6 +19,13 @@ import AppContext from '../../AppContext';
 
 import { useSwipeable } from 'react-swipeable';
 
+import { Plugins } from '@capacitor/core';
+const { Device } = Plugins;
+let deviceInfo = {};
+Device.getInfo().then(r => {
+  deviceInfo = r;
+});
+
 // interface MusicProps {}
 
 const Music: React.FC = (props: any) => {
@@ -26,7 +33,9 @@ const Music: React.FC = (props: any) => {
   // const [popoverEvent, setPopoverEvent] = useState();
   const handlers = useSwipeable({
     onSwipedLeft: () => {
-      props.history.replace('food');
+      if ('platform' in deviceInfo && deviceInfo['platform'] === 'android') {
+        props.history.replace('food');
+      }
     }
   });
   const vle = Object.values(React.useContext(AppContext));

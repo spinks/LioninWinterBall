@@ -30,14 +30,25 @@ import Countdown from 'react-countdown-now';
 
 import { useSwipeable } from 'react-swipeable';
 
+import { Plugins } from '@capacitor/core';
+const { Device } = Plugins;
+let deviceInfo = {};
+Device.getInfo().then(r => {
+  deviceInfo = r;
+});
+
 const Home: React.FC = (props: any) => {
   const handlers = useSwipeable({
     onSwipedRight: () => {
-      props.history.replace('food');
+      if ('platform' in deviceInfo && deviceInfo['platform'] === 'android') {
+        props.history.replace('food');
+      }
       // props.history.replace('food');
     },
     onSwipedLeft: () => {
-      props.history.replace('schedule');
+      if ('platform' in deviceInfo && deviceInfo['platform'] === 'android') {
+        props.history.replace('schedule');
+      }
     }
   });
 

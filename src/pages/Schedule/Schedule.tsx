@@ -13,13 +13,24 @@ import AppContext from '../../AppContext';
 
 import { useSwipeable } from 'react-swipeable';
 
+import { Plugins } from '@capacitor/core';
+const { Device } = Plugins;
+let deviceInfo = {};
+Device.getInfo().then(r => {
+  deviceInfo = r;
+});
+
 const Schedule: React.FC = (props: any) => {
   const handlers = useSwipeable({
     onSwipedRight: () => {
-      props.history.replace('home');
+      if ('platform' in deviceInfo && deviceInfo['platform'] === 'android') {
+        props.history.replace('home');
+      }
     },
     onSwipedLeft: () => {
-      props.history.replace('maps');
+      if ('platform' in deviceInfo && deviceInfo['platform'] === 'android') {
+        props.history.replace('maps');
+      }
     }
   });
   const vle = Object.values(React.useContext(AppContext));

@@ -12,10 +12,19 @@ import React from 'react';
 
 import { useSwipeable } from 'react-swipeable';
 
+import { Plugins } from '@capacitor/core';
+const { Device } = Plugins;
+let deviceInfo = {};
+Device.getInfo().then(r => {
+  deviceInfo = r;
+});
+
 const Maps: React.FC = (props: any) => {
   const handlers = useSwipeable({
     onSwipedRight: () => {
-      props.history.replace('schedule');
+      if ('platform' in deviceInfo && deviceInfo['platform'] === 'android') {
+        props.history.replace('schedule');
+      }
     }
   });
   return (
