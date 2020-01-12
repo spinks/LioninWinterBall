@@ -1,107 +1,107 @@
-.map-button{
+.map-button {
   position: absolute;
   font: 1vw;
   height: 5vw;
   width: 5vw;
-  transform: translate(-50%,calc(1.4cm - 50%));
+  transform: translate(-50%, calc(1.4cm - 50%));
 }
 
-.map-label{
+.map-label {
   position: absolute;
-  transform: translate(-25vw,-2vw);
+  transform: translate(-25vw, -2vw);
   font-size: 4vw;
 }
 
-.map-food{
-  top:79vw;
-  left:62.4vw;
+.map-food {
+  top: 79vw;
+  left: 62.4vw;
 }
 
-.map-bar{
-  top:35vw;
-  left:29vw;
+.map-bar {
+  top: 35vw;
+  left: 29vw;
 }
 
-.map-mermaids{
-  top:22.6vw;
-  left:29vw;
+.map-mermaids {
+  top: 22.6vw;
+  left: 29vw;
 }
 
-.map-photo{
-  top:43vw;
-  left:29vw;
+.map-photo {
+  top: 43vw;
+  left: 29vw;
 }
 
-.map-wc1{
-  top:26.5vw;
-  left:37vw;
+.map-wc1 {
+  top: 26.5vw;
+  left: 37vw;
 }
 
-.map-wc2{
-  top:110vw;
-  left:74vw;
+.map-wc2 {
+  top: 110vw;
+  left: 74vw;
 }
 
-.map-exit1{
-  top:73vw;
-  left:26vw;
+.map-exit1 {
+  top: 73vw;
+  left: 26vw;
 }
 
-.map-exit2{
-  top:148vw;
-  left:50.3vw;
+.map-exit2 {
+  top: 148vw;
+  left: 50.3vw;
 }
 
-.map-portersLodge{
-  top:81vw;
-  left:28vw;
+.map-portersLodge {
+  top: 81vw;
+  left: 28vw;
 }
 
-.map-playroom{
-  top:146vw;
-  left:60vw;
+.map-playroom {
+  top: 146vw;
+  left: 60vw;
 }
 
-.map-shipwreck{
-  top:131vw;
-  left:43vw;
+.map-shipwreck {
+  top: 131vw;
+  left: 43vw;
 }
-.map-pirateship{
-  top:106vw;
-  left:48vw;
-}
-
-.map-kitchen{
-  top:19vw;
-  left:53.5vw;
+.map-pirateship {
+  top: 106vw;
+  left: 48vw;
 }
 
-.map-hideout{
-  top:39vw;
-  left:53.5vw;
+.map-kitchen {
+  top: 19vw;
+  left: 53.5vw;
 }
 
-.map-dining{
-  top:70vw;
-  left:63vw;
+.map-hideout {
+  top: 39vw;
+  left: 53.5vw;
 }
 
-.map-creek{
-  top:88vw;
-  left:48vw;
+.map-dining {
+  top: 70vw;
+  left: 63vw;
 }
 
-.map-pa{
-  top:39vw;
-  left:40vw;
+.map-creek {
+  top: 88vw;
+  left: 48vw;
 }
 
-.map-icon{
+.map-pa {
+  top: 39vw;
+  left: 40vw;
+}
+
+.map-icon {
   font-size: 4vw;
   margin: -1cm;
 }
 
-.map-text-icon{
+.map-text-icon {
   font-size: 2.5vw;
 }
 
