@@ -240,7 +240,7 @@ const DiningEnter: React.FC = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel position="floating">Wine Choice</IonLabel>
+            <IonLabel position="floating">Wine Choice (number)</IonLabel>
             <IonInput
               type="number"
               name={num.toString() + '_wine'}
