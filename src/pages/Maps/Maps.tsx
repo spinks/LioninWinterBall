@@ -17,15 +17,7 @@ const Maps: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonImg
-          src="/assets/map/map.png"
-          alt=""
-          style={{
-            position: 'relative',
-            top: '50%',
-            transform: 'translateY(-50%)'
-          }}
-        ></IonImg>
+        <IonImg src="/assets/map/map.png" alt="map"></IonImg>
       </IonContent>
     </IonPage>
   );
