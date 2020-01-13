@@ -42,8 +42,12 @@ import AppContext from './AppContext';
 import fb from './Firebase';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
-import { Plugins, KeyboardResize } from '@capacitor/core';
-const { SplashScreen, Device, Keyboard } = Plugins;
+import {
+  Plugins,
+  KeyboardResize,
+  PushNotificationToken
+} from '@capacitor/core';
+const { SplashScreen, Device, Keyboard, PushNotifications } = Plugins;
 
 Device.getInfo().then(r => {
   if ('platform' in r && r['platform'] === 'ios') {
@@ -79,6 +83,13 @@ const App: React.FC = () => {
   });
   useEffect(() => {
     SplashScreen.hide();
+    PushNotifications.register();
+    PushNotifications.addListener(
+      'registration',
+      (token: PushNotificationToken) => {
+        alert('Push registration success, token: ' + token.value);
+      }
+    );
   }, []);
   const [value, loading, error] = useDocumentData(
     fb
