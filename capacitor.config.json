@@ -1,6 +1,6 @@
 {
-  "appId": "com.hatfield.liwb",
-  "appName": "LioninWinterBall",
+  "appId": "uk.ac.durham.hatfield.lioninwinter",
+  "appName": "Lion in Winter Ball",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
