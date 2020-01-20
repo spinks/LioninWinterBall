@@ -17,6 +17,7 @@
         - [Notify](#notify)
       - [Implementing](#implementing)
   - [Silent Disco](#silent-disco)
+  - [Table Sign-up Form](#table-sign-up-form)
   - [Additional Notes](#additional-notes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -38,7 +39,7 @@ When developing using `ionic serve` and running in a chrome is a much faster app
 
 ## Modifying Content
 
-Trivial changes to content can be made, simply be editing the `tsx` files for each page. New page formats and such can be built from the components at [ionic components](https://ionicframework.com/docs/components). You are of course able to build any other functionality, using react JS primitives.
+Trivial changes to content can be made, simply be editing the `tsx` files for each page. New page formats and such can be built from the components at [ionic components](https://ionicframework.com/docs/components). You are of course able to build any other functionality, using react JS primitives. Much of the apps content is drawn from the firebase document, which is explained further later.
 
 **Countdown** [react-countdown-now](https://www.npmjs.com/package/react-countdown-now). Provides countdown to a set date (ball, ticket release, etc). The renderer method seen in `home.tsx` is how the remaining time is displayed.
 
@@ -56,7 +57,7 @@ See [capacitor getting-started](https://capacitor.ionicframework.com/docs/gettin
 
 You shouldn't need to run `ionic integrations enable capacitor` but if you are encountering issues, you could check that it is enabled via `ionic integrations list` and checking capacitor's status.
 
-You will then need to initialise the capacitor module with `npx cap init`. You will need to choose an app name (for example LioninWinterBall*2020*) and an appID (we use `com.hatfield.liwb`).
+You will then need to initialise the capacitor module with `npx cap init`. You will need to choose an app name (for example Lion in Winter Ball) and an appID (something like `com.hatfield.liwb`).
 
 Then following the capacitor docs, you will build the app with ionic `ionic build` add platforms:
 
@@ -147,7 +148,7 @@ If you then want this page (content) to be formatted into a grid of cards (and m
 
 Within these numbered row maps: either:
 
-- **A** — the set of card fields (actual content described later) or
+- **A** — the set of card fields (actual content described below) or
 - **B** — maps with IDs `"0"` and `"1"`, these represent the left and right hand columns respectively. Within these two column maps you also have the card fields.
 
 Card fields (all are strings unless otherwise noted):
@@ -231,22 +232,37 @@ Then create a serverless function, deployed with Zeit (for example), which perfo
 
 1. On the console goto auth, enable anonymous authentication
 2. Create a `songs` collection
-3. Set up write rules, your database rules file should look something like:
+3. Set up write rules, your database rules for the songs collection should look something like:
 
 ```
-match /databases/{database}/documents {
-  service cloud.firestore {
-    match /songs/{userId} {
-      allow write, update, create: if request.auth.uid == userId
+match /songs/{userId} {
+      allow write : if request.auth.uid == userId
     }
-    match /{document=**} {
-      allow read: if (resource.data.visibility == 'public')
-    }
-  }
-}
 ```
 
 If you have a large amount of song requests be cautious of using the firebase console to look at them, as every user song push or page refresh will perform **a lot** of reads, definitely do not leave it open for extended periods.
+
+## Table Sign-up Form
+
+The table sign up form handles the range of data that is needed at sign up. Table heads are expected to bring their unique code to sign up, which can then be used by staff to quickly query the information. The Lion in Winter Ball Server (separate directory) has the implementation of this. It also allows for bar staff to quickly collect the required sum of money for wine payments at sign-up.
+
+Setting this feature up is quite simple.
+
+**Firebase Firestore** - you need to:
+
+1. On the console goto auth, enable anonymous authentication
+2. Create a `tables` collection
+3. Set up write rules, your database rules for the tables collection:
+
+```
+match /tables/{userId} {
+    	allow create: if request.auth.uid == userId && request.resource.data.timestamp == request.time;
+      allow update: if request.auth.uid == userId && (request.time > resource.data.timestamp + duration.value(15, 'm'))
+      allow read: if request.auth.uid in [put your admin ids here]
+    }
+```
+
+The additional rule here prevents rapid resubmission, this is mostly a safety precaution to stop someone rapidly writing to firebase.
 
 ## Additional Notes
 
