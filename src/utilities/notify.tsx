@@ -6,24 +6,29 @@ import { Plugins } from '@capacitor/core';
 const { LocalNotifications } = Plugins;
 
 /**
- * Toggles the status of a notification, either creates notifcation or cancels if it exists
+ * Toggles the status of a notification, either creates notification or cancels if it exists
  * @param {NProps} notificationContent the information for the notification
+ * @return {any} object with enabled (the status of that notification) and permissions (if they are allowed)
  */
-async function notifyHandler(notificationContent: NProps): Promise<boolean> {
-  const existing = await notifyExists(notificationContent['id']);
+async function notifyHandler(notificationContent: NProps): Promise<any> {
+  const permissions = await LocalNotifications.areEnabled();
+  if (!permissions.value) {
+    return { enabled: false, permissions: false };
+  }
+  let existing = await notifyExists(notificationContent['id']);
   if (!existing) {
     notify(notificationContent);
-    return true;
   } else {
     LocalNotifications.cancel({ notifications: [existing] });
-    return false;
   }
+  existing = await notifyExists(notificationContent['id']);
+  return { enabled: existing, permissions: true };
 }
 
 /**
  * Check if an notification exists, either returns undefined or the notification
  * @param {number} nid notification ID
- * @return {any} either undefined if it doesnt exist, or the notification id object
+ * @return {any} either undefined if it doesn't exist, or the notification id object
  */
 async function notifyExists(nid: number): Promise<any> {
   const pending = await LocalNotifications.getPending();
@@ -78,9 +83,13 @@ const NotifyChip: React.FC<NProps> = props => {
         onClick={e => {
           e.stopPropagation();
           notifyHandler(props).then(b => {
-            setNotifyOn(b);
+            setNotifyOn(b.enabled);
             setToastString(
-              b ? 'You will be notified' : 'Notification cancelled'
+              b.permissions
+                ? b.enabled
+                  ? 'You will be notified'
+                  : 'Notification cancelled'
+                : 'Please enable notification in settings to use this feature'
             );
             setShowToast1(true);
           });

@@ -43,7 +43,7 @@ import fb from './Firebase';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { Plugins, KeyboardResize } from '@capacitor/core';
-const { SplashScreen, Device, Keyboard } = Plugins;
+const { SplashScreen, Device, Keyboard, LocalNotifications } = Plugins;
 
 Device.getInfo().then(r => {
   if ('platform' in r && r['platform'] === 'ios') {
@@ -79,6 +79,21 @@ const App: React.FC = () => {
   });
   useEffect(() => {
     SplashScreen.hide();
+    // dummy notification to ask for permissions
+    // this wont be set as it is not past the current time
+    // TODO: could probably do a check to only run this once
+    LocalNotifications.schedule({
+      notifications: [
+        {
+          title: '',
+          body: '',
+          id: 0,
+          schedule: { at: new Date() },
+          actionTypeId: '',
+          extra: null
+        }
+      ]
+    });
   }, []);
   const [value, loading, error] = useDocumentData(
     fb
