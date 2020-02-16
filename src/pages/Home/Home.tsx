@@ -5,11 +5,7 @@ import {
   IonCardTitle,
   IonContent,
   IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
   IonList,
-  IonListHeader,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -17,15 +13,10 @@ import {
   IonGrid,
   IonCardContent
 } from '@ionic/react';
-import {
-  logoInstagram,
-  logoFacebook,
-  star,
-  informationCircleOutline,
-  cog
-} from 'ionicons/icons';
 import React from 'react';
 import Countdown from 'react-countdown-now';
+import AppContext from '../../AppContext';
+import list from '../../utilities/list';
 
 const Home: React.FC = () => {
   // Countdown renderer
@@ -33,8 +24,6 @@ const Home: React.FC = () => {
   const renderer = ({
     days,
     hours,
-    minutes,
-    seconds,
     completed
   }: {
     days: number;
@@ -56,7 +45,7 @@ const Home: React.FC = () => {
       );
     }
   };
-
+  const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
       <IonHeader translucent>
@@ -86,10 +75,6 @@ const Home: React.FC = () => {
           <IonCardContent style={{ paddingTop: '0px' }}>
             Discover the artists playing on the night. <br /> Explore the wide
             range of food and entertainment.
-            <br />
-            <br />
-            If you plan on dining, please pre-enter your table information on
-            the link below.
           </IonCardContent>
         </IonCard>
 
@@ -99,53 +84,7 @@ const Home: React.FC = () => {
           style={{ '--ion-item-background': 'transparent' }}
         >
           <IonCardContent class="ion-no-padding">
-            <IonList>
-              <IonListHeader>
-                <IonLabel>Dining Pre-Sign-up</IonLabel>
-              </IonListHeader>
-              <IonItem routerLink="/Home/DiningEnter">
-                <IonIcon slot="start" icon={star} />
-                <IonLabel>Enter Table Information</IonLabel>
-              </IonItem>
-
-              <IonListHeader>
-                <IonLabel>Follow us on social media</IonLabel>
-              </IonListHeader>
-              <IonItem
-                href="https://www.instagram.com/lioninwinterball/"
-                target="_blank"
-              >
-                <IonLabel>Instagram</IonLabel>
-                <IonIcon icon={logoInstagram} size="large" slot="start" />
-              </IonItem>
-              <IonItem
-                href="https://www.facebook.com/liwb2020/"
-                target="_blank"
-              >
-                <IonLabel>Facebook</IonLabel>
-                <IonIcon icon={logoFacebook} size="large" slot="start" />
-              </IonItem>
-
-              <IonListHeader>
-                <IonLabel>Our Sponsors</IonLabel>
-              </IonListHeader>
-              <IonItem routerLink="/Home/Sponsors">
-                <IonIcon slot="start" icon={star} />
-                <IonLabel>Sponsors</IonLabel>
-              </IonItem>
-
-              <IonListHeader>
-                <IonLabel>Information</IonLabel>
-              </IonListHeader>
-              <IonItem routerLink="/Home/BallInformation">
-                <IonIcon slot="start" icon={informationCircleOutline} />
-                <IonLabel>Ball Information and Help</IonLabel>
-              </IonItem>
-              <IonItem routerLink="/Home/AppInformation">
-                <IonIcon slot="start" icon={cog} />
-                <IonLabel>About the App</IonLabel>
-              </IonItem>
-            </IonList>
+            <IonList>{list(vle, 'home')}</IonList>
           </IonCardContent>
         </IonCard>
       </IonContent>
