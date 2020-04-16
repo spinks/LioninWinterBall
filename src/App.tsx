@@ -79,20 +79,15 @@ const App: React.FC = () => {
   });
   useEffect(() => {
     SplashScreen.hide();
-    // dummy notification to ask for permissions
-    // this wont be set as it is not past the current time
-    // TODO: could probably do a check to only run this once
-    LocalNotifications.schedule({
-      notifications: [
-        {
-          title: '',
-          body: '',
-          id: 0,
-          schedule: { at: new Date() },
-          actionTypeId: '',
-          extra: null
-        }
-      ]
+    Device.getInfo().then(r => {
+      if ('platform' in r && r['platform'] !== 'web') {
+        LocalNotifications.areEnabled().then(permissions => {
+          if (!permissions.value) {
+            // @ts-ignore
+            LocalNotifications.requestPermission();
+          }
+        });
+      }
     });
   }, []);
   const [value, loading, error] = useDocumentData(

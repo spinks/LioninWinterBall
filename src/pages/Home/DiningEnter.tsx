@@ -121,7 +121,7 @@ const DiningEnter: React.FC = () => {
   const [fullTable, setFullTable] = useState(tableInfo.size === 12);
   const [uid, setUid] = useState('Not yet authenticated');
 
-  const [tableTime, setTableTime] = useState();
+  const [tableTime, setTableTime] = useState(Number);
 
   useEffect(() => {
     // runs once on component mount (due to empty array second arg)
@@ -314,7 +314,8 @@ const DiningEnter: React.FC = () => {
                       expand="block"
                       disabled={
                         fb.auth().currentUser === null ||
-                        (tableTime && Date.now() <= tableTime + 15 * 60000)
+                        (tableTime && Date.now() <= tableTime + 15 * 60000) ||
+                        false
                       }
                       type="submit"
                     >
@@ -335,7 +336,7 @@ const DiningEnter: React.FC = () => {
                         <IonLabel>Full</IonLabel>
                         <IonRadio
                           slot="start"
-                          checked={fullTable}
+                          value={fullTable}
                           onClick={() => setFullTable(true)}
                         />
                       </IonItem>
@@ -345,7 +346,7 @@ const DiningEnter: React.FC = () => {
                         <IonLabel>Half Table</IonLabel>
                         <IonRadio
                           slot="start"
-                          checked={!fullTable}
+                          value={!fullTable}
                           onClick={() => setFullTable(false)}
                         />
                       </IonItem>

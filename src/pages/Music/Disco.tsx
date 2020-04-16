@@ -21,6 +21,7 @@ import {
 import { add } from 'ionicons/icons';
 
 // @ts-ignore
+// TODO: update this to 3.0 https://github.com/idanlo/react-spotify-api/releases/tag/v3.0.0
 import { SpotifyApiContext, Search } from 'react-spotify-api';
 
 import fb from '../../Firebase';

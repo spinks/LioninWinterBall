@@ -233,6 +233,7 @@ body.dark {
   max-height: 20vh;
   overflow: hidden;
   object-fit: cover;
+  width: 100%;
 }
 
 .grid-med-title {
