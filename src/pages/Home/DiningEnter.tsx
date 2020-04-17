@@ -71,18 +71,18 @@ async function saveTable(table: Table, fire: boolean = true) {
   return status;
 }
 
-let savedTable: any = {};
+const savedTable: any = {};
 /**
- * Sets loadedTrack global constant to stored track
+ * Returns the table from storage
+ * @return {Promise<Table>} table
  */
 async function getSavedTable() {
+  let t;
   await Storage.get({ key: 'savedTable' }).then(ret => {
-    savedTable = JSON.parse(ret.value || JSON.stringify(defaultTable));
+    t = JSON.parse(ret.value || JSON.stringify(defaultTable));
   });
+  return t;
 }
-// code in the main page is one once on app startup
-// this has to be run before the component mounts
-getSavedTable();
 
 /**
  * Saves table submission time to storage
@@ -117,8 +117,8 @@ const DiningEnter: React.FC = () => {
   );
   const [alertTitle, setAlertTitle] = useState('Table Submitted');
 
-  const [tableInfo] = useState(savedTable);
-  const [fullTable, setFullTable] = useState(tableInfo.size === 12);
+  const [tableInfo, setTableInfo] = useState(savedTable);
+  const [fullTable, setFullTable] = useState(savedTable.size === 12);
   const [uid, setUid] = useState('Not yet authenticated');
 
   const [tableTime, setTableTime] = useState(Number);
@@ -129,6 +129,10 @@ const DiningEnter: React.FC = () => {
       if (t) {
         setTableTime(t);
       }
+    });
+    getSavedTable().then(t => {
+      setTableInfo(t);
+      setFullTable(t!['size'] === 12);
     });
     // some warnings about not passing the functions to useEffect?
     // eslint-disable-next-line
@@ -210,7 +214,7 @@ const DiningEnter: React.FC = () => {
             <IonInput
               type="text"
               name={num.toString() + '_name'}
-              value={tableInfo[num]['name']}
+              value={tableInfo[num] && tableInfo[num]['name']}
             ></IonInput>
           </IonItem>
           <IonItem>
@@ -218,7 +222,7 @@ const DiningEnter: React.FC = () => {
             <IonInput
               type="email"
               name={num.toString() + '_email'}
-              value={tableInfo[num]['email']}
+              value={tableInfo[num] && tableInfo[num]['email']}
             ></IonInput>
           </IonItem>
           <IonItem>
@@ -228,7 +232,7 @@ const DiningEnter: React.FC = () => {
             <IonInput
               type="text"
               name={num.toString() + '_cis'}
-              value={tableInfo[num]['cis']}
+              value={tableInfo[num] && tableInfo[num]['cis']}
             ></IonInput>
           </IonItem>
           <IonItem>
@@ -244,7 +248,7 @@ const DiningEnter: React.FC = () => {
             <IonInput
               type="number"
               name={num.toString() + '_wine'}
-              value={tableInfo[num]['wine']}
+              value={tableInfo[num] && tableInfo[num]['wine']}
             ></IonInput>
           </IonItem>
           <IonItem lines="none">
@@ -254,7 +258,7 @@ const DiningEnter: React.FC = () => {
             <IonInput
               type="text"
               name={num.toString() + '_dietary'}
-              value={tableInfo[num]['dietary']}
+              value={tableInfo[num] && tableInfo[num]['dietary']}
             ></IonInput>
           </IonItem>
         </IonCardContent>
@@ -328,27 +332,22 @@ const DiningEnter: React.FC = () => {
           </IonCard>
           <IonCard class="card-white-header" color="light">
             <IonCardHeader class="ion-no-padding">
-              <IonRadioGroup>
+              <IonRadioGroup
+                value={fullTable}
+                onIonChange={e => setFullTable(e.detail.value)}
+              >
                 <IonGrid>
                   <IonRow>
                     <IonCol>
                       <IonItem lines="none">
                         <IonLabel>Full</IonLabel>
-                        <IonRadio
-                          slot="start"
-                          value={fullTable}
-                          onClick={() => setFullTable(true)}
-                        />
+                        <IonRadio slot="start" value={true} />
                       </IonItem>
                     </IonCol>
                     <IonCol>
                       <IonItem lines="none">
                         <IonLabel>Half Table</IonLabel>
-                        <IonRadio
-                          slot="start"
-                          value={!fullTable}
-                          onClick={() => setFullTable(false)}
-                        />
+                        <IonRadio slot="start" value={false} />
                       </IonItem>
                     </IonCol>
                   </IonRow>
