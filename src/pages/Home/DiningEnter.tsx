@@ -20,11 +20,14 @@ import {
   IonButton,
   IonAlert,
   IonSelect,
-  IonSelectOption
+  IonSelectOption,
+  IonSpinner
 } from '@ionic/react';
 
 import * as firebase from 'firebase/app';
 import fb from '../../Firebase';
+
+import AppContext from '../../AppContext';
 
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
@@ -34,6 +37,10 @@ const sanitizeHtml = require('sanitize-html');
 interface Table {
   [key: string]: any;
   size: number;
+}
+
+interface Wines {
+  [key: string]: any;
 }
 
 /**
@@ -113,6 +120,9 @@ async function getSavedTableTime(): Promise<any> {
 }
 
 const DiningEnter: React.FC = () => {
+  // vle array
+  const [value, loading, error] = Object.values(React.useContext(AppContext));
+
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState(
     'Your table has been submitted, bring the UID to sign-up'
@@ -199,10 +209,11 @@ const DiningEnter: React.FC = () => {
   /**
    * Returns a diner info card
    * @param {number} num
-   * @param {title} title
+   * @param {Wines} wines
+   * @param {string} title
    * @return {any} card element
    */
-  function dinerCard(num: number, title: string = ''): any {
+  function dinerCard(num: number, wines: Wines = {}, title: string = ''): any {
     title = title || 'Diner ' + num.toString();
     return (
       <IonCard class="card-white-header" color="light">
@@ -212,7 +223,7 @@ const DiningEnter: React.FC = () => {
 
         <IonCardContent class="ion-no-padding">
           <IonItem>
-            <IonLabel position="floating">Name</IonLabel>
+            <IonLabel position="stacked">Name</IonLabel>
             <IonInput
               type="text"
               name={num.toString() + '_name'}
@@ -220,7 +231,7 @@ const DiningEnter: React.FC = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel position="floating">Email</IonLabel>
+            <IonLabel position="stacked">Email (preferably Durham)</IonLabel>
             <IonInput
               type="email"
               name={num.toString() + '_email'}
@@ -228,7 +239,7 @@ const DiningEnter: React.FC = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel position="floating">
+            <IonLabel position="stacked">
               CIS Username (NA if not student)
             </IonLabel>
             <IonInput
@@ -238,13 +249,10 @@ const DiningEnter: React.FC = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel position="floating">College</IonLabel>
+            <IonLabel position="stacked">College</IonLabel>
             <IonSelect
               name={num.toString() + '_college'}
               value={tableInfo[num] && tableInfo[num]['college']}
-              okText="Okay"
-              cancelText="Dismiss"
-              // onIonChange={e => setHairColor(e.detail.value)}
             >
               <IonSelectOption value="hatfield">Hatfield</IonSelectOption>
               <IonSelectOption value="non-hatfield">
@@ -253,17 +261,31 @@ const DiningEnter: React.FC = () => {
             </IonSelect>
           </IonItem>
           <IonItem>
-            <IonLabel position="floating">Wine Choice (number)</IonLabel>
-            <IonInput
+            <IonLabel position="stacked">Wine Choice</IonLabel>
+            {/* <IonInput
               type="number"
               name={num.toString() + '_wine'}
               value={tableInfo[num] && tableInfo[num]['wine']}
-            ></IonInput>
+            ></IonInput> */}
+            <IonSelect
+              name={num.toString() + '_wine'}
+              value={tableInfo[num] && tableInfo[num]['wine']}
+            >
+              <React.Fragment>
+                {Object.keys(wines)
+                  .sort((a, b) => parseInt(a) - parseInt(b))
+                  .map(key => {
+                    return (
+                      <IonSelectOption key={key} value={key}>
+                        {key in wines && wines[key]}
+                      </IonSelectOption>
+                    );
+                  })}
+              </React.Fragment>
+            </IonSelect>
           </IonItem>
           <IonItem lines="none">
-            <IonLabel position="floating">
-              Dietary Requirements (optional)
-            </IonLabel>
+            <IonLabel position="stacked">Dietary Requirements</IonLabel>
             <IonInput
               type="text"
               name={num.toString() + '_dietary'}
@@ -293,92 +315,123 @@ const DiningEnter: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen style={{ background: 'rgb(18, 39, 78)' }}>
-        <IonAlert
-          isOpen={showAlert}
-          onDidDismiss={() => setShowAlert(false)}
-          header={alertTitle}
-          message={alertText}
-        />
-        <form onSubmit={handleSubmit} id="diningForm">
-          <IonCard class="card-white-header" color="light" id="top">
-            <IonCardHeader>
-              Enter your table information below and be sure to submit, bring
-              your UID to sign-up. Your UID is as follows.
-              <h5 style={{ textAlign: 'center' }}>{uid}</h5>
-              You can only submit your table changes once every 15 minutes.
-              <br />
-              <IonGrid>
-                <IonRow>
-                  <IonCol>
-                    <IonButton
-                      expand="block"
-                      onClick={() => {
-                        handleSubmit(
-                          { target: document.getElementById('diningForm') },
-                          false
-                        );
-                      }}
-                    >
-                      Save
-                    </IonButton>
-                  </IonCol>
-                  <IonCol>
-                    <IonButton
-                      expand="block"
-                      disabled={
-                        fb.auth().currentUser === null ||
-                        (tableTime && Date.now() <= tableTime + 15 * 60000) ||
-                        false
-                      }
-                      type="submit"
-                    >
-                      Submit
-                    </IonButton>
-                  </IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonCardHeader>
-          </IonCard>
-          <IonCard class="card-white-header" color="light">
-            <IonCardHeader class="ion-no-padding">
-              <IonRadioGroup
-                value={fullTable}
-                onIonChange={e => setFullTable(e.detail.value)}
-              >
-                <IonGrid>
-                  <IonRow>
-                    <IonCol>
-                      <IonItem lines="none">
-                        <IonLabel>Full</IonLabel>
-                        <IonRadio slot="start" value={true} />
-                      </IonItem>
-                    </IonCol>
-                    <IonCol>
-                      <IonItem lines="none">
-                        <IonLabel>Half Table</IonLabel>
-                        <IonRadio slot="start" value={false} />
-                      </IonItem>
-                    </IonCol>
-                  </IonRow>
-                </IonGrid>
-              </IonRadioGroup>
-            </IonCardHeader>
-          </IonCard>
-          {dinerCard(1, 'Head of Table')}
-          {dinerCard(2)}
-          {dinerCard(3)}
-          {dinerCard(4)}
-          {dinerCard(5)}
-          {dinerCard(6)}
-          {fullTable && (
+        <React.Fragment>
+          {error && (
+            <IonCard class="card-white-header" color="light">
+              <IonCardContent>Error: {JSON.stringify(error)}</IonCardContent>
+            </IonCard>
+          )}
+          {loading && (
+            <IonCard class="card-white-header" color="light">
+              <IonCardContent class="ion-text-center">
+                <IonSpinner />
+              </IonCardContent>
+            </IonCard>
+          )}
+          {value && !('home/signUp' in value) && (
+            <IonCard class="card-white-header" color="light">
+              <IonCardContent class="ion-text-center">
+                Content unavailable. If the issue persists contact LiWB.
+              </IonCardContent>
+            </IonCard>
+          )}
+          {value && 'home/signUp' in value && (
             <React.Fragment>
-              {dinerCard(7)} {dinerCard(8)} {dinerCard(9)}
-              {dinerCard(10)}
-              {dinerCard(11)}
-              {dinerCard(12)}
+              <IonAlert
+                isOpen={showAlert}
+                onDidDismiss={() => setShowAlert(false)}
+                header={alertTitle}
+                message={alertText}
+              />
+              <form onSubmit={handleSubmit} id="diningForm">
+                <IonCard class="card-white-header" color="light" id="top">
+                  <IonCardHeader>
+                    Enter your table information below and be sure to submit,
+                    bring your UID to sign-up. Your UID is as follows.
+                    <h5 style={{ textAlign: 'center' }}>{uid}</h5>
+                    You can only submit your table changes once every 15
+                    minutes.
+                    <br />
+                    <IonGrid>
+                      <IonRow>
+                        <IonCol>
+                          <IonButton
+                            expand="block"
+                            onClick={() => {
+                              handleSubmit(
+                                {
+                                  target: document.getElementById('diningForm')
+                                },
+                                false
+                              );
+                            }}
+                          >
+                            Save
+                          </IonButton>
+                        </IonCol>
+                        <IonCol>
+                          <IonButton
+                            expand="block"
+                            disabled={
+                              fb.auth().currentUser === null ||
+                              (tableTime &&
+                                Date.now() <= tableTime + 15 * 60000) ||
+                              false
+                            }
+                            type="submit"
+                          >
+                            Submit
+                          </IonButton>
+                        </IonCol>
+                      </IonRow>
+                    </IonGrid>
+                  </IonCardHeader>
+                </IonCard>
+                <IonCard class="card-white-header" color="light">
+                  <IonCardHeader class="ion-no-padding">
+                    <IonRadioGroup
+                      value={fullTable}
+                      onIonChange={e => setFullTable(e.detail.value)}
+                    >
+                      <IonGrid>
+                        <IonRow>
+                          <IonCol>
+                            <IonItem lines="none">
+                              <IonLabel>Full</IonLabel>
+                              <IonRadio slot="start" value={true} />
+                            </IonItem>
+                          </IonCol>
+                          <IonCol>
+                            <IonItem lines="none">
+                              <IonLabel>Half Table</IonLabel>
+                              <IonRadio slot="start" value={false} />
+                            </IonItem>
+                          </IonCol>
+                        </IonRow>
+                      </IonGrid>
+                    </IonRadioGroup>
+                  </IonCardHeader>
+                </IonCard>
+                {dinerCard(1, value['home/signUp']['wine'], 'Head of Table')}
+                {dinerCard(2, value['home/signUp']['wine'])}
+                {dinerCard(3, value['home/signUp']['wine'])}
+                {dinerCard(4, value['home/signUp']['wine'])}
+                {dinerCard(5, value['home/signUp']['wine'])}
+                {dinerCard(6, value['home/signUp']['wine'])}
+                {fullTable && (
+                  <React.Fragment>
+                    {dinerCard(7, value['home/signUp']['wine'])}
+                    {dinerCard(8, value['home/signUp']['wine'])}
+                    {dinerCard(9, value['home/signUp']['wine'])}
+                    {dinerCard(10, value['home/signUp']['wine'])}
+                    {dinerCard(11, value['home/signUp']['wine'])}
+                    {dinerCard(12, value['home/signUp']['wine'])}
+                  </React.Fragment>
+                )}
+              </form>
             </React.Fragment>
           )}
-        </form>
+        </React.Fragment>
       </IonContent>
     </IonPage>
   );
