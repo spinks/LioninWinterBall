@@ -18,7 +18,9 @@ import {
   IonRow,
   IonCol,
   IonButton,
-  IonAlert
+  IonAlert,
+  IonSelect,
+  IonSelectOption
 } from '@ionic/react';
 
 import * as firebase from 'firebase/app';
@@ -236,12 +238,19 @@ const DiningEnter: React.FC = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel position="floating">College (or guest)</IonLabel>
-            <IonInput
-              type="text"
+            <IonLabel position="floating">College</IonLabel>
+            <IonSelect
               name={num.toString() + '_college'}
-              value={tableInfo[num]['college']}
-            ></IonInput>
+              value={tableInfo[num] && tableInfo[num]['college']}
+              okText="Okay"
+              cancelText="Dismiss"
+              // onIonChange={e => setHairColor(e.detail.value)}
+            >
+              <IonSelectOption value="hatfield">Hatfield</IonSelectOption>
+              <IonSelectOption value="non-hatfield">
+                Non-Hatfield
+              </IonSelectOption>
+            </IonSelect>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Wine Choice (number)</IonLabel>
