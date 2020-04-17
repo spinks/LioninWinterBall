@@ -19,11 +19,17 @@ const Maps: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <TransformWrapper>
-          <TransformComponent>
-            <IonImg src="/assets/map/map.png" alt="map"></IonImg>
-          </TransformComponent>
-        </TransformWrapper>
+        <div style={{ height: '100%', alignItems: 'center', display: 'flex' }}>
+          <TransformWrapper>
+            <TransformComponent>
+              <IonImg
+                src="/assets/map/map.png"
+                alt="map"
+                style={{ height: '95vh', objectFit: 'contain' }}
+              ></IonImg>
+            </TransformComponent>
+          </TransformWrapper>
+        </div>
       </IonContent>
     </IonPage>
   );
