@@ -262,7 +262,7 @@ const Disco: React.FC = () => {
         {search && !currentlyFetching && (
           <SpotifyApiContext.Provider value={token}>
             <Search query={search} track options={{ limit: 10 }}>
-              {(data: any, loading: any, error: any) => {
+              {({ data, loading, error }: any) => {
                 if (error) {
                   if (
                     // cases where tokens are invalid or not provided
