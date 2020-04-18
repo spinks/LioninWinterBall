@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IonChip, IonIcon, IonToast } from '@ionic/react';
 import { notificationsOff, notifications } from 'ionicons/icons';
 
-import { Plugins } from '@capacitor/core';
+import { Plugins, LocalNotificationRequest } from '@capacitor/core';
 const { LocalNotifications } = Plugins;
 
 /**
@@ -28,9 +28,11 @@ async function notifyHandler(notificationContent: NProps): Promise<any> {
 /**
  * Check if an notification exists, either returns undefined or the notification
  * @param {number} nid notification ID
- * @return {any} either undefined if it doesn't exist, or the notification id object
+ * @return {(undefined|LocalNotificationRequest)} either undefined if it doesn't exist, or the notification id object
  */
-async function notifyExists(nid: number): Promise<any> {
+async function notifyExists(
+  nid: number
+): Promise<undefined | LocalNotificationRequest> {
   const pending = await LocalNotifications.getPending();
   return pending['notifications'].find(e => e['id'] === nid.toString());
 }
@@ -55,6 +57,9 @@ function notify(notificationContent: NProps) {
   });
 }
 
+/**
+ * Notification properties
+ */
 export interface NProps {
   /**
    * id: unique numeric ID for notification
@@ -100,7 +105,7 @@ const NotifyChip: React.FC<NProps> = props => {
                 ? b.enabled
                   ? 'You will be notified'
                   : 'Notification cancelled'
-                : 'Please enable notification in settings to use this feature'
+                : 'Please enable notifications in settings to use this feature'
             );
             setShowToast1(true);
           });
