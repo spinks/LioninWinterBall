@@ -46,7 +46,7 @@ export default function list(VLEArray: Array<any>, pageKey: string): any {
       {value && pageKey in value && (
         <React.Fragment>
           {Object.keys(value[pageKey])
-            .sort()
+            .sort((a, b) => parseInt(a) - parseInt(b))
             .map(key => {
               const item = value[pageKey][key];
               if (item['type'] === 'header') {

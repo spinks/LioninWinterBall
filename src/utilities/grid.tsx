@@ -55,6 +55,8 @@ export default function grid(VLEArray: Array<any>, pageKey: string): any {
           {Object.keys(value[pageKey])
             .sort()
             .map(key => {
+              // TODO: make this sort parseInts, to avoid using letters and such
+              // .sort((a, b) => parseInt(a) - parseInt(b))
               const item = value[pageKey][key];
               if (!item['0']) {
                 // item is one leveled (0 and 1 are column positions)
