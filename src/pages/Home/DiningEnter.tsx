@@ -85,8 +85,8 @@ const savedTable: any = {};
  * Returns the table from storage
  * @return {Promise<Table>} table
  */
-async function getSavedTable() {
-  let t;
+async function getSavedTable(): Promise<Table> {
+  let t: Table = { size: 0 };
   await Storage.get({ key: 'savedTable' }).then(ret => {
     t = JSON.parse(ret.value || JSON.stringify(defaultTable));
   });
@@ -251,10 +251,13 @@ const DiningEnter: React.FC = () => {
           <IonItem>
             <IonLabel position="stacked">College</IonLabel>
             <IonSelect
+              placeholder="Select"
               name={num.toString() + '_college'}
               value={tableInfo[num] && tableInfo[num]['college']}
             >
-              <IonSelectOption value="hatfield">Hatfield</IonSelectOption>
+              <IonSelectOption value="hatfield">
+                Hatfield JCR Member
+              </IonSelectOption>
               <IonSelectOption value="non-hatfield">
                 Non-Hatfield
               </IonSelectOption>
@@ -262,12 +265,8 @@ const DiningEnter: React.FC = () => {
           </IonItem>
           <IonItem>
             <IonLabel position="stacked">Wine Choice</IonLabel>
-            {/* <IonInput
-              type="number"
-              name={num.toString() + '_wine'}
-              value={tableInfo[num] && tableInfo[num]['wine']}
-            ></IonInput> */}
             <IonSelect
+              placeholder="Select"
               name={num.toString() + '_wine'}
               value={tableInfo[num] && tableInfo[num]['wine']}
             >
