@@ -14,11 +14,9 @@ import {
   IonCardTitle
 } from '@ionic/react';
 
-import grid from '../../utilities/grid';
-import AppContext from '../../AppContext';
+import Grid from '../../utilities/grid';
 
 const Music: React.FC = () => {
-  const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
       <IonHeader translucent>
@@ -43,7 +41,7 @@ const Music: React.FC = () => {
               </IonCard>
             </IonCol>
           </IonRow>
-          {grid(vle, 'music')}
+          <Grid pageKey="music" />
         </IonGrid>
       </IonContent>
     </IonPage>

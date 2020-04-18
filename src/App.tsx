@@ -90,14 +90,14 @@ const App: React.FC = () => {
       }
     });
   }, []);
-  const [value, loading, error] = useDocumentData(
+  const vle = useDocumentData(
     fb
       .firestore()
       .collection('master')
       .doc('liwb')
   );
   return (
-    <AppContext.Provider value={[value, loading, error]}>
+    <AppContext.Provider value={vle}>
       <IonApp>
         <IonReactRouter>
           <IonTabs>

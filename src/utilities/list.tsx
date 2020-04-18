@@ -14,14 +14,12 @@ import {
   cog
 } from 'ionicons/icons';
 
-/**
- * Generate an list array from Firebase Array (map) for a certiain page
- * @param {Array} VLEArray The firestore loading array
- * @param {string} pageKey The page that needs to be queried from the doc
- * @return {any} The formated grid
- */
-export default function list(VLEArray: Array<any>, pageKey: string): any {
-  const [value, loading, error] = VLEArray;
+import AppContext from '../AppContext';
+
+const List: React.FC<{ pageKey: string }> = props => {
+  const pageKey = props.pageKey;
+  const [value, loading, error] = Object.values(React.useContext(AppContext));
+
   return (
     <React.Fragment>
       {error && (
@@ -98,4 +96,6 @@ export default function list(VLEArray: Array<any>, pageKey: string): any {
       )}
     </React.Fragment>
   );
-}
+};
+
+export default List;

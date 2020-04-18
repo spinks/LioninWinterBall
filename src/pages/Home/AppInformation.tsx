@@ -12,11 +12,9 @@ import {
   IonCol
 } from '@ionic/react';
 
-import grid from '../../utilities/grid';
-import AppContext from '../../AppContext';
+import Grid from '../../utilities/grid';
 
 const AppInformation: React.FC = () => {
-  const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
       <IonHeader translucent>
@@ -26,7 +24,7 @@ const AppInformation: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <IonGrid>
-          {grid(vle, 'home/appInformation')}
+          <Grid pageKey="home/appInformation" />
           <IonRow>
             <IonCol>
               <IonCard class="card-white-header grid-card" color="light">

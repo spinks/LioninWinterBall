@@ -15,8 +15,7 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import Countdown from 'react-countdown-now';
-import AppContext from '../../AppContext';
-import list from '../../utilities/list';
+import List from '../../utilities/list';
 
 const Home: React.FC = () => {
   // Countdown renderer
@@ -45,7 +44,6 @@ const Home: React.FC = () => {
       );
     }
   };
-  const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
       <IonHeader translucent>
@@ -84,7 +82,9 @@ const Home: React.FC = () => {
           style={{ '--ion-item-background': 'transparent' }}
         >
           <IonCardContent class="ion-no-padding">
-            <IonList>{list(vle, 'home')}</IonList>
+            <IonList>
+              <List pageKey="home" />
+            </IonList>
           </IonCardContent>
         </IonCard>
       </IonContent>

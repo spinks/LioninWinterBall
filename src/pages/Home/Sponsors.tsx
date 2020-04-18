@@ -8,11 +8,9 @@ import {
   IonGrid
 } from '@ionic/react';
 
-import grid from '../../utilities/grid';
-import AppContext from '../../AppContext';
+import Grid from '../../utilities/grid';
 
 const Sponsors: React.FC = () => {
-  const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
       <IonHeader translucent>
@@ -21,7 +19,9 @@ const Sponsors: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonGrid>{grid(vle, 'home/sponsors')}</IonGrid>
+        <IonGrid>
+          <Grid pageKey="home/sponsors" />
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

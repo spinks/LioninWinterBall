@@ -8,11 +8,9 @@ import {
   IonGrid
 } from '@ionic/react';
 
-import grid from '../../utilities/grid';
-import AppContext from '../../AppContext';
+import Grid from '../../utilities/grid';
 
 const Schedule: React.FC = () => {
-  const vle = Object.values(React.useContext(AppContext));
   return (
     <IonPage>
       <IonHeader translucent>
@@ -21,7 +19,9 @@ const Schedule: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonGrid>{grid(vle, 'schedule')}</IonGrid>
+        <IonGrid>
+          <Grid pageKey="schedule" />
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
