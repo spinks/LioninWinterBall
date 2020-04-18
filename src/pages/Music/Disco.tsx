@@ -236,7 +236,7 @@ const Disco: React.FC = () => {
             <img
               src={selectedTrack['album']['images'][0]['url']}
               alt="album artwork"
-              style={{ bottom: '-3px', position: 'relative' }}
+              style={{ bottom: '-6px', position: 'relative' }}
             />
           </IonCard>
         )}
