@@ -57,15 +57,15 @@ async function saveTrack(trackInfo: any) {
 let savedTrack: any = {};
 /**
  * Sets loadedTrack global constant to stored track
+ * @return {Promise<Object>} saved track
  */
 async function getSavedTrack() {
+  let t;
   await Storage.get({ key: 'savedTrack' }).then(ret => {
-    savedTrack = JSON.parse(ret.value || '{}');
+    t = JSON.parse(ret.value || '{}');
   });
+  return t;
 }
-// code in the main page is one once on app startup
-// this has to be run before the component mounts
-getSavedTrack();
 
 /**
  * Saves selected token to storage
@@ -117,7 +117,7 @@ const Disco: React.FC = () => {
   function getAPIToken() {
     if (!currentlyFetching) {
       setCurrentlyFetching(true);
-      fetch('https://lioninwinterball.now.sh/api/token.js').then(r => {
+      fetch('https://lioninwinterball.now.sh/api/token').then(r => {
         console.log('fetching token:', r.status, r);
         if (r.status === 200) {
           r.text().then(resp => {
@@ -147,6 +147,11 @@ const Disco: React.FC = () => {
         setToken(t);
       } else {
         getAPIToken();
+      }
+    });
+    getSavedTrack().then(t => {
+      if (t) {
+        setSelectedTrack(t);
       }
     });
     // some warnings about not passing the functions to useEffect?
@@ -231,6 +236,7 @@ const Disco: React.FC = () => {
             <img
               src={selectedTrack['album']['images'][0]['url']}
               alt="album artwork"
+              style={{ bottom: '-3px', position: 'relative' }}
             />
           </IonCard>
         )}
