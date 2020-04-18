@@ -224,7 +224,6 @@ body.dark {
 }
 
 .grid-card {
-  /* padding: 0 !important; */
   margin: 0 !important;
   width: 100% !important;
 }
@@ -236,18 +235,25 @@ body.dark {
   width: 100%;
 }
 
+.grid-card img:before {
+  background: var(--ion-color-light-shade);
+  content: 'Broken image link';
+  display: block;
+  left: 0px;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  position: absolute;
+  text-align: center;
+  top: -10px;
+  width: 100%;
+}
+
 .grid-med-title {
   font-size: medium;
 }
 
-.welcome-card img {
-  max-height: 25vh;
-  overflow: hidden;
-}
-
 .card-white-header {
   opacity: 0.9;
-  /* background-color: rgba(255, 255, 255, 0.85); */
 }
 
 .font-small {
