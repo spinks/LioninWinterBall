@@ -48,6 +48,7 @@ function notify(notificationContent: NProps) {
         id: notificationContent['id'],
         schedule: { at: new Date(notificationContent['datetime']) },
         actionTypeId: '',
+        sound: notificationContent['silent'] ? undefined : '/assets/note.mp3',
         extra: null
       }
     ]
@@ -55,10 +56,20 @@ function notify(notificationContent: NProps) {
 }
 
 export interface NProps {
+  /**
+   * id: unique numeric ID for notification
+   */
   id: number;
   title: string;
   body: string;
+  /**
+   * datetime: string parsable by Date() method for time of notification
+   */
   datetime: string;
+  /**
+   * silent: if passed and true then sound will be disabled for notification
+   */
+  silent?: boolean;
 }
 
 const NotifyChip: React.FC<NProps> = props => {
