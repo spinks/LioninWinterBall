@@ -28,12 +28,7 @@ const Music: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <IonCard
-                class="grid-card"
-                button
-                routerLink="/Music/disco"
-                color="light"
-              >
+              <IonCard button routerLink="/Music/disco" color="light">
                 <IonCardHeader>
                   <IonCardSubtitle>Request Songs</IonCardSubtitle>
                   <IonCardTitle>Silent Disco</IonCardTitle>

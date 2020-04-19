@@ -223,11 +223,15 @@ body.dark {
   /* --ion-item-background: #1a1b1e; */
 }
 
-.grid-card {
-  margin: 0 !important;
-  width: 100% !important;
+ion-grid {
+  padding: 5px 11px;
 }
-.grid-card img {
+
+ion-grid ion-card {
+  margin: 0 !important;
+}
+
+ion-grid ion-card img {
   max-height: 20vh;
   overflow: hidden;
   object-fit: cover;

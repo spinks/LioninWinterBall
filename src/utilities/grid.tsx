@@ -20,7 +20,7 @@ const Grid: React.FC<{ pageKey: string }> = props => {
       {error && (
         <IonRow>
           <IonCol>
-            <IonCard class="grid-card" color="light">
+            <IonCard color="light">
               <IonCardContent>Error: {JSON.stringify(error)}</IonCardContent>
             </IonCard>
           </IonCol>
@@ -29,7 +29,7 @@ const Grid: React.FC<{ pageKey: string }> = props => {
       {loading && (
         <IonRow>
           <IonCol>
-            <IonCard class="grid-card" color="light">
+            <IonCard color="light">
               <IonCardContent class="ion-text-center">
                 <IonSpinner />
               </IonCardContent>
@@ -40,7 +40,7 @@ const Grid: React.FC<{ pageKey: string }> = props => {
       {value && !(pageKey in value) && (
         <IonRow>
           <IonCol>
-            <IonCard class="grid-card" color="light">
+            <IonCard color="light">
               <IonCardContent class="ion-text-center">
                 Content unavailable. If the issue persists contact LiWB.
               </IonCardContent>
@@ -61,7 +61,7 @@ const Grid: React.FC<{ pageKey: string }> = props => {
                 return (
                   <IonRow key={key}>
                     <IonCol>
-                      <Card {...item} class="grid-card" />
+                      <Card {...item} />
                     </IonCol>
                   </IonRow>
                 );
@@ -73,10 +73,10 @@ const Grid: React.FC<{ pageKey: string }> = props => {
                 return (
                   <IonRow key={key}>
                     <IonCol>
-                      <Card {...item['0']} class="grid-card" />
+                      <Card {...item['0']} />
                     </IonCol>
                     <IonCol>
-                      <Card {...item['1']} class="grid-card" />
+                      <Card {...item['1']} />
                     </IonCol>
                   </IonRow>
                 );

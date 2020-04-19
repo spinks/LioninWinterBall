@@ -27,12 +27,7 @@ const Food: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <IonCard
-                class="grid-card card-white-header"
-                button
-                routerLink="/Food/dining"
-                color="light"
-              >
+              <IonCard button routerLink="/Food/dining" color="light">
                 <img src="/assets/food/dining_tent.jpg" alt="" />
                 <IonCardHeader>
                   <IonCardTitle>Dining Menu</IonCardTitle>
