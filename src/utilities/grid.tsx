@@ -20,7 +20,7 @@ const Grid: React.FC<{ pageKey: string }> = props => {
       {error && (
         <IonRow>
           <IonCol>
-            <IonCard class="grid-card card-white-header" color="light">
+            <IonCard class="grid-card" color="light">
               <IonCardContent>Error: {JSON.stringify(error)}</IonCardContent>
             </IonCard>
           </IonCol>
