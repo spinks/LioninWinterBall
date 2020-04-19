@@ -29,7 +29,7 @@ const Music: React.FC = () => {
           <IonRow>
             <IonCol>
               <IonCard
-                class="grid-card card-white-header"
+                class="grid-card"
                 button
                 routerLink="/Music/disco"
                 color="light"

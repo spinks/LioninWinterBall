@@ -177,11 +177,7 @@ const Disco: React.FC = () => {
           animated={false}
           keyboardClose={true}
         />
-        <IonCard
-          class="card-white-header"
-          style={{ margin: '5px 6px 5px 6px' }}
-          color="light"
-        >
+        <IonCard style={{ margin: '5px 6px 5px 6px' }} color="light">
           <IonCardContent
             style={{
               paddingTop: '0px',
@@ -219,11 +215,7 @@ const Disco: React.FC = () => {
           </IonCardContent>
         </IonCard>
         {search === '' && selectedTrack['name'] && (
-          <IonCard
-            class="card-white-header"
-            style={{ margin: '5px 6px 5px 6px' }}
-            color="light"
-          >
+          <IonCard style={{ margin: '5px 6px 5px 6px' }} color="light">
             <IonCardHeader>
               <IonCardSubtitle>Currently selected song</IonCardSubtitle>
               <IonCardTitle>
@@ -241,11 +233,7 @@ const Disco: React.FC = () => {
           </IonCard>
         )}
         {search === '' && !selectedTrack['name'] && (
-          <IonCard
-            class="card-white-header"
-            color="light"
-            style={{ margin: '5px 6px 5px 6px' }}
-          >
+          <IonCard color="light" style={{ margin: '5px 6px 5px 6px' }}>
             <IonCardHeader>
               <IonCardSubtitle>
                 No song currently selected, search
@@ -254,11 +242,7 @@ const Disco: React.FC = () => {
           </IonCard>
         )}
         {errorTokens && (
-          <IonCard
-            class="card-white-header"
-            color="light"
-            style={{ margin: '5px 6px 5px 6px' }}
-          >
+          <IonCard color="light" style={{ margin: '5px 6px 5px 6px' }}>
             <IonCardContent>
               Error getting tokens. Try again later, if this issue persists
               contact the LiWB team.
@@ -293,7 +277,6 @@ const Disco: React.FC = () => {
                       <React.Fragment>
                         {data.tracks.items.map((track: any) => (
                           <IonCard
-                            class="card-white-header"
                             key={track.id}
                             style={{ margin: '5px 6px 5px 6px' }}
                             color="light"

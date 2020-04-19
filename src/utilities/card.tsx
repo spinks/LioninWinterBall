@@ -24,9 +24,10 @@ interface GCProps {
   notify?: NProps;
   popup?: string;
   smallTitle?: Boolean;
+  class?: string;
 }
 
-const GridCard: React.FC<GCProps> = props => {
+const Card: React.FC<GCProps> = props => {
   const item = props;
   const [showAlert, setShowAlert] = useState(false);
   return (
@@ -41,7 +42,7 @@ const GridCard: React.FC<GCProps> = props => {
         />
       )}
       <IonCard
-        class="grid-card card-white-header"
+        class={item['class'] ?? ''}
         color="light"
         button={'router' in item || 'href' in item}
         routerLink={item['router']}
@@ -80,13 +81,14 @@ const GridCard: React.FC<GCProps> = props => {
           new Date(item['notify']['datetime']) >= new Date() && (
             <NotifyChip {...item['notify']} />
           )}
+        {props.children}
       </IonCard>
     </React.Fragment>
   );
 };
 
-GridCard.defaultProps = {
+Card.defaultProps = {
   smallTitle: false
 };
 
-export default GridCard;
+export default Card;

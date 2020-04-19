@@ -7,7 +7,7 @@ import {
   IonSpinner
 } from '@ionic/react';
 
-import GridCard from './card';
+import Card from './card';
 
 import AppContext from '../AppContext';
 
@@ -29,7 +29,7 @@ const Grid: React.FC<{ pageKey: string }> = props => {
       {loading && (
         <IonRow>
           <IonCol>
-            <IonCard class="grid-card card-white-header" color="light">
+            <IonCard class="grid-card" color="light">
               <IonCardContent class="ion-text-center">
                 <IonSpinner />
               </IonCardContent>
@@ -40,7 +40,7 @@ const Grid: React.FC<{ pageKey: string }> = props => {
       {value && !(pageKey in value) && (
         <IonRow>
           <IonCol>
-            <IonCard class="grid-card card-white-header" color="light">
+            <IonCard class="grid-card" color="light">
               <IonCardContent class="ion-text-center">
                 Content unavailable. If the issue persists contact LiWB.
               </IonCardContent>
@@ -61,7 +61,7 @@ const Grid: React.FC<{ pageKey: string }> = props => {
                 return (
                   <IonRow key={key}>
                     <IonCol>
-                      <GridCard {...item} />
+                      <Card {...item} class="grid-card" />
                     </IonCol>
                   </IonRow>
                 );
@@ -73,10 +73,10 @@ const Grid: React.FC<{ pageKey: string }> = props => {
                 return (
                   <IonRow key={key}>
                     <IonCol>
-                      <GridCard {...item['0']} />
+                      <Card {...item['0']} class="grid-card" />
                     </IonCol>
                     <IonCol>
-                      <GridCard {...item['1']} />
+                      <Card {...item['1']} class="grid-card" />
                     </IonCol>
                   </IonRow>
                 );

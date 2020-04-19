@@ -64,6 +64,7 @@ async function saveTable(table: Table, fire: boolean = true) {
       return status;
     }
     for (let i = tableInfo.size + 1; i < 12 + 1; i++) {
+      // deletes second 6 diners if table size is half
       delete tableInfo[i];
     }
     tableInfo.id = fb.auth().currentUser!.uid;
@@ -216,7 +217,7 @@ const DiningEnter: React.FC = () => {
   function dinerCard(num: number, wines: Wines = {}, title: string = ''): any {
     title = title || 'Diner ' + num.toString();
     return (
-      <IonCard class="card-white-header" color="light">
+      <IonCard color="light">
         <IonCardHeader>
           <IonCardSubtitle>{title}</IonCardSubtitle>
         </IonCardHeader>
@@ -316,19 +317,19 @@ const DiningEnter: React.FC = () => {
       <IonContent fullscreen style={{ background: 'rgb(18, 39, 78)' }}>
         <React.Fragment>
           {error && (
-            <IonCard class="card-white-header" color="light">
+            <IonCard color="light">
               <IonCardContent>Error: {JSON.stringify(error)}</IonCardContent>
             </IonCard>
           )}
           {loading && (
-            <IonCard class="card-white-header" color="light">
+            <IonCard color="light">
               <IonCardContent class="ion-text-center">
                 <IonSpinner />
               </IonCardContent>
             </IonCard>
           )}
           {value && !('home/signUp' in value) && (
-            <IonCard class="card-white-header" color="light">
+            <IonCard color="light">
               <IonCardContent class="ion-text-center">
                 Content unavailable. If the issue persists contact LiWB.
               </IonCardContent>
@@ -343,7 +344,7 @@ const DiningEnter: React.FC = () => {
                 message={alertText}
               />
               <form onSubmit={handleSubmit} id="diningForm">
-                <IonCard class="card-white-header" color="light" id="top">
+                <IonCard color="light" id="top">
                   <IonCardHeader>
                     Enter your table information below and be sure to submit,
                     bring your UID to sign-up. Your UID is as follows.
@@ -386,7 +387,7 @@ const DiningEnter: React.FC = () => {
                     </IonGrid>
                   </IonCardHeader>
                 </IonCard>
-                <IonCard class="card-white-header" color="light">
+                <IonCard color="light">
                   <IonCardHeader class="ion-no-padding">
                     <IonRadioGroup
                       value={fullTable}

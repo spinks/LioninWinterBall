@@ -227,7 +227,6 @@ body.dark {
   margin: 0 !important;
   width: 100% !important;
 }
-
 .grid-card img {
   max-height: 20vh;
   overflow: hidden;
@@ -239,7 +238,7 @@ body.dark {
   font-size: medium;
 }
 
-.card-white-header {
+ion-card {
   opacity: 0.9;
 }
 
