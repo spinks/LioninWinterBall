@@ -20,7 +20,7 @@ const Maps: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <div style={{ height: '100%', alignItems: 'center', display: 'flex' }}>
-          <TransformWrapper>
+          <TransformWrapper options={{ maxScale: 2 }}>
             <TransformComponent>
               <IonImg
                 src="/assets/map/map.png"
