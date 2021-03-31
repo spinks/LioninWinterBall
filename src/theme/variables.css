@@ -245,7 +245,9 @@ ion-card-title {
 ion-list-header {
   font-size: 16px !important;
   font-weight: 500 !important;
-  margin-top: -5px;
+}
+ion-list-header:not(:first-of-type) {
+  margin-top: -15px;
 }
 
 ion-card-subtitle {

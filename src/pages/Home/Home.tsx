@@ -118,7 +118,7 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader translucent>
         <IonToolbar>
-          <IonTitle>Lion in Winter Ball</IonTitle>
+          <IonTitle>Summer Solstice Ball</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

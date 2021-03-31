@@ -1,10 +1,8 @@
 export default {
-  apiKey: 'AIzaSyDf3jxSr1Oq5tN5Ly-l6zJZEprEXPdjz8M',
-  authDomain: 'lioninwinterball20.firebaseapp.com',
-  databaseURL: 'https://lioninwinterball20.firebaseio.com',
-  projectId: 'lioninwinterball20',
-  storageBucket: 'lioninwinterball20.appspot.com',
-  messagingSenderId: '708303455148',
-  appId: '1:708303455148:web:8e986feb3f4cc40697f009',
-  measurementId: 'G-ETKHWBVW83'
+  apiKey: 'AIzaSyB6pMgcTW4MgJPI8cWDUyM98XWdAYt9yXo',
+  authDomain: 'summersolstice-98d28.firebaseapp.com',
+  projectId: 'summersolstice-98d28',
+  storageBucket: 'summersolstice-98d28.appspot.com',
+  messagingSenderId: '798826037550',
+  appId: '1:798826037550:web:67e5c6e2d8faae9b7a7abf'
 };

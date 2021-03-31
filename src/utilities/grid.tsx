@@ -42,7 +42,7 @@ const Grid: React.FC<{ pageKey: string }> = (props) => {
           <IonCol>
             <IonCard color="light">
               <IonCardContent class="ion-text-center">
-                Content unavailable. If the issue persists contact LiWB.
+                Content unavailable. If the issue persists contact the event team.
               </IonCardContent>
             </IonCard>
           </IonCol>
@@ -51,10 +51,8 @@ const Grid: React.FC<{ pageKey: string }> = (props) => {
       {value && pageKey in value && (
         <React.Fragment>
           {Object.keys(value[pageKey])
-              .sort()
+              .sort((a, b) => parseInt(a) - parseInt(b))
               .map((key) => {
-              // TODO: make this sort parseInts, to avoid using letters and such
-              // .sort((a, b) => parseInt(a) - parseInt(b))
                 const item = value[pageKey][key];
                 if (!item['0']) {
                 // item is one leveled (0 and 1 are column positions)

@@ -37,7 +37,7 @@ const List: React.FC<{ pageKey: string }> = (props) => {
       {value && !(pageKey in value) && (
         <IonItem>
           <IonLabel>
-            Content unavailable. If the issue persists contact LiWB.
+            Content unavailable. If the issue persists contact the event team.
           </IonLabel>
         </IonItem>
       )}

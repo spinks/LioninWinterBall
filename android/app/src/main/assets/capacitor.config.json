@@ -1,13 +1,13 @@
 {
-  "appId": "uk.ac.durham.hatfield.lioninwinter",
-  "appName": "Lion in Winter Ball",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "build",
-  "cordova": {},
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 5000
-    }
-  }
+	"appId": "uk.ac.durham.hatfield.lioninwinter",
+	"appName": "Summer Solstice Ball",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "build",
+	"cordova": {},
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 1000
+		}
+	}
 }
