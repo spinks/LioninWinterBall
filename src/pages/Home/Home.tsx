@@ -118,14 +118,14 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader translucent>
         <IonToolbar>
-          <IonTitle>Summer Solstice Ball</IonTitle>
+          <IonTitle>Summer Solstice</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonGrid>
           <IonRow class="ion-justify-content-center ion-padding-top">
             <img
-              src={'/assets/lions/lion.png'}
+              src={'/assets/logo.png'}
               height="120"
               alt="lion logo"
             ></img>
