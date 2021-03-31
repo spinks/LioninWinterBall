@@ -42,10 +42,12 @@ import AppContext from './AppContext';
 import fb from './Firebase';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
-import { Plugins, KeyboardResize } from '@capacitor/core';
-const { SplashScreen, Device, Keyboard, LocalNotifications } = Plugins;
+import { Device } from '@capacitor/device';
+import { Keyboard, KeyboardResize } from '@capacitor/keyboard';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
-Device.getInfo().then(r => {
+Device.getInfo().then((r) => {
   if ('platform' in r && r['platform'] === 'ios') {
     Keyboard.setResizeMode({ mode: KeyboardResize.Body });
   }
@@ -59,7 +61,7 @@ const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 toggleDarkTheme(prefersDark.matches);
 
 // Listen for changes to the prefers-color-scheme media query
-prefersDark.addListener(mediaQuery => toggleDarkTheme(mediaQuery.matches));
+prefersDark.addEventListener('change', (mediaQuery) => toggleDarkTheme(mediaQuery.matches));
 
 // Add or remove the "dark" class based on if the media query matches
 /**
@@ -79,9 +81,9 @@ const App: React.FC = () => {
   });
   useEffect(() => {
     SplashScreen.hide();
-    Device.getInfo().then(r => {
+    Device.getInfo().then((r) => {
       if ('platform' in r && r['platform'] !== 'web') {
-        LocalNotifications.areEnabled().then(permissions => {
+        LocalNotifications.areEnabled().then((permissions) => {
           if (!permissions.value) {
             // @ts-ignore
             LocalNotifications.requestPermission();
@@ -90,12 +92,7 @@ const App: React.FC = () => {
       }
     });
   }, []);
-  const vle = useDocumentData(
-    fb
-      .firestore()
-      .collection('master')
-      .doc('liwb')
-  );
+  const vle = useDocumentData(fb.firestore().collection('master').doc('liwb'));
   return (
     <AppContext.Provider value={vle}>
       <IonApp>

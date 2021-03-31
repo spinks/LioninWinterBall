@@ -16,7 +16,7 @@ import {
 
 import AppContext from '../AppContext';
 
-const List: React.FC<{ pageKey: string }> = props => {
+const List: React.FC<{ pageKey: string }> = (props) => {
   const pageKey = props.pageKey;
   const [value, loading, error] = Object.values(React.useContext(AppContext));
 
@@ -44,54 +44,54 @@ const List: React.FC<{ pageKey: string }> = props => {
       {value && pageKey in value && (
         <React.Fragment>
           {Object.keys(value[pageKey])
-            .sort((a, b) => parseInt(a) - parseInt(b))
-            .map(key => {
-              const item = value[pageKey][key];
-              if (item['type'] === 'header') {
+              .sort((a, b) => parseInt(a) - parseInt(b))
+              .map((key) => {
+                const item = value[pageKey][key];
+                if (item['type'] === 'header') {
                 // item is one leveled (0 and 1 are column positions)
-                return (
-                  <IonListHeader key={key}>
-                    <IonLabel>{item['body']}</IonLabel>
-                  </IonListHeader>
-                );
-              } else {
-                if (
-                  item['icon'] === 'logoInstagram' ||
+                  return (
+                    <IonListHeader key={key}>
+                      {item['body']}
+                    </IonListHeader>
+                  );
+                } else {
+                  if (
+                    item['icon'] === 'logoInstagram' ||
                   item['icon'] === logoInstagram
-                ) {
-                  item['icon'] = logoInstagram;
-                } else if (
-                  item['icon'] === 'logoFacebook' ||
+                  ) {
+                    item['icon'] = logoInstagram;
+                  } else if (
+                    item['icon'] === 'logoFacebook' ||
                   item['icon'] === logoFacebook
-                ) {
-                  item['icon'] = logoFacebook;
-                } else if (
-                  item['icon'] === 'informationCircleOutline' ||
+                  ) {
+                    item['icon'] = logoFacebook;
+                  } else if (
+                    item['icon'] === 'informationCircleOutline' ||
                   item['icon'] === informationCircleOutline
-                ) {
-                  item['icon'] = informationCircleOutline;
-                } else if (item['icon'] === 'cog' || item['icon'] === cog) {
-                  item['icon'] = cog;
-                } else {
-                  item['icon'] = star;
+                  ) {
+                    item['icon'] = informationCircleOutline;
+                  } else if (item['icon'] === 'cog' || item['icon'] === cog) {
+                    item['icon'] = cog;
+                  } else {
+                    item['icon'] = star;
+                  }
+                  if (item['router']) {
+                    return (
+                      <IonItem routerLink={item['router']} key={key} lines='none'>
+                        <IonLabel>{item['body']}</IonLabel>
+                        <IonIcon icon={item['icon']} size="medium" slot="start" />
+                      </IonItem>
+                    );
+                  } else {
+                    return (
+                      <IonItem href={item['href']} target="_blank" key={key} lines='none'>
+                        <IonLabel>{item['body']}</IonLabel>
+                        <IonIcon icon={item['icon']} size="medium" slot="start" />
+                      </IonItem>
+                    );
+                  }
                 }
-                if (item['router']) {
-                  return (
-                    <IonItem routerLink={item['router']} key={key}>
-                      <IonLabel>{item['body']}</IonLabel>
-                      <IonIcon icon={item['icon']} size="large" slot="start" />
-                    </IonItem>
-                  );
-                } else {
-                  return (
-                    <IonItem href={item['href']} target="_blank" key={key}>
-                      <IonLabel>{item['body']}</IonLabel>
-                      <IonIcon icon={item['icon']} size="large" slot="start" />
-                    </IonItem>
-                  );
-                }
-              }
-            })}
+              })}
         </React.Fragment>
       )}
     </React.Fragment>

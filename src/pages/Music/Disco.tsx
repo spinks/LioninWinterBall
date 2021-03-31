@@ -21,15 +21,16 @@ import {
 import { add } from 'ionicons/icons';
 
 // @ts-ignore
-// TODO: update this to 3.0 https://github.com/idanlo/react-spotify-api/releases/tag/v3.0.0
 import { SpotifyApiContext, Search } from 'react-spotify-api';
 
 import fb from '../../Firebase';
 
-import { Plugins } from '@capacitor/core';
-const { Keyboard, Storage, Device } = Plugins;
+import { Storage } from '@capacitor/storage';
+import { Device } from '@capacitor/device';
+import { Keyboard } from '@capacitor/keyboard';
+
 let deviceInfo = {};
-Device.getInfo().then(r => {
+Device.getInfo().then((r) => {
   deviceInfo = r;
 });
 
@@ -44,13 +45,13 @@ async function saveTrack(trackInfo: any) {
   });
   if (fb.auth().currentUser) {
     fb.firestore()
-      .collection('songs')
-      .doc(fb.auth().currentUser!.uid)
-      .set({
-        name: trackInfo.name,
-        artist: trackInfo.artists[0].name,
-        url: trackInfo.external_urls.spotify
-      });
+        .collection('songs')
+        .doc(fb.auth().currentUser!.uid)
+        .set({
+          name: trackInfo.name,
+          artist: trackInfo.artists[0].name,
+          url: trackInfo.external_urls.spotify
+        });
   }
 }
 
@@ -61,7 +62,7 @@ let savedTrack: any = {};
  */
 async function getSavedTrack() {
   let t;
-  await Storage.get({ key: 'savedTrack' }).then(ret => {
+  await Storage.get({ key: 'savedTrack' }).then((ret) => {
     t = JSON.parse(ret.value || '{}');
   });
   return t;
@@ -85,7 +86,7 @@ async function saveToken(token: any) {
  */
 async function getSavedToken(): Promise<string> {
   let token = '';
-  await Storage.get({ key: 'savedToken' }).then(ret => {
+  await Storage.get({ key: 'savedToken' }).then((ret) => {
     token = JSON.parse(ret.value || '""');
     console.log('getting saved Token', token);
   });
@@ -117,10 +118,10 @@ const Disco: React.FC = () => {
   function getAPIToken() {
     if (!currentlyFetching) {
       setCurrentlyFetching(true);
-      fetch('https://lioninwinterball.now.sh/api/token').then(r => {
+      fetch('https://lioninwinterball.now.sh/api/token').then((r) => {
         console.log('fetching token:', r.status, r);
         if (r.status === 200) {
-          r.text().then(resp => {
+          r.text().then((resp) => {
             setToken(resp);
             saveToken(resp);
             setCurrentlyFetching(false);
@@ -142,14 +143,14 @@ const Disco: React.FC = () => {
   useEffect(() => {
     // runs once on component mount (due to empty array second arg)
     // get any cached token and then set (if empty it gets a new token)
-    getSavedToken().then(t => {
+    getSavedToken().then((t) => {
       if (t) {
         setToken(t);
       } else {
         getAPIToken();
       }
     });
-    getSavedTrack().then(t => {
+    getSavedTrack().then((t) => {
       if (t) {
         setSelectedTrack(t);
       }
@@ -191,7 +192,7 @@ const Disco: React.FC = () => {
               inputmode="search"
               type="search"
               showCancelButton="always"
-              onKeyPress={e => {
+              onKeyPress={(e) => {
                 if (
                   e.key === 'Enter' &&
                   'platform' in deviceInfo &&
@@ -204,7 +205,7 @@ const Disco: React.FC = () => {
                   }
                 }
               }}
-              onIonChange={e => {
+              onIonChange={(e) => {
                 if (e.detail.value) {
                   setSearch(e.detail.value);
                 } else {
@@ -283,13 +284,13 @@ const Disco: React.FC = () => {
                           >
                             <IonItem lines="none">
                               {track.album.images[
-                                track.album.images.length - 1
+                                  track.album.images.length - 1
                               ] && (
                                 <IonThumbnail slot="start">
                                   <img
                                     src={
                                       track.album.images[
-                                        track.album.images.length - 1
+                                          track.album.images.length - 1
                                       ].url
                                     }
                                     alt="album artwork"

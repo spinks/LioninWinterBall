@@ -24,13 +24,12 @@ import {
   IonSpinner
 } from '@ionic/react';
 
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import fb from '../../Firebase';
 
 import AppContext from '../../AppContext';
 
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins;
+import { Storage } from '@capacitor/storage';
 
 const sanitizeHtml = require('sanitize-html');
 
@@ -70,13 +69,13 @@ async function saveTable(table: Table, fire: boolean = true) {
     tableInfo.id = fb.auth().currentUser!.uid;
     tableInfo.timestamp = firebase.firestore.FieldValue.serverTimestamp();
     await fb
-      .firestore()
-      .collection('tables')
-      .doc(fb.auth().currentUser!.uid)
-      .set(tableInfo)
-      .catch(err => {
-        status = 'Firebase Error: ' + err.message;
-      });
+        .firestore()
+        .collection('tables')
+        .doc(fb.auth().currentUser!.uid)
+        .set(tableInfo)
+        .catch((err) => {
+          status = 'Firebase Error: ' + err.message;
+        });
   }
   return status;
 }
@@ -88,7 +87,7 @@ const savedTable: any = {};
  */
 async function getSavedTable(): Promise<Table> {
   let t: Table = { size: 0 };
-  await Storage.get({ key: 'savedTable' }).then(ret => {
+  await Storage.get({ key: 'savedTable' }).then((ret) => {
     t = JSON.parse(ret.value || JSON.stringify(defaultTable));
   });
   return t;
@@ -113,7 +112,7 @@ async function saveTableTime(time: number) {
  */
 async function getSavedTableTime(): Promise<any> {
   let time = '';
-  await Storage.get({ key: 'savedTableTime' }).then(ret => {
+  await Storage.get({ key: 'savedTableTime' }).then((ret) => {
     time = JSON.parse(ret.value || JSON.stringify(false));
     console.log('getting saved time', time);
   });
@@ -126,7 +125,7 @@ const DiningEnter: React.FC = () => {
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState(
-    'Your table has been submitted, bring the UID to sign-up'
+      'Your table has been submitted, bring the UID to sign-up'
   );
   const [alertTitle, setAlertTitle] = useState('Table Submitted');
 
@@ -138,12 +137,12 @@ const DiningEnter: React.FC = () => {
 
   useEffect(() => {
     // runs once on component mount (due to empty array second arg)
-    getSavedTableTime().then(t => {
+    getSavedTableTime().then((t) => {
       if (t) {
         setTableTime(t);
       }
     });
-    getSavedTable().then(t => {
+    getSavedTable().then((t) => {
       setTableInfo(t);
       setFullTable(t!['size'] === 12);
     });
@@ -157,8 +156,8 @@ const DiningEnter: React.FC = () => {
    * @param {boolean} fire wether to save to firebase
    */
   function handleSubmit(
-    e: { target: any; preventDefault?: any },
-    fire: boolean = true
+      e: { target: any; preventDefault?: any },
+      fire: boolean = true
   ): any {
     if (typeof e.preventDefault === 'function') {
       e.preventDefault();
@@ -175,22 +174,22 @@ const DiningEnter: React.FC = () => {
         dietary: sanitizeHtml(e.target[i.toString() + '_dietary'].value)
       };
     }
-    saveTable(tableInfo, fire).then(s => {
+    saveTable(tableInfo, fire).then((s) => {
       if (s !== 'OK') {
         setAlertText(
-          'If the issue persists please contact the LiWB team <br/>' +
+            'If the issue persists please contact the LiWB team <br/>' +
             'If it is a firebase error you may have tried to submit more than once in 15 minutes, try again later'
         );
         setAlertTitle(s);
       } else {
         if (!fire) {
           setAlertText(
-            'Table information saved, you can return at a later time to submit'
+              'Table information saved, you can return at a later time to submit'
           );
           setAlertTitle('Table Saved');
         } else {
           setAlertText(
-            'Your table has been submitted, bring the UID to sign-up'
+              'Your table has been submitted, bring the UID to sign-up'
           );
           setAlertTitle('Table Submitted');
           setTableTime(Date.now());
@@ -273,14 +272,14 @@ const DiningEnter: React.FC = () => {
             >
               <React.Fragment>
                 {Object.keys(wines)
-                  .sort((a, b) => parseInt(a) - parseInt(b))
-                  .map(key => {
-                    return (
-                      <IonSelectOption key={key} value={key}>
-                        {key in wines && wines[key]}
-                      </IonSelectOption>
-                    );
-                  })}
+                    .sort((a, b) => parseInt(a) - parseInt(b))
+                    .map((key) => {
+                      return (
+                        <IonSelectOption key={key} value={key}>
+                          {key in wines && wines[key]}
+                        </IonSelectOption>
+                      );
+                    })}
               </React.Fragment>
             </IonSelect>
           </IonItem>
@@ -359,10 +358,10 @@ const DiningEnter: React.FC = () => {
                             expand="block"
                             onClick={() => {
                               handleSubmit(
-                                {
-                                  target: document.getElementById('diningForm')
-                                },
-                                false
+                                  {
+                                    target: document.getElementById('diningForm')
+                                  },
+                                  false
                               );
                             }}
                           >
@@ -391,7 +390,7 @@ const DiningEnter: React.FC = () => {
                   <IonCardHeader class="ion-no-padding">
                     <IonRadioGroup
                       value={fullTable}
-                      onIonChange={e => setFullTable(e.detail.value)}
+                      onIonChange={(e) => setFullTable(e.detail.value)}
                     >
                       <IonGrid>
                         <IonRow>

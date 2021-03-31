@@ -232,14 +232,41 @@ ion-grid ion-card {
 }
 
 ion-grid ion-card img {
-  max-height: 20vh;
-  overflow: hidden;
+  max-height: 18vh;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
   object-fit: cover;
   width: 100%;
 }
 
-.grid-med-title {
-  font-size: medium;
+ion-card-title {
+  font-size: 18px !important;
+}
+ion-list-header {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  margin-top: -5px;
+}
+
+ion-card-subtitle {
+  font-size: 13px !important;
+  font-weight: 500;
+  color: var(--ion-color-dark-tint) !important;
+}
+
+ion-card-content, ion-item {
+  font-size: 13px !important;
+  color: var(--ion-color-dark-tint) !important;
+}
+
+.grid-smaller-fonts ion-card-title {
+  font-size: 15px !important;
+}
+.grid-smaller-fonts ion-card-subtitle {
+  font-size: 12px !important;
+}
+.grid-smaller-fonts ion-card-content {
+  font-size: 12px !important;
 }
 
 ion-card {
@@ -255,9 +282,7 @@ ion-card {
 }
 
 ion-list {
-  opacity: 0.85;
   border-radius: 8px !important;
-  padding: 0;
   /* padding-left: 20px; */
   /* this one affects area around items */
   background: transparent;
@@ -268,7 +293,7 @@ ion-app {
 }
 
 ion-content {
-  background-image: url('/assets/background2.png');
+  background-image: url('../assets/background.png');
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */

@@ -1,5 +1,5 @@
 // import firebase from 'firebase';
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import config from './FirebaseConfig';
@@ -13,17 +13,17 @@ fb.firestore().enablePersistence();
 // we should stay under the 20,000 item limit for firestore documents given the relatively minimal amount of conent
 
 fb.auth()
-  .signInAnonymously()
-  .then(() => {
-    console.log('signed in');
-  })
-  .catch(function(error) {
+    .signInAnonymously()
+    .then(() => {
+      console.log('signed in');
+    })
+    .catch(function(error) {
     // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode, errorMessage);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
     // ...
-  });
+    });
 
 // fb.auth().onAuthStateChanged(function(user) {
 //   if (user) {

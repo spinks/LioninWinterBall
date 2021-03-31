@@ -56,49 +56,49 @@ const HeaderCard: React.FC = () => {
               <React.Fragment>
                 {typeof value['home/headerCard']['title'] === 'object' &&
                   value['home/headerCard']['title']['countdown'] === true && (
-                    <Countdown
-                      date={new Date(value['home/headerCard']['title']['date'])}
-                      renderer={props => {
-                        if (props.completed) {
-                          // Render a completed state
-                          return (
-                            <React.Fragment>
-                              {htmlToReactParser.parse(
+                  <Countdown
+                    date={new Date(value['home/headerCard']['title']['date'])}
+                    renderer={(props) => {
+                      if (props.completed) {
+                        // Render a completed state
+                        return (
+                          <React.Fragment>
+                            {htmlToReactParser.parse(
                                 value['home/headerCard']['title']['completed']
-                              )}
-                            </React.Fragment>
-                          );
-                        } else {
-                          // Render a countdown
-                          return (
-                            <React.Fragment>
-                              {props.days > 0 && (
-                                <React.Fragment>
-                                  {props.days}{' '}
-                                  {props.days === 1
-                                    ? 'Day Left!'
-                                    : 'Days Left!'}
-                                </React.Fragment>
-                              )}
-                              {props.days === 0 && (
-                                <React.Fragment>
-                                  {props.hours === 0 && 'Less than an hour!'}
-                                  {props.hours !== 0 && (
-                                    <React.Fragment>
-                                      {props.hours}{' '}
-                                      {props.hours === 1
-                                        ? 'Hour Left!'
-                                        : 'Hours Left!'}
-                                    </React.Fragment>
-                                  )}
-                                </React.Fragment>
-                              )}
-                            </React.Fragment>
-                          );
-                        }
-                      }}
-                    />
-                  )}
+                            )}
+                          </React.Fragment>
+                        );
+                      } else {
+                        // Render a countdown
+                        return (
+                          <React.Fragment>
+                            {props.days > 0 && (
+                              <React.Fragment>
+                                {props.days}{' '}
+                                {props.days === 1 ?
+                                    'Day Left!' :
+                                    'Days Left!'}
+                              </React.Fragment>
+                            )}
+                            {props.days === 0 && (
+                              <React.Fragment>
+                                {props.hours === 0 && 'Less than an hour!'}
+                                {props.hours !== 0 && (
+                                  <React.Fragment>
+                                    {props.hours}{' '}
+                                    {props.hours === 1 ?
+                                        'Hour Left!' :
+                                        'Hours Left!'}
+                                  </React.Fragment>
+                                )}
+                              </React.Fragment>
+                            )}
+                          </React.Fragment>
+                        );
+                      }
+                    }}
+                  />
+                )}
                 {typeof value['home/headerCard']['title'] === 'string' &&
                   htmlToReactParser.parse(value['home/headerCard']['title'])}
               </React.Fragment>

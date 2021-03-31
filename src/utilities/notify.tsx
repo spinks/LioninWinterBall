@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IonChip, IonIcon, IonToast } from '@ionic/react';
 import { notificationsOff, notifications } from 'ionicons/icons';
 
-import { Plugins, LocalNotificationRequest } from '@capacitor/core';
-const { LocalNotifications } = Plugins;
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 /**
  * Toggles the status of a notification, either creates notification or cancels if it exists
@@ -31,10 +30,10 @@ async function notifyHandler(notificationContent: NProps): Promise<any> {
  * @return {(undefined|LocalNotificationRequest)} either undefined if it doesn't exist, or the notification id object
  */
 async function notifyExists(
-  nid: number
-): Promise<undefined | LocalNotificationRequest> {
+    nid: number
+): Promise<any> {
   const pending = await LocalNotifications.getPending();
-  return pending['notifications'].find(e => e['id'] === nid.toString());
+  return pending['notifications'].find((e) => e['id'] === nid);
 }
 
 /**
@@ -77,12 +76,12 @@ export interface NProps {
   silent?: boolean;
 }
 
-const NotifyChip: React.FC<NProps> = props => {
+const NotifyChip: React.FC<NProps> = (props) => {
   const [showToast1, setShowToast1] = useState(false);
   const [toastString, setToastString] = useState('');
   const [notifyOn, setNotifyOn] = useState(false);
   useEffect(() => {
-    notifyExists(props.id).then(b => setNotifyOn(b ? true : false));
+    notifyExists(props.id).then((b) => setNotifyOn(b ? true : false));
   }, [props.id]);
   return (
     <React.Fragment>
@@ -96,16 +95,16 @@ const NotifyChip: React.FC<NProps> = props => {
           background: 'var(--ion-color-light)'
         }}
         color={notifyOn ? 'primary' : 'dark'}
-        onClick={e => {
+        onClick={(e) => {
           e.stopPropagation();
-          notifyHandler(props).then(b => {
+          notifyHandler(props).then((b) => {
             setNotifyOn(b.enabled);
             setToastString(
-              b.permissions
-                ? b.enabled
-                  ? 'You will be notified'
-                  : 'Notification cancelled'
-                : 'Please enable notifications in settings to use this feature'
+              b.permissions ?
+                b.enabled ?
+                  'You will be notified' :
+                  'Notification cancelled' :
+                'Please enable notifications in settings to use this feature'
             );
             setShowToast1(true);
           });

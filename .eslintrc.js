@@ -4,12 +4,7 @@ module.exports = {
     es6: true,
     node: true
   },
-  extends: [
-    'google',
-    'prettier',
-    'prettier/@typescript-eslint',
-    'prettier/react'
-  ],
+  extends: ['google'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
@@ -22,14 +17,11 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module'
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
     'no-unused-vars': 0, // could be 1 to warn (but lots of ion components throw false positives)
-    'prettier/prettier': [
-      'error',
-      {
-        usePrettierrc: true
-      }
-    ]
+    'comma-dangle': ['error', 'never'],
+    'object-curly-spacing': ['error', 'always'],
+    'max-len': ['error', { 'code': 120 }]
   }
 };

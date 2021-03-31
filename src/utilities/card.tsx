@@ -27,7 +27,7 @@ interface GCProps {
   class?: string;
 }
 
-const Card: React.FC<GCProps> = props => {
+const Card: React.FC<GCProps> = (props) => {
   const item = props;
   const [showAlert, setShowAlert] = useState(false);
   return (
@@ -53,14 +53,14 @@ const Card: React.FC<GCProps> = props => {
       >
         {item['img'] && <img src={item['img']} alt="" />}
         {(item['title'] || item['subtitle']) && (
-          <IonCardHeader>
+          <IonCardHeader class={item['smallTitle'] ? 'grid-smaller-fonts' : ''}>
             {item['subtitle'] && (
               <IonCardSubtitle>
                 {htmlToReactParser.parse(item['subtitle'])}
               </IonCardSubtitle>
             )}
             {item['title'] && (
-              <IonCardTitle class={item['smallTitle'] ? 'grid-med-title' : ''}>
+              <IonCardTitle>
                 {htmlToReactParser.parse(item['title'])}
               </IonCardTitle>
             )}
@@ -79,8 +79,8 @@ const Card: React.FC<GCProps> = props => {
         )}
         {item['notify'] &&
           new Date(item['notify']['datetime']) >= new Date() && (
-            <NotifyChip {...item['notify']} />
-          )}
+          <NotifyChip {...item['notify']} />
+        )}
         {props.children}
       </IonCard>
     </React.Fragment>
