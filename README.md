@@ -1,28 +1,4 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-**Table of Contents**
-
-- [Lion in Winter Ball App](#lion-in-winter-ball-app)
-  - [Set Up Development environment](#set-up-development-environment)
-  - [Modifying Content](#modifying-content)
-    - [Theming](#theming)
-  - [Building](#building)
-    - [Device Native Dependencies](#device-native-dependencies)
-    - [iOS](#ios)
-  - [Firebase](#firebase)
-    - [One Document](#one-document)
-    - [Document Reading and Implementing](#document-reading-and-implementing)
-      - [Document](#document)
-        - [Notify](#notify)
-      - [Implementing](#implementing)
-  - [Silent Disco](#silent-disco)
-  - [Table Sign-up Form](#table-sign-up-form)
-  - [Additional Notes](#additional-notes)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Lion in Winter Ball App
+# Lion in Winter Ball App (Summer Solstice)
 
 App built on the ionic react framework, to be deployed to iOS and Android for the Lion in Winter Ball for Hatfield College.
 
